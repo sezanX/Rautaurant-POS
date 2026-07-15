@@ -1,13 +1,13 @@
 # Complete Application Tutorial & Explanation
 
-This document serves as an in-depth guide to understanding the architecture of the Restaurant POS application and provides a tutorial on how to navigate, maintain, and extend the codebase.
+This document serves as an in-depth guide to understanding the architecture of the KHAON POS application and provides a tutorial on how to navigate, maintain, and extend the codebase.
 
 ## 1. Architectural Overview
 
 The application follows a strict **Model-View-ViewModel (MVVM)** pattern combined with **Dependency Injection (DI)**.
 
 ### Directory Structure
-- **`/Data`**: Contains the `AppDbContext` (the EF Core gateway) and the `Entities` (the C# classes representing the database tables).
+- **`/Data`**: Contains the `AppDbContext` (the EF Core gateway using Npgsql for PostgreSQL) and the `Entities` (the C# classes representing the database tables).
 - **`/Services`**: Contains interfaces and business logic implementations. This decouples the database operations and API calls from the UI layer.
 - **`/ViewModels`**: Contains the state and logic for the UI. ViewModels have zero knowledge of the WPF UI controls (no `using System.Windows.Controls;`). They expose `ICommand` properties for button clicks and `ObservableCollection` properties for lists.
 - **`/Views`**: Contains the `.xaml` files. The UI binds directly to the properties in the ViewModels.
@@ -16,7 +16,7 @@ The application follows a strict **Model-View-ViewModel (MVVM)** pattern combine
 ### Application Startup Flow
 1. **`App.xaml.cs`**: The `OnStartup` method executes.
 2. An `IHost` (Dependency Injection container) is built. All Services, ViewModels, and the `AppDbContext` are registered as singletons or transients.
-3. EF Core's `dbContext.Database.EnsureCreated()` is called, checking if `LocalDB` has the `RestaurantPosDB`. If not, it creates the tables and inserts the initial mock data (configured in `AppDbContext.cs`).
+3. EF Core's `dbContext.Database.EnsureCreated()` is called, checking if your connected PostgreSQL database (on Neon.tech) has the `RestaurantPosDB` schema. If not, it automatically creates the tables in the cloud and inserts the initial mock data (configured in `AppDbContext.cs`).
 4. `MainWindow` is resolved from the DI container and displayed.
 
 ---
@@ -88,25 +88,15 @@ services.AddTransient<EmployeeViewModel>();
 ```
 
 ### Step 4: Hook it up to the Navigation System
-1. Open `MainWindow.xaml`.
-2. Map the new ViewModel to the new View in the `<Window.Resources>` section:
+1. Open `MainWindow.xaml` or `DashboardView.xaml` (depending on where you want the feature to live).
+2. Map the new ViewModel to the new View in the `<Window.Resources>` or `<UserControl.Resources>` section:
 ```xml
 <DataTemplate DataType="{x:Type viewmodels:EmployeeViewModel}">
     <views:EmployeeView />
 </DataTemplate>
 ```
-3. Add a new button in the Side Drawer of `MainWindow.xaml`:
-```xml
-<Button Command="{Binding NavigateCommand}" CommandParameter="Employees">
-    <TextBlock Text="Manage Employees"/>
-</Button>
-```
-4. Open `MainViewModel.cs` and update the `Navigate` switch statement:
-```csharp
-case "Employees":
-    CurrentViewModel = (BaseViewModel)_serviceProvider.GetService(typeof(EmployeeViewModel))!;
-    break;
-```
+3. Add a new Navigation Button (using a `RadioButton` or `Button`).
+4. Update the parent ViewModel's switch statement to route the user correctly.
 
 You have now successfully extended the application using strict MVVM and DI!
 
@@ -115,15 +105,13 @@ You have now successfully extended the application using strict MVVM and DI!
 ## 4. Troubleshooting & Advanced Topics
 
 ### Database Migrations
-Currently, the app uses `EnsureCreated()` which is great for quick prototyping. If you want to evolve the database schema (e.g., adding a new column to a table), you should switch to EF Core Migrations:
-1. Delete `EnsureCreated()` from `App.xaml.cs`.
-2. Run `dotnet ef migrations add InitialCreate` in your terminal.
-3. Run `dotnet ef database update`.
+Currently, the app uses `EnsureCreated()` which is great for quick prototyping and auto-provisioning the cloud database. If you want to evolve the database schema (e.g., adding a new column to an existing table), you have two options:
+1. **Drop & Recreate:** Delete the tables manually in your Neon.tech SQL dashboard, and run the app. `EnsureCreated()` will rebuild them with the new columns. (Warning: erases data).
+2. **EF Core Migrations:** Delete `EnsureCreated()` from `App.xaml.cs`. Run `dotnet ef migrations add InitialCreate` in your terminal, followed by `dotnet ef database update`.
 
-### LocalDB Issues
-If you experience a crash on startup with no logs, it is highly likely a SQL Server connection issue.
-You can verify if LocalDB is running by opening a terminal and running:
-```powershell
-sqllocaldb info
-```
-If it is not installed, install **SQL Server Express LocalDB** from Microsoft, or change the connection string inside `AppDbContext.cs`'s `OnConfiguring` method to point to an active SQL Server instance (e.g., `Server=localhost;Database=RestaurantPosDB;User Id=sa;Password=YourPassword;`).
+### Cloud Database Issues
+If you experience a crash on startup, it is almost certainly a connection issue with PostgreSQL.
+Verify that:
+1. You have an active internet connection.
+2. Your connection string in `AppDbContext.cs` is perfectly accurate and contains the password.
+3. Your cloud provider (Neon.tech) is not currently experiencing an outage.
