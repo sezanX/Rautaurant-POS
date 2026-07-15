@@ -16,10 +16,10 @@ public class OrderItem
 
     public int Quantity { get; set; }
 
-    [Column(TypeName = "decimal(18,2)")]
+    [Column(TypeName = "numeric(18,2)")]
     public decimal UnitPrice { get; set; }
 
-    [Column(TypeName = "decimal(18,2)")]
+    [Column(TypeName = "numeric(18,2)")]
     public decimal ExtraCharge { get; set; }
 
     [MaxLength(255)]

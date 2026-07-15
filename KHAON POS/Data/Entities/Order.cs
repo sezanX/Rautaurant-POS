@@ -18,7 +18,7 @@ public class Order
 
     public DateTime OrderDate { get; set; } = DateTime.Now;
 
-    [Column(TypeName = "decimal(18,2)")]
+    [Column(TypeName = "numeric(18,2)")]
     public decimal TotalAmount { get; set; }
 
     [Required]

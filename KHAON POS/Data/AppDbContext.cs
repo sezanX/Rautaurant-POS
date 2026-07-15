@@ -26,7 +26,7 @@ public class AppDbContext : DbContext
     {
         if (!optionsBuilder.IsConfigured)
         {
-            optionsBuilder.UseSqlite("Data Source=RestaurantPosDB.db");
+            optionsBuilder.UseNpgsql("postgresql://neondb_owner:npg_QJ9rtifFqpD0@ep-lively-poetry-azpra9fn.c-3.ap-southeast-1.aws.neon.tech/neondb?sslmode=require");
         }
     }
 
