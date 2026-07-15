@@ -1,0 +1,20 @@
+﻿RestaurantPOS
+1.0.0.0
+
+winexe
+C#
+.cs
+C:\Users\Computer Hospital\Desktop\Github\SD-5\Rautaurant POS\obj\Debug\net8.0-windows\
+RestaurantPOS
+none
+false
+TRACE;DEBUG;NET;NET8_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NET7_0_OR_GREATER;NET8_0_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WINDOWS7_0_OR_GREATER
+C:\Users\Computer Hospital\Desktop\Github\SD-5\Rautaurant POS\App.xaml
+101824551742
+
+461168046250
+250-1398886150
+Views\AdminAnalyticsView.xaml;Views\AdminInventoryView.xaml;Views\AdminOverviewView.xaml;Views\AdminReportsView.xaml;Views\AdminUsersView.xaml;Views\DashboardView.xaml;Views\KitchenView.xaml;Views\LoginView.xaml;Views\MainWindow.xaml;Views\PosView.xaml;
+
+True
+

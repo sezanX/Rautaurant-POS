@@ -1,0 +1,222 @@
+<UserControl x:Class="RestaurantPOS.Views.AdminOverviewView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF">
+    <Grid Margin="32">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Grid Grid.Row="0" Margin="0,0,0,32">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel>
+                <TextBlock Text="Analytics Overview" FontSize="28" FontWeight="Bold" Foreground="#212121" />
+                <TextBlock Text="Track your restaurant's performance" FontSize="14" Foreground="#757575" Margin="0,4,0,0" />
+            </StackPanel>
+            
+            <Border Grid.Column="1" Background="White" CornerRadius="8" Padding="16,8" BorderBrush="#E0E0E0" BorderThickness="1">
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="Calendar" Foreground="#757575" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                    <TextBlock Text="Today" Foreground="#424242" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                    <materialDesign:PackIcon Kind="ChevronDown" Foreground="#757575" VerticalAlignment="Center" Margin="8,0,0,0"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <!-- KPIs -->
+        <Grid Grid.Row="1" Margin="0,0,0,32">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="24" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="24" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="24" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Total Revenue -->
+            <materialDesign:Card Grid.Column="0" Padding="24" UniformCornerRadius="12" Background="White" materialDesign:ElevationAssist.Elevation="Dp1">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="CashMultiple" Foreground="#4CAF50" Width="24" Height="24" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                        <TextBlock Text="Total Revenue" Foreground="#757575" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <TextBlock Text="{Binding TotalSales, StringFormat={}{0:C}}" FontSize="32" FontWeight="Bold" Foreground="#212121" Margin="0,16,0,8" />
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="TrendingUp" Foreground="#4CAF50" VerticalAlignment="Center" Margin="0,0,4,0"/>
+                        <TextBlock Text="+15%" Foreground="#4CAF50" FontWeight="Bold" VerticalAlignment="Center"/>
+                        <TextBlock Text=" vs last week" Foreground="#9E9E9E" FontSize="12" VerticalAlignment="Center" Margin="4,0,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+            </materialDesign:Card>
+
+            <!-- Total Orders -->
+            <materialDesign:Card Grid.Column="2" Padding="24" UniformCornerRadius="12" Background="White" materialDesign:ElevationAssist.Elevation="Dp1">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="ShoppingOutline" Foreground="#2196F3" Width="24" Height="24" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                        <TextBlock Text="Total Orders" Foreground="#757575" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <TextBlock Text="{Binding OrderCount}" FontSize="32" FontWeight="Bold" Foreground="#212121" Margin="0,16,0,8" />
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="TrendingUp" Foreground="#4CAF50" VerticalAlignment="Center" Margin="0,0,4,0"/>
+                        <TextBlock Text="+12%" Foreground="#4CAF50" FontWeight="Bold" VerticalAlignment="Center"/>
+                        <TextBlock Text=" vs last week" Foreground="#9E9E9E" FontSize="12" VerticalAlignment="Center" Margin="4,0,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+            </materialDesign:Card>
+
+            <!-- Average Order Value -->
+            <materialDesign:Card Grid.Column="4" Padding="24" UniformCornerRadius="12" Background="White" materialDesign:ElevationAssist.Elevation="Dp1">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="ChartBar" Foreground="#9C27B0" Width="24" Height="24" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                        <TextBlock Text="Avg Order Value" Foreground="#757575" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <TextBlock Text="{Binding AverageOrderValue, StringFormat={}{0:C}}" FontSize="32" FontWeight="Bold" Foreground="#212121" Margin="0,16,0,8" />
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="TrendingUp" Foreground="#4CAF50" VerticalAlignment="Center" Margin="0,0,4,0"/>
+                        <TextBlock Text="+5%" Foreground="#4CAF50" FontWeight="Bold" VerticalAlignment="Center"/>
+                        <TextBlock Text=" vs last week" Foreground="#9E9E9E" FontSize="12" VerticalAlignment="Center" Margin="4,0,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+            </materialDesign:Card>
+
+            <!-- Active Customers -->
+            <materialDesign:Card Grid.Column="6" Padding="24" UniformCornerRadius="12" Background="White" materialDesign:ElevationAssist.Elevation="Dp1">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="AccountMultipleOutline" Foreground="#FF9800" Width="24" Height="24" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                        <TextBlock Text="Active Customers" Foreground="#757575" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <TextBlock Text="{Binding ActiveCustomers}" FontSize="32" FontWeight="Bold" Foreground="#212121" Margin="0,16,0,8" />
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="TrendingUp" Foreground="#4CAF50" VerticalAlignment="Center" Margin="0,0,4,0"/>
+                        <TextBlock Text="+8%" Foreground="#4CAF50" FontWeight="Bold" VerticalAlignment="Center"/>
+                        <TextBlock Text=" vs last week" Foreground="#9E9E9E" FontSize="12" VerticalAlignment="Center" Margin="4,0,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+            </materialDesign:Card>
+        </Grid>
+
+        <!-- Bottom Section -->
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="32" />
+                <ColumnDefinition Width="350" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Chart -->
+            <materialDesign:Card Grid.Column="0" Padding="24" UniformCornerRadius="12" Background="White" materialDesign:ElevationAssist.Elevation="Dp1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    
+                    <Grid Grid.Row="0" Margin="0,0,0,24">
+                        <TextBlock Text="Sales Overview" FontSize="20" FontWeight="Bold" Foreground="#212121" />
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Border Background="#F5F5F5" CornerRadius="16" Padding="16,6" Margin="0,0,8,0">
+                                <TextBlock Text="Weekly" FontWeight="SemiBold" Foreground="#424242"/>
+                            </Border>
+                            <Border Background="Transparent" CornerRadius="16" Padding="16,6">
+                                <TextBlock Text="Monthly" FontWeight="SemiBold" Foreground="#757575"/>
+                            </Border>
+                        </StackPanel>
+                    </Grid>
+                    
+                    <!-- LiveCharts2 CartesianChart -->
+                    <lvc:CartesianChart Grid.Row="1" MinHeight="300"
+                                        Series="{Binding SalesSeries}"
+                                        XAxes="{Binding XAxes}"
+                                        YAxes="{Binding YAxes}"
+                                        TooltipPosition="Top">
+                    </lvc:CartesianChart>
+                </Grid>
+            </materialDesign:Card>
+
+            <!-- Right Column -->
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="24" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <!-- Recent Orders -->
+                <materialDesign:Card Grid.Row="0" Padding="24" UniformCornerRadius="12" Background="White" materialDesign:ElevationAssist.Elevation="Dp1">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Recent Orders" FontSize="18" FontWeight="Bold" Foreground="#212121" Margin="0,0,0,16"/>
+                        <ItemsControl Grid.Row="1" ItemsSource="{Binding RecentOrders}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border BorderThickness="0,0,0,1" BorderBrush="#EEEEEE" Padding="0,12">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel>
+                                                <TextBlock Text="{Binding Id, StringFormat=Order #{0}}" FontWeight="SemiBold" Foreground="#424242" />
+                                                <TextBlock Text="{Binding OrderDate, StringFormat={}{0:MMM dd, HH:mm}}" FontSize="12" Foreground="#9E9E9E" />
+                                            </StackPanel>
+                                            <TextBlock Grid.Column="1" Text="{Binding TotalAmount, StringFormat={}{0:C}}" FontWeight="Bold" Foreground="#66BD76" VerticalAlignment="Center"/>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Grid>
+                </materialDesign:Card>
+
+                <!-- Top Items -->
+                <materialDesign:Card Grid.Row="2" Padding="24" UniformCornerRadius="12" Background="White" materialDesign:ElevationAssist.Elevation="Dp1">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Top Items" FontSize="18" FontWeight="Bold" Foreground="#212121" Margin="0,0,0,16"/>
+                        <ItemsControl Grid.Row="1" ItemsSource="{Binding TopItems}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border BorderThickness="0,0,0,1" BorderBrush="#EEEEEE" Padding="0,12">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <Border Width="40" Height="40" CornerRadius="8" Background="#F5F5F5" Margin="0,0,12,0">
+                                                <materialDesign:PackIcon Kind="{Binding IconName}" Width="24" Height="24" Foreground="#757575" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                                <TextBlock Text="{Binding Name}" FontWeight="SemiBold" Foreground="#424242" />
+                                                <TextBlock Text="Item" FontSize="12" Foreground="#9E9E9E" />
+                                            </StackPanel>
+                                            <TextBlock Grid.Column="2" Text="{Binding UnitsSold, StringFormat={}{0} sold}" FontWeight="Bold" Foreground="#2196F3" VerticalAlignment="Center"/>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Grid>
+                </materialDesign:Card>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

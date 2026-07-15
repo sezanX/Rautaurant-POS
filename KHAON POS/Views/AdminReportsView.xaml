@@ -1,0 +1,50 @@
+<UserControl x:Class="RestaurantPOS.Views.AdminReportsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+    <Grid Margin="32">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Transaction Reports" FontSize="28" FontWeight="Bold" Foreground="#212121" Margin="0,0,0,24" />
+
+        <materialDesign:Card Grid.Row="1" Padding="16" UniformCornerRadius="8" Background="White">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                
+                <Grid Margin="0,0,0,16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    
+                    <StackPanel Grid.Column="0" Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="ReceiptText" Width="24" Height="24" Foreground="#FF9800" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                        <TextBlock Text="Recent Orders" FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center" Foreground="#212121"/>
+                    </StackPanel>
+                    <Button Grid.Column="1" Command="{Binding RefreshCommand}" Style="{StaticResource MaterialDesignIconForegroundButton}" HorizontalAlignment="Right">
+                        <materialDesign:PackIcon Kind="Refresh" Width="24" Height="24"/>
+                    </Button>
+                </Grid>
+
+                <DataGrid Grid.Row="1" ItemsSource="{Binding RecentOrders}" 
+                          AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True"
+                          materialDesign:DataGridAssist.CellPadding="16" materialDesign:DataGridAssist.ColumnHeaderPadding="16">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Order ID" Binding="{Binding Id}" />
+                        <DataGridTextColumn Header="Date" Binding="{Binding OrderDate, StringFormat={}{0:MMM dd, yyyy HH:mm}}" />
+                        <DataGridTextColumn Header="Cashier" Binding="{Binding User.Username}" />
+                        <DataGridTextColumn Header="Table" Binding="{Binding Table.TableNumber}" />
+                        <DataGridTextColumn Header="Status" Binding="{Binding Status}" />
+                        <DataGridTextColumn Header="Total Amount" Binding="{Binding TotalAmount, StringFormat={}{0:C}}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </materialDesign:Card>
+    </Grid>
+</UserControl>

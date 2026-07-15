@@ -1,0 +1,90 @@
+using System;
+using System.Windows.Input;
+
+namespace RestaurantPOS.ViewModels;
+
+public class MainViewModel : BaseViewModel
+{
+    private BaseViewModel _currentViewModel;
+    private readonly IServiceProvider _serviceProvider;
+
+    public BaseViewModel CurrentViewModel
+    {
+        get => _currentViewModel;
+        set
+        {
+            if (SetProperty(ref _currentViewModel, value))
+            {
+                OnPropertyChanged(nameof(IsLoggedIn));
+            }
+        }
+    }
+
+    public bool IsLoggedIn => CurrentViewModel is not LoginViewModel;
+
+    public ICommand NavigateCommand { get; }
+
+    public DateTime CurrentDate => DateTime.Now;
+    public DateTime CurrentTime => DateTime.Now;
+
+    private readonly System.Windows.Threading.DispatcherTimer _timer;
+
+    public MainViewModel(IServiceProvider serviceProvider)
+    {
+        _serviceProvider = serviceProvider;
+        _currentViewModel = (BaseViewModel)_serviceProvider.GetService(typeof(LoginViewModel))!;
+        
+        NavigateCommand = new RelayCommand<string>(Navigate);
+
+        // Subscribe to a static login event to change to POS view on success
+        LoginViewModel.LoginSuccessful += OnLoginSuccessful;
+
+        _timer = new System.Windows.Threading.DispatcherTimer
+        {
+            Interval = TimeSpan.FromSeconds(1)
+        };
+        _timer.Tick += (s, e) =>
+        {
+            OnPropertyChanged(nameof(CurrentDate));
+            OnPropertyChanged(nameof(CurrentTime));
+        };
+        _timer.Start();
+    }
+
+    private void Navigate(string? viewName)
+    {
+        if (string.IsNullOrEmpty(viewName)) return;
+
+        switch (viewName)
+        {
+            case "POS":
+                CurrentViewModel = (BaseViewModel)_serviceProvider.GetService(typeof(PosViewModel))!;
+                break;
+            case "Kitchen":
+                CurrentViewModel = (BaseViewModel)_serviceProvider.GetService(typeof(KitchenViewModel))!;
+                break;
+            case "Dashboard":
+                CurrentViewModel = (BaseViewModel)_serviceProvider.GetService(typeof(DashboardViewModel))!;
+                break;
+            case "Logout":
+                CurrentViewModel = (BaseViewModel)_serviceProvider.GetService(typeof(LoginViewModel))!;
+                break;
+        }
+    }
+
+    private void OnLoginSuccessful(object? sender, string role)
+    {
+        if (role == "Kitchen")
+        {
+            Navigate("Kitchen");
+        }
+        else if (role == "Admin")
+        {
+            Navigate("Dashboard");
+        }
+        else
+        {
+            Navigate("POS");
+        }
+    }
+}
