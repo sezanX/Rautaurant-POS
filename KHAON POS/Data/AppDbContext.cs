@@ -26,7 +26,7 @@ public class AppDbContext : DbContext
     {
         if (!optionsBuilder.IsConfigured)
         {
-            optionsBuilder.UseNpgsql("postgresql://neondb_owner:npg_QJ9rtifFqpD0@ep-lively-poetry-azpra9fn.c-3.ap-southeast-1.aws.neon.tech/neondb?sslmode=require");
+            optionsBuilder.UseNpgsql("Host=ep-lively-poetry-azpra9fn.c-3.ap-southeast-1.aws.neon.tech;Database=neondb;Username=neondb_owner;Password=npg_QJ9rtifFqpD0;Ssl Mode=Require;Trust Server Certificate=true;");
         }
     }
 

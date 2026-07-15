@@ -3,6 +3,7 @@ using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
 using RestaurantPOS.Data;
 using RestaurantPOS.Services;
 using RestaurantPOS.ViewModels;
@@ -16,6 +17,8 @@ public partial class App : Application
 
     public App()
     {
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
         _host = Host.CreateDefaultBuilder()
             .ConfigureServices((context, services) =>
             {
@@ -54,6 +57,11 @@ public partial class App : Application
 
     private void OnStartup(object sender, StartupEventArgs e)
     {
+        this.DispatcherUnhandledException += (s, args) => 
+        {
+            System.IO.File.WriteAllText("crash.log", args.Exception.ToString());
+        };
+        
         try
         {
             _host.Start();
@@ -62,7 +70,7 @@ public partial class App : Application
             using (var scope = _host.Services.CreateScope())
             {
                 var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-                dbContext.Database.EnsureCreated();
+                dbContext.Database.Migrate();
             }
 
             var mainWindow = _host.Services.GetRequiredService<MainWindow>();

@@ -144,20 +144,32 @@ public class ReportingService : IReportingService
 
     public async Task<System.Collections.Generic.List<RestaurantPOS.Data.Models.TopItemDTO>> GetTopItemsAsync(int count = 5)
     {
-        var topItems = await _context.OrderItems
-            .Include(oi => oi.MenuItem)
-            .ThenInclude(m => m!.Category)
-            .GroupBy(oi => oi.MenuItem)
-            .Select(g => new RestaurantPOS.Data.Models.TopItemDTO
+        var groupedData = await _context.OrderItems
+            .GroupBy(oi => oi.MenuItemId)
+            .Select(g => new 
             {
-                Name = g.Key != null ? g.Key.Name : "Unknown",
-                IconName = g.Key != null && g.Key.Category != null ? g.Key.Category.IconName : "Food",
+                MenuItemId = g.Key,
                 UnitsSold = g.Sum(oi => oi.Quantity)
             })
-            .OrderByDescending(dto => dto.UnitsSold)
+            .OrderByDescending(x => x.UnitsSold)
             .Take(count)
             .ToListAsync();
 
+        var topItems = new System.Collections.Generic.List<RestaurantPOS.Data.Models.TopItemDTO>();
+        foreach(var data in groupedData) 
+        {
+             var menuItem = await _context.MenuItems
+                 .Include(m => m.Category)
+                 .FirstOrDefaultAsync(m => m.Id == data.MenuItemId);
+                 
+             topItems.Add(new RestaurantPOS.Data.Models.TopItemDTO
+             {
+                 Name = menuItem?.Name ?? "Unknown",
+                 IconName = menuItem?.Category?.IconName ?? "Food",
+                 UnitsSold = data.UnitsSold
+             });
+        }
+        
         return topItems;
     }
 }
