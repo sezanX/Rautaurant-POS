@@ -188,3 +188,10 @@ C:\Users\Computer Hospital\Desktop\Github\SD-5\Rautaurant POS\obj\Debug\net8.0-w
 C:\Users\Computer Hospital\Desktop\Github\SD-5\Rautaurant POS\obj\Debug\net8.0-windows\Views\AdminInventoryView.g.cs
 C:\Users\Computer Hospital\Desktop\Github\SD-5\Rautaurant POS\bin\Debug\net8.0-windows\Npgsql.dll
 C:\Users\Computer Hospital\Desktop\Github\SD-5\Rautaurant POS\bin\Debug\net8.0-windows\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+C:\Users\Computer Hospital\Desktop\Github\SD-5\Rautaurant POS\bin\Debug\net8.0-windows\Serilog.dll
+C:\Users\Computer Hospital\Desktop\Github\SD-5\Rautaurant POS\bin\Debug\net8.0-windows\Serilog.Extensions.Logging.dll
+C:\Users\Computer Hospital\Desktop\Github\SD-5\Rautaurant POS\bin\Debug\net8.0-windows\Serilog.Extensions.Logging.File.dll
+C:\Users\Computer Hospital\Desktop\Github\SD-5\Rautaurant POS\bin\Debug\net8.0-windows\Serilog.Formatting.Compact.dll
+C:\Users\Computer Hospital\Desktop\Github\SD-5\Rautaurant POS\bin\Debug\net8.0-windows\Serilog.Sinks.Async.dll
+C:\Users\Computer Hospital\Desktop\Github\SD-5\Rautaurant POS\bin\Debug\net8.0-windows\Serilog.Sinks.File.dll
+C:\Users\Computer Hospital\Desktop\Github\SD-5\Rautaurant POS\bin\Debug\net8.0-windows\Serilog.Sinks.RollingFile.dll

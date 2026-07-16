@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Windows.Input;
 using RestaurantPOS.Data;
+using RestaurantPOS.Data.Entities;
 
 namespace RestaurantPOS.ViewModels;
 
@@ -57,6 +58,7 @@ public class LoginViewModel : BaseViewModel
     public ICommand BackCommand { get; }
 
     public static event EventHandler<string>? LoginSuccessful;
+    public static User? CurrentUser { get; private set; }
 
     public LoginViewModel(AppDbContext context)
     {
@@ -98,6 +100,7 @@ public class LoginViewModel : BaseViewModel
         var user = _context.Users.FirstOrDefault(u => u.Username == trimmedUsername && u.PasswordHash == trimmedPassword && u.Role == SelectedRole);
         if (user != null)
         {
+            CurrentUser = user;
             ErrorMessage = string.Empty;
             LoginSuccessful?.Invoke(this, user.Role);
             

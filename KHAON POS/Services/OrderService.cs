@@ -191,6 +191,17 @@ public class OrderService : IOrderService
         {
             order.Status = "Pending";
             order.EstimatedCompletionTime = DateTime.Now.AddMinutes(estimatedTimeMinutes);
+
+            // Automatically process payment since this is a prepaid system
+            var payment = new Payment
+            {
+                OrderId = orderId,
+                AmountPaid = order.TotalAmount,
+                PaymentMethod = "Cash",
+                PaymentDate = DateTime.Now
+            };
+            _context.Payments.Add(payment);
+
             await _context.SaveChangesAsync();
         }
     }

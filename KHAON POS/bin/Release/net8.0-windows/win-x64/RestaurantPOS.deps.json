@@ -11,13 +11,13 @@
         "dependencies": {
           "LiveChartsCore.SkiaSharpView.WPF": "2.0.0-rc2",
           "MaterialDesignThemes": "5.0.0",
-          "Microsoft.EntityFrameworkCore.Sqlite": "8.0.7",
           "Microsoft.EntityFrameworkCore.Tools": "8.0.7",
           "Microsoft.Extensions.DependencyInjection": "8.0.0",
           "Microsoft.Extensions.Hosting": "8.0.0",
           "Microsoft.Extensions.Logging": "8.0.0",
-          "Microsoft.NET.ILLink.Tasks": "8.0.29",
+          "Npgsql.EntityFrameworkCore.PostgreSQL": "8.0.4",
           "QuestPDF": "2024.7.0",
+          "Serilog.Extensions.Logging.File": "3.0.0",
           "ZXing.Net": "0.16.9",
           "runtimepack.Microsoft.NETCore.App.Runtime.win-x64": "8.0.29",
           "runtimepack.Microsoft.WindowsDesktop.App.Runtime.win-x64": "8.0.29"
@@ -973,8 +973,7 @@
       },
       "HarfBuzzSharp/7.3.0": {
         "dependencies": {
-          "HarfBuzzSharp.NativeAssets.Win32": "7.3.0",
-          "HarfBuzzSharp.NativeAssets.macOS": "7.3.0"
+          "HarfBuzzSharp.NativeAssets.Win32": "7.3.0"
         },
         "runtime": {
           "lib/net6.0/HarfBuzzSharp.dll": {
@@ -983,7 +982,6 @@
           }
         }
       },
-      "HarfBuzzSharp.NativeAssets.macOS/7.3.0": {},
       "HarfBuzzSharp.NativeAssets.Win32/7.3.0": {
         "native": {
           "runtimes/win-x64/native/libHarfBuzzSharp.dll": {
@@ -1060,15 +1058,7 @@
           }
         }
       },
-      "Microsoft.CodeAnalysis.Analyzers/3.3.3": {},
       "Microsoft.CodeAnalysis.Common/4.5.0": {
-        "dependencies": {
-          "Microsoft.CodeAnalysis.Analyzers": "3.3.3",
-          "System.Collections.Immutable": "6.0.0",
-          "System.Reflection.Metadata": "6.0.1",
-          "System.Runtime.CompilerServices.Unsafe": "6.0.0",
-          "System.Text.Encoding.CodePages": "6.0.0"
-        },
         "runtime": {
           "lib/netcoreapp3.1/Microsoft.CodeAnalysis.dll": {
             "assemblyVersion": "4.5.0.0",
@@ -1230,8 +1220,7 @@
           "Microsoft.Bcl.AsyncInterfaces": "6.0.0",
           "Microsoft.CodeAnalysis.Common": "4.5.0",
           "System.Composition": "6.0.0",
-          "System.IO.Pipelines": "6.0.3",
-          "System.Threading.Channels": "6.0.0"
+          "System.IO.Pipelines": "6.0.3"
         },
         "runtime": {
           "lib/netcoreapp3.1/Microsoft.CodeAnalysis.Workspaces.dll": {
@@ -1281,21 +1270,9 @@
           }
         }
       },
-      "Microsoft.Data.Sqlite.Core/8.0.7": {
-        "dependencies": {
-          "SQLitePCLRaw.core": "2.1.6"
-        },
-        "runtime": {
-          "lib/net8.0/Microsoft.Data.Sqlite.dll": {
-            "assemblyVersion": "8.0.7.0",
-            "fileVersion": "8.0.724.31404"
-          }
-        }
-      },
       "Microsoft.EntityFrameworkCore/8.0.7": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore.Abstractions": "8.0.7",
-          "Microsoft.EntityFrameworkCore.Analyzers": "8.0.7",
           "Microsoft.Extensions.Caching.Memory": "8.0.0",
           "Microsoft.Extensions.Logging": "8.0.0"
         },
@@ -1314,7 +1291,6 @@
           }
         }
       },
-      "Microsoft.EntityFrameworkCore.Analyzers/8.0.7": {},
       "Microsoft.EntityFrameworkCore.Design/8.0.7": {
         "dependencies": {
           "Humanizer.Core": "2.14.1",
@@ -1337,25 +1313,6 @@
         },
         "runtime": {
           "lib/net8.0/Microsoft.EntityFrameworkCore.Relational.dll": {
-            "assemblyVersion": "8.0.7.0",
-            "fileVersion": "8.0.724.31404"
-          }
-        }
-      },
-      "Microsoft.EntityFrameworkCore.Sqlite/8.0.7": {
-        "dependencies": {
-          "Microsoft.EntityFrameworkCore.Sqlite.Core": "8.0.7",
-          "SQLitePCLRaw.bundle_e_sqlite3": "2.1.6"
-        }
-      },
-      "Microsoft.EntityFrameworkCore.Sqlite.Core/8.0.7": {
-        "dependencies": {
-          "Microsoft.Data.Sqlite.Core": "8.0.7",
-          "Microsoft.EntityFrameworkCore.Relational": "8.0.7",
-          "Microsoft.Extensions.DependencyModel": "8.0.1"
-        },
-        "runtime": {
-          "lib/net8.0/Microsoft.EntityFrameworkCore.Sqlite.dll": {
             "assemblyVersion": "8.0.7.0",
             "fileVersion": "8.0.724.31404"
           }
@@ -1470,8 +1427,7 @@
           "Microsoft.Extensions.Configuration": "8.0.0",
           "Microsoft.Extensions.Configuration.Abstractions": "8.0.0",
           "Microsoft.Extensions.Configuration.FileExtensions": "8.0.0",
-          "Microsoft.Extensions.FileProviders.Abstractions": "8.0.0",
-          "System.Text.Json": "8.0.4"
+          "Microsoft.Extensions.FileProviders.Abstractions": "8.0.0"
         },
         "runtime": {
           "lib/net8.0/Microsoft.Extensions.Configuration.Json.dll": {
@@ -1514,10 +1470,6 @@
         }
       },
       "Microsoft.Extensions.DependencyModel/8.0.1": {
-        "dependencies": {
-          "System.Text.Encodings.Web": "8.0.0",
-          "System.Text.Json": "8.0.4"
-        },
         "runtime": {
           "lib/net8.0/Microsoft.Extensions.DependencyModel.dll": {
             "assemblyVersion": "8.0.0.1",
@@ -1541,8 +1493,7 @@
       "Microsoft.Extensions.Diagnostics.Abstractions/8.0.0": {
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.0",
-          "Microsoft.Extensions.Options": "8.0.0",
-          "System.Diagnostics.DiagnosticSource": "8.0.0"
+          "Microsoft.Extensions.Options": "8.0.0"
         },
         "runtime": {
           "lib/net8.0/Microsoft.Extensions.Diagnostics.Abstractions.dll": {
@@ -1678,8 +1629,7 @@
           "Microsoft.Extensions.Logging": "8.0.0",
           "Microsoft.Extensions.Logging.Abstractions": "8.0.0",
           "Microsoft.Extensions.Logging.Configuration": "8.0.0",
-          "Microsoft.Extensions.Options": "8.0.0",
-          "System.Text.Json": "8.0.4"
+          "Microsoft.Extensions.Options": "8.0.0"
         },
         "runtime": {
           "lib/net8.0/Microsoft.Extensions.Logging.Console.dll": {
@@ -1706,8 +1656,7 @@
           "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.0",
           "Microsoft.Extensions.Logging": "8.0.0",
           "Microsoft.Extensions.Logging.Abstractions": "8.0.0",
-          "Microsoft.Extensions.Options": "8.0.0",
-          "System.Diagnostics.EventLog": "8.0.0"
+          "Microsoft.Extensions.Options": "8.0.0"
         },
         "runtime": {
           "lib/net8.0/Microsoft.Extensions.Logging.EventLog.dll": {
@@ -1722,8 +1671,7 @@
           "Microsoft.Extensions.Logging": "8.0.0",
           "Microsoft.Extensions.Logging.Abstractions": "8.0.0",
           "Microsoft.Extensions.Options": "8.0.0",
-          "Microsoft.Extensions.Primitives": "8.0.0",
-          "System.Text.Json": "8.0.4"
+          "Microsoft.Extensions.Primitives": "8.0.0"
         },
         "runtime": {
           "lib/net8.0/Microsoft.Extensions.Logging.EventSource.dll": {
@@ -1767,13 +1715,6 @@
           }
         }
       },
-      "Microsoft.NET.ILLink.Tasks/8.0.29": {},
-      "Microsoft.NETCore.Platforms/3.1.9": {},
-      "Microsoft.Win32.SystemEvents/4.7.0": {
-        "dependencies": {
-          "Microsoft.NETCore.Platforms": "3.1.9"
-        }
-      },
       "Microsoft.Xaml.Behaviors.Wpf/1.1.39": {
         "runtime": {
           "lib/net5.0-windows7.0/Microsoft.Xaml.Behaviors.dll": {
@@ -1783,13 +1724,35 @@
         }
       },
       "Mono.TextTemplating/2.2.1": {
-        "dependencies": {
-          "System.CodeDom": "4.4.0"
-        },
         "runtime": {
           "lib/netstandard2.0/Mono.TextTemplating.dll": {
             "assemblyVersion": "2.2.0.0",
             "fileVersion": "2.2.1.1"
+          }
+        }
+      },
+      "Npgsql/8.0.3": {
+        "dependencies": {
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.0"
+        },
+        "runtime": {
+          "lib/net8.0/Npgsql.dll": {
+            "assemblyVersion": "8.0.3.0",
+            "fileVersion": "8.0.3.0"
+          }
+        }
+      },
+      "Npgsql.EntityFrameworkCore.PostgreSQL/8.0.4": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "8.0.7",
+          "Microsoft.EntityFrameworkCore.Abstractions": "8.0.7",
+          "Microsoft.EntityFrameworkCore.Relational": "8.0.7",
+          "Npgsql": "8.0.3"
+        },
+        "runtime": {
+          "lib/net8.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll": {
+            "assemblyVersion": "8.0.4.0",
+            "fileVersion": "8.0.4.0"
           }
         }
       },
@@ -1806,10 +1769,90 @@
           }
         }
       },
+      "Serilog/2.10.0": {
+        "runtime": {
+          "lib/netstandard2.1/Serilog.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.10.0.0"
+          }
+        }
+      },
+      "Serilog.Extensions.Logging/3.1.0": {
+        "dependencies": {
+          "Microsoft.Extensions.Logging": "8.0.0",
+          "Serilog": "2.10.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Serilog.Extensions.Logging.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "3.1.0.0"
+          }
+        }
+      },
+      "Serilog.Extensions.Logging.File/3.0.0": {
+        "dependencies": {
+          "Microsoft.Extensions.Configuration.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Configuration.Binder": "8.0.0",
+          "Serilog": "2.10.0",
+          "Serilog.Extensions.Logging": "3.1.0",
+          "Serilog.Formatting.Compact": "1.1.0",
+          "Serilog.Sinks.Async": "1.5.0",
+          "Serilog.Sinks.RollingFile": "3.3.0"
+        },
+        "runtime": {
+          "lib/net6.0/Serilog.Extensions.Logging.File.dll": {
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.0.0.0"
+          }
+        }
+      },
+      "Serilog.Formatting.Compact/1.1.0": {
+        "dependencies": {
+          "Serilog": "2.10.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Serilog.Formatting.Compact.dll": {
+            "assemblyVersion": "1.1.0.0",
+            "fileVersion": "1.1.0.0"
+          }
+        }
+      },
+      "Serilog.Sinks.Async/1.5.0": {
+        "dependencies": {
+          "Serilog": "2.10.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Serilog.Sinks.Async.dll": {
+            "assemblyVersion": "1.5.0.0",
+            "fileVersion": "1.5.0.0"
+          }
+        }
+      },
+      "Serilog.Sinks.File/3.2.0": {
+        "dependencies": {
+          "Serilog": "2.10.0"
+        },
+        "runtime": {
+          "lib/netstandard1.3/Serilog.Sinks.File.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "3.2.0.0"
+          }
+        }
+      },
+      "Serilog.Sinks.RollingFile/3.3.0": {
+        "dependencies": {
+          "Serilog.Sinks.File": "3.2.0"
+        },
+        "runtime": {
+          "lib/netstandard1.3/Serilog.Sinks.RollingFile.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "3.3.0.0"
+          }
+        }
+      },
       "SkiaSharp/2.88.6": {
         "dependencies": {
-          "SkiaSharp.NativeAssets.Win32": "2.88.6",
-          "SkiaSharp.NativeAssets.macOS": "2.88.6"
+          "SkiaSharp.NativeAssets.Win32": "2.88.6"
         },
         "runtime": {
           "lib/net6.0/SkiaSharp.dll": {
@@ -1830,7 +1873,6 @@
           }
         }
       },
-      "SkiaSharp.NativeAssets.macOS/2.88.6": {},
       "SkiaSharp.NativeAssets.Win32/2.88.6": {
         "native": {
           "runtimes/win-x64/native/libSkiaSharp.dll": {
@@ -1840,8 +1882,7 @@
       },
       "SkiaSharp.Views.Desktop.Common/2.88.6": {
         "dependencies": {
-          "SkiaSharp": "2.88.6",
-          "System.Drawing.Common": "4.7.3"
+          "SkiaSharp": "2.88.6"
         },
         "runtime": {
           "lib/netcoreapp3.1/SkiaSharp.Views.Desktop.Common.dll": {
@@ -1860,53 +1901,6 @@
             "assemblyVersion": "2.88.0.0",
             "fileVersion": "2.88.6.0"
           }
-        }
-      },
-      "SQLitePCLRaw.bundle_e_sqlite3/2.1.6": {
-        "dependencies": {
-          "SQLitePCLRaw.lib.e_sqlite3": "2.1.6",
-          "SQLitePCLRaw.provider.e_sqlite3": "2.1.6"
-        },
-        "runtime": {
-          "lib/netstandard2.0/SQLitePCLRaw.batteries_v2.dll": {
-            "assemblyVersion": "2.1.6.2060",
-            "fileVersion": "2.1.6.2060"
-          }
-        }
-      },
-      "SQLitePCLRaw.core/2.1.6": {
-        "dependencies": {
-          "System.Memory": "4.5.3"
-        },
-        "runtime": {
-          "lib/netstandard2.0/SQLitePCLRaw.core.dll": {
-            "assemblyVersion": "2.1.6.2060",
-            "fileVersion": "2.1.6.2060"
-          }
-        }
-      },
-      "SQLitePCLRaw.lib.e_sqlite3/2.1.6": {
-        "native": {
-          "runtimes/win-x64/native/e_sqlite3.dll": {
-            "fileVersion": "0.0.0.0"
-          }
-        }
-      },
-      "SQLitePCLRaw.provider.e_sqlite3/2.1.6": {
-        "dependencies": {
-          "SQLitePCLRaw.core": "2.1.6"
-        },
-        "runtime": {
-          "lib/net6.0-windows7.0/SQLitePCLRaw.provider.e_sqlite3.dll": {
-            "assemblyVersion": "2.1.6.2060",
-            "fileVersion": "2.1.6.2060"
-          }
-        }
-      },
-      "System.CodeDom/4.4.0": {},
-      "System.Collections.Immutable/6.0.0": {
-        "dependencies": {
-          "System.Runtime.CompilerServices.Unsafe": "6.0.0"
         }
       },
       "System.Composition/6.0.0": {
@@ -1969,14 +1963,6 @@
           }
         }
       },
-      "System.Diagnostics.DiagnosticSource/8.0.0": {},
-      "System.Diagnostics.EventLog/8.0.0": {},
-      "System.Drawing.Common/4.7.3": {
-        "dependencies": {
-          "Microsoft.NETCore.Platforms": "3.1.9",
-          "Microsoft.Win32.SystemEvents": "4.7.0"
-        }
-      },
       "System.IO.Pipelines/6.0.3": {
         "runtime": {
           "lib/net6.0/System.IO.Pipelines.dll": {
@@ -1985,25 +1971,6 @@
           }
         }
       },
-      "System.Memory/4.5.3": {},
-      "System.Reflection.Metadata/6.0.1": {
-        "dependencies": {
-          "System.Collections.Immutable": "6.0.0"
-        }
-      },
-      "System.Runtime.CompilerServices.Unsafe/6.0.0": {},
-      "System.Text.Encoding.CodePages/6.0.0": {
-        "dependencies": {
-          "System.Runtime.CompilerServices.Unsafe": "6.0.0"
-        }
-      },
-      "System.Text.Encodings.Web/8.0.0": {},
-      "System.Text.Json/8.0.4": {
-        "dependencies": {
-          "System.Text.Encodings.Web": "8.0.0"
-        }
-      },
-      "System.Threading.Channels/6.0.0": {},
       "ZXing.Net/0.16.9": {
         "runtime": {
           "lib/net7.0/zxing.dll": {
@@ -2036,13 +2003,6 @@
       "sha512": "sha512-OrQLaxtZMIeS2yHSUtsKzeSdk9CPaCpyJ/JCs+wLfRGatjE8MLUS6LGj6vdbGRxqRavcXs79C9O3oWe6FJR0JQ==",
       "path": "harfbuzzsharp/7.3.0",
       "hashPath": "harfbuzzsharp.7.3.0.nupkg.sha512"
-    },
-    "HarfBuzzSharp.NativeAssets.macOS/7.3.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-LWcFJ39j+dN0KK8c/GJJZPPZPL9TqT2FA42/LRGqzUMmSm5LYbINOMnPvUr7RuLR6RFSmKIrgrlgObR8G5ho2A==",
-      "path": "harfbuzzsharp.nativeassets.macos/7.3.0",
-      "hashPath": "harfbuzzsharp.nativeassets.macos.7.3.0.nupkg.sha512"
     },
     "HarfBuzzSharp.NativeAssets.Win32/7.3.0": {
       "type": "package",
@@ -2100,13 +2060,6 @@
       "path": "microsoft.bcl.asyncinterfaces/6.0.0",
       "hashPath": "microsoft.bcl.asyncinterfaces.6.0.0.nupkg.sha512"
     },
-    "Microsoft.CodeAnalysis.Analyzers/3.3.3": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-j/rOZtLMVJjrfLRlAMckJLPW/1rze9MT1yfWqSIbUPGRu1m1P0fuo9PmqapwsmePfGB5PJrudQLvmUOAMF0DqQ==",
-      "path": "microsoft.codeanalysis.analyzers/3.3.3",
-      "hashPath": "microsoft.codeanalysis.analyzers.3.3.3.nupkg.sha512"
-    },
     "Microsoft.CodeAnalysis.Common/4.5.0": {
       "type": "package",
       "serviceable": true,
@@ -2135,13 +2088,6 @@
       "path": "microsoft.codeanalysis.workspaces.common/4.5.0",
       "hashPath": "microsoft.codeanalysis.workspaces.common.4.5.0.nupkg.sha512"
     },
-    "Microsoft.Data.Sqlite.Core/8.0.7": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-3H5ht15zKtw9ma9v092kI0gjV+P45EbJPsmnkk/DNVz/yDPPVYSyCGytSatN2dZQ19ZazLg3gUzoBdsoO5V5JQ==",
-      "path": "microsoft.data.sqlite.core/8.0.7",
-      "hashPath": "microsoft.data.sqlite.core.8.0.7.nupkg.sha512"
-    },
     "Microsoft.EntityFrameworkCore/8.0.7": {
       "type": "package",
       "serviceable": true,
@@ -2156,13 +2102,6 @@
       "path": "microsoft.entityframeworkcore.abstractions/8.0.7",
       "hashPath": "microsoft.entityframeworkcore.abstractions.8.0.7.nupkg.sha512"
     },
-    "Microsoft.EntityFrameworkCore.Analyzers/8.0.7": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-nerD0vEOYJVhVapamRVH9DrUYbDNMJ5bPfWze4SibDDaDaekzgwQqBht97/tV+8pgdKoPAXmtiJsB+lDajwVrQ==",
-      "path": "microsoft.entityframeworkcore.analyzers/8.0.7",
-      "hashPath": "microsoft.entityframeworkcore.analyzers.8.0.7.nupkg.sha512"
-    },
     "Microsoft.EntityFrameworkCore.Design/8.0.7": {
       "type": "package",
       "serviceable": true,
@@ -2176,20 +2115,6 @@
       "sha512": "sha512-Hn86yScnW+VXb+A2LGrVGkGmjsQ9KLWR0T8GQBEcESWk8u9JYhBiRtdxz76Aq0ir82Ei48sLEZTN4VE0sJ3yIg==",
       "path": "microsoft.entityframeworkcore.relational/8.0.7",
       "hashPath": "microsoft.entityframeworkcore.relational.8.0.7.nupkg.sha512"
-    },
-    "Microsoft.EntityFrameworkCore.Sqlite/8.0.7": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-odTJtx/J7/EyPtg+pGfDbuEZJaODH+yG7R4mkmnhrHYwJPtzSzPue1xl4jBjxwEVVWd/qdBP5z/E+8dAnW9hGQ==",
-      "path": "microsoft.entityframeworkcore.sqlite/8.0.7",
-      "hashPath": "microsoft.entityframeworkcore.sqlite.8.0.7.nupkg.sha512"
-    },
-    "Microsoft.EntityFrameworkCore.Sqlite.Core/8.0.7": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-pqjQey+EEmsLwTv4vGeSGFw4o6nGLFdEM3ii2FCjfb0YZd3+tqX4O5jNZE/2+Y9rN4QQcbsb/8Cf6NIoyuKZng==",
-      "path": "microsoft.entityframeworkcore.sqlite.core/8.0.7",
-      "hashPath": "microsoft.entityframeworkcore.sqlite.core.8.0.7.nupkg.sha512"
     },
     "Microsoft.EntityFrameworkCore.Tools/8.0.7": {
       "type": "package",
@@ -2408,27 +2333,6 @@
       "path": "microsoft.extensions.primitives/8.0.0",
       "hashPath": "microsoft.extensions.primitives.8.0.0.nupkg.sha512"
     },
-    "Microsoft.NET.ILLink.Tasks/8.0.29": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-HSBTfrkIZijz8z3ybLRKB7E8rHk4QQufFwpHa9fc5CMIgRhRzdn4mBGmlyXZqaueiMPtuJcnjresGvSTfaW8Mg==",
-      "path": "microsoft.net.illink.tasks/8.0.29",
-      "hashPath": "microsoft.net.illink.tasks.8.0.29.nupkg.sha512"
-    },
-    "Microsoft.NETCore.Platforms/3.1.9": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-e+/BrhryHoMojWlbcPJAFcShpk3JYvsMfrmoM26dnvHARWR6vtmGbfHppZcANVqf7DUBDIRxlZXcWg7v/9e1TQ==",
-      "path": "microsoft.netcore.platforms/3.1.9",
-      "hashPath": "microsoft.netcore.platforms.3.1.9.nupkg.sha512"
-    },
-    "Microsoft.Win32.SystemEvents/4.7.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-mtVirZr++rq+XCDITMUdnETD59XoeMxSpLRIII7JRI6Yj0LEDiO1pPn0ktlnIj12Ix8bfvQqQDMMIF9wC98oCA==",
-      "path": "microsoft.win32.systemevents/4.7.0",
-      "hashPath": "microsoft.win32.systemevents.4.7.0.nupkg.sha512"
-    },
     "Microsoft.Xaml.Behaviors.Wpf/1.1.39": {
       "type": "package",
       "serviceable": true,
@@ -2443,12 +2347,75 @@
       "path": "mono.texttemplating/2.2.1",
       "hashPath": "mono.texttemplating.2.2.1.nupkg.sha512"
     },
+    "Npgsql/8.0.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-6WEmzsQJCZAlUG1pThKg/RmeF6V+I0DmBBBE/8YzpRtEzhyZzKcK7ulMANDm5CkxrALBEC8H+5plxHWtIL7xnA==",
+      "path": "npgsql/8.0.3",
+      "hashPath": "npgsql.8.0.3.nupkg.sha512"
+    },
+    "Npgsql.EntityFrameworkCore.PostgreSQL/8.0.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-/hHd9MqTRVDgIpsToCcxMDxZqla0HAQACiITkq1+L9J2hmHKV6lBAPlauF+dlNSfHpus7rrljWx4nAanKD6qAw==",
+      "path": "npgsql.entityframeworkcore.postgresql/8.0.4",
+      "hashPath": "npgsql.entityframeworkcore.postgresql.8.0.4.nupkg.sha512"
+    },
     "QuestPDF/2024.7.0": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-eZCzZYYqdZ6V6JvOSaCm8RpGDmqW+au8XMJQGuzQ8uMzSc8N8YEJG4R8qx7rwFpDJpsuLxUiBHNd8Xz4VFSksw==",
       "path": "questpdf/2024.7.0",
       "hashPath": "questpdf.2024.7.0.nupkg.sha512"
+    },
+    "Serilog/2.10.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-+QX0hmf37a0/OZLxM3wL7V6/ADvC1XihXN4Kq/p6d8lCPfgkRdiuhbWlMaFjR9Av0dy5F0+MBeDmDdRZN/YwQA==",
+      "path": "serilog/2.10.0",
+      "hashPath": "serilog.2.10.0.nupkg.sha512"
+    },
+    "Serilog.Extensions.Logging/3.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-IWfem7wfrFbB3iw1OikqPFNPEzfayvDuN4WP7Ue1AVFskalMByeWk3QbtUXQR34SBkv1EbZ3AySHda/ErDgpcg==",
+      "path": "serilog.extensions.logging/3.1.0",
+      "hashPath": "serilog.extensions.logging.3.1.0.nupkg.sha512"
+    },
+    "Serilog.Extensions.Logging.File/3.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-bUYjMHn7NhpK+/8HDftG7+G5hpWzD49XTSvLoUFZGgappDa6FoseqFOsLrjLRjwe1zM+igH5mySFJv3ntb+qcg==",
+      "path": "serilog.extensions.logging.file/3.0.0",
+      "hashPath": "serilog.extensions.logging.file.3.0.0.nupkg.sha512"
+    },
+    "Serilog.Formatting.Compact/1.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-pNroKVjo+rDqlxNG5PXkRLpfSCuDOBY0ri6jp9PLe505ljqwhwZz8ospy2vWhQlFu5GkIesh3FcDs4n7sWZODA==",
+      "path": "serilog.formatting.compact/1.1.0",
+      "hashPath": "serilog.formatting.compact.1.1.0.nupkg.sha512"
+    },
+    "Serilog.Sinks.Async/1.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-csHYIqAwI4Gy9oAhXYRwxGrQEAtBg3Ep7WaCzsnA1cZuBZjVAU0n7hWaJhItjO7hbLHh/9gRVxALCUB4Dv+gZw==",
+      "path": "serilog.sinks.async/1.5.0",
+      "hashPath": "serilog.sinks.async.1.5.0.nupkg.sha512"
+    },
+    "Serilog.Sinks.File/3.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-VHbo68pMg5hwSWrzLEdZv5b/rYmIgHIRhd4d5rl8GnC5/a8Fr+RShT5kWyeJOXax1el6mNJ+dmHDOVgnNUQxaw==",
+      "path": "serilog.sinks.file/3.2.0",
+      "hashPath": "serilog.sinks.file.3.2.0.nupkg.sha512"
+    },
+    "Serilog.Sinks.RollingFile/3.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-2lT5X1r3GH4P0bRWJfhA7etGl8Q2Ipw9AACvtAHWRUSpYZ42NGVyHoVs2ALBZ/cAkkS+tA4jl80Zie144eLQPg==",
+      "path": "serilog.sinks.rollingfile/3.3.0",
+      "hashPath": "serilog.sinks.rollingfile.3.3.0.nupkg.sha512"
     },
     "SkiaSharp/2.88.6": {
       "type": "package",
@@ -2463,13 +2430,6 @@
       "sha512": "sha512-s5yZTHdqbXKiTL06ns6zW3asELfX60dEceA4ZdYmNlOkz/OyWDfdjHAuu4HGDA7Mxx5iaUEzDZgPkEe+OVr/jg==",
       "path": "skiasharp.harfbuzz/2.88.6",
       "hashPath": "skiasharp.harfbuzz.2.88.6.nupkg.sha512"
-    },
-    "SkiaSharp.NativeAssets.macOS/2.88.6": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-Sko9LFxRXSjb3OGh5/RxrVRXxYo48tr5NKuuSy6jB85GrYt8WRqVY1iLOLwtjPiVAt4cp+pyD4i30azanS64dw==",
-      "path": "skiasharp.nativeassets.macos/2.88.6",
-      "hashPath": "skiasharp.nativeassets.macos.2.88.6.nupkg.sha512"
     },
     "SkiaSharp.NativeAssets.Win32/2.88.6": {
       "type": "package",
@@ -2491,48 +2451,6 @@
       "sha512": "sha512-JQFZ8BeEg7Lv4uMMbgGnbq7GLi9w63mvL+tzkMzFYmXBEDuFibubWPQmYwOkEo5dlWee0Wn7K1SBhMb8EMFROg==",
       "path": "skiasharp.views.wpf/2.88.6",
       "hashPath": "skiasharp.views.wpf.2.88.6.nupkg.sha512"
-    },
-    "SQLitePCLRaw.bundle_e_sqlite3/2.1.6": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-BmAf6XWt4TqtowmiWe4/5rRot6GerAeklmOPfviOvwLoF5WwgxcJHAxZtySuyW9r9w+HLILnm8VfJFLCUJYW8A==",
-      "path": "sqlitepclraw.bundle_e_sqlite3/2.1.6",
-      "hashPath": "sqlitepclraw.bundle_e_sqlite3.2.1.6.nupkg.sha512"
-    },
-    "SQLitePCLRaw.core/2.1.6": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-wO6v9GeMx9CUngAet8hbO7xdm+M42p1XeJq47ogyRoYSvNSp0NGLI+MgC0bhrMk9C17MTVFlLiN6ylyExLCc5w==",
-      "path": "sqlitepclraw.core/2.1.6",
-      "hashPath": "sqlitepclraw.core.2.1.6.nupkg.sha512"
-    },
-    "SQLitePCLRaw.lib.e_sqlite3/2.1.6": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-2ObJJLkIUIxRpOUlZNGuD4rICpBnrBR5anjyfUFQep4hMOIeqW+XGQYzrNmHSVz5xSWZ3klSbh7sFR6UyDj68Q==",
-      "path": "sqlitepclraw.lib.e_sqlite3/2.1.6",
-      "hashPath": "sqlitepclraw.lib.e_sqlite3.2.1.6.nupkg.sha512"
-    },
-    "SQLitePCLRaw.provider.e_sqlite3/2.1.6": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-PQ2Oq3yepLY4P7ll145P3xtx2bX8xF4PzaKPRpw9jZlKvfe4LE/saAV82inND9usn1XRpmxXk7Lal3MTI+6CNg==",
-      "path": "sqlitepclraw.provider.e_sqlite3/2.1.6",
-      "hashPath": "sqlitepclraw.provider.e_sqlite3.2.1.6.nupkg.sha512"
-    },
-    "System.CodeDom/4.4.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-2sCCb7doXEwtYAbqzbF/8UAeDRMNmPaQbU2q50Psg1J9KzumyVVCgKQY8s53WIPTufNT0DpSe9QRvVjOzfDWBA==",
-      "path": "system.codedom/4.4.0",
-      "hashPath": "system.codedom.4.4.0.nupkg.sha512"
-    },
-    "System.Collections.Immutable/6.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-l4zZJ1WU2hqpQQHXz1rvC3etVZN+2DLmQMO79FhOTZHMn8tDRr+WU287sbomD0BETlmKDn0ygUgVy9k5xkkJdA==",
-      "path": "system.collections.immutable/6.0.0",
-      "hashPath": "system.collections.immutable.6.0.0.nupkg.sha512"
     },
     "System.Composition/6.0.0": {
       "type": "package",
@@ -2576,82 +2494,12 @@
       "path": "system.composition.typedparts/6.0.0",
       "hashPath": "system.composition.typedparts.6.0.0.nupkg.sha512"
     },
-    "System.Diagnostics.DiagnosticSource/8.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-c9xLpVz6PL9lp/djOWtk5KPDZq3cSYpmXoJQY524EOtuFl5z9ZtsotpsyrDW40U1DRnQSYvcPKEUV0X//u6gkQ==",
-      "path": "system.diagnostics.diagnosticsource/8.0.0",
-      "hashPath": "system.diagnostics.diagnosticsource.8.0.0.nupkg.sha512"
-    },
-    "System.Diagnostics.EventLog/8.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-fdYxcRjQqTTacKId/2IECojlDSFvp7LP5N78+0z/xH7v/Tuw5ZAxu23Y6PTCRinqyu2ePx+Gn1098NC6jM6d+A==",
-      "path": "system.diagnostics.eventlog/8.0.0",
-      "hashPath": "system.diagnostics.eventlog.8.0.0.nupkg.sha512"
-    },
-    "System.Drawing.Common/4.7.3": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-B3+wwhAeoUQ6KeshWSq3IRLQiMoqPEzSHzyVyxTI/EbYuqIp90lXrRISlip2AF+5tj74ycIVPpnRY4M424HahA==",
-      "path": "system.drawing.common/4.7.3",
-      "hashPath": "system.drawing.common.4.7.3.nupkg.sha512"
-    },
     "System.IO.Pipelines/6.0.3": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-ryTgF+iFkpGZY1vRQhfCzX0xTdlV3pyaTTqRu2ETbEv+HlV7O6y7hyQURnghNIXvctl5DuZ//Dpks6HdL/Txgw==",
       "path": "system.io.pipelines/6.0.3",
       "hashPath": "system.io.pipelines.6.0.3.nupkg.sha512"
-    },
-    "System.Memory/4.5.3": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-3oDzvc/zzetpTKWMShs1AADwZjQ/36HnsufHRPcOjyRAAMLDlu2iD33MBI2opxnezcVUtXyqDXXjoFMOU9c7SA==",
-      "path": "system.memory/4.5.3",
-      "hashPath": "system.memory.4.5.3.nupkg.sha512"
-    },
-    "System.Reflection.Metadata/6.0.1": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-III/lNMSn0ZRBuM9m5Cgbiho5j81u0FAEagFX5ta2DKbljZ3T0IpD8j+BIiHQPeKqJppWS9bGEp6JnKnWKze0g==",
-      "path": "system.reflection.metadata/6.0.1",
-      "hashPath": "system.reflection.metadata.6.0.1.nupkg.sha512"
-    },
-    "System.Runtime.CompilerServices.Unsafe/6.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-/iUeP3tq1S0XdNNoMz5C9twLSrM/TH+qElHkXWaPvuNOt+99G75NrV0OS2EqHx5wMN7popYjpc8oTjC1y16DLg==",
-      "path": "system.runtime.compilerservices.unsafe/6.0.0",
-      "hashPath": "system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
-    },
-    "System.Text.Encoding.CodePages/6.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-ZFCILZuOvtKPauZ/j/swhvw68ZRi9ATCfvGbk1QfydmcXBkIWecWKn/250UH7rahZ5OoDBaiAudJtPvLwzw85A==",
-      "path": "system.text.encoding.codepages/6.0.0",
-      "hashPath": "system.text.encoding.codepages.6.0.0.nupkg.sha512"
-    },
-    "System.Text.Encodings.Web/8.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-yev/k9GHAEGx2Rg3/tU6MQh4HGBXJs70y7j1LaM1i/ER9po+6nnQ6RRqTJn1E7Xu0fbIFK80Nh5EoODxrbxwBQ==",
-      "path": "system.text.encodings.web/8.0.0",
-      "hashPath": "system.text.encodings.web.8.0.0.nupkg.sha512"
-    },
-    "System.Text.Json/8.0.4": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-bAkhgDJ88XTsqczoxEMliSrpijKZHhbJQldhAmObj/RbrN3sU5dcokuXmWJWsdQAhiMJ9bTayWsL1C9fbbCRhw==",
-      "path": "system.text.json/8.0.4",
-      "hashPath": "system.text.json.8.0.4.nupkg.sha512"
-    },
-    "System.Threading.Channels/6.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-TY8/9+tI0mNaUMgntOxxaq2ndTkdXqLSxvPmas7XEqOlv9lQtB7wLjYGd756lOaO7Dvb5r/WXhluM+0Xe87v5Q==",
-      "path": "system.threading.channels/6.0.0",
-      "hashPath": "system.threading.channels.6.0.0.nupkg.sha512"
     },
     "ZXing.Net/0.16.9": {
       "type": "package",

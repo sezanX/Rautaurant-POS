@@ -23,13 +23,13 @@ public partial class App : Application
             .ConfigureServices((context, services) =>
             {
                 // Register DbContext
-                services.AddDbContext<AppDbContext>();
+                services.AddDbContext<AppDbContext>(ServiceLifetime.Transient);
 
                 // Register Services
-                services.AddSingleton<IOrderService, OrderService>();
-                services.AddSingleton<IInventoryService, InventoryService>();
-                services.AddSingleton<IReportingService, ReportingService>();
-                services.AddSingleton<IBarcodeService, BarcodeService>();
+                services.AddTransient<IOrderService, OrderService>();
+                services.AddTransient<IInventoryService, InventoryService>();
+                services.AddTransient<IReportingService, ReportingService>();
+                services.AddTransient<IBarcodeService, BarcodeService>();
 
                 // Register ViewModels
                 services.AddSingleton<MainViewModel>();

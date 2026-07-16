@@ -83,17 +83,26 @@ public class PosViewModel : BaseViewModel
 
     public async Task InitializeAsync()
     {
-        var categories = await _inventoryService.GetCategoriesAsync();
-        Categories.Clear();
-        Categories.Add(new Category { Id = 0, Name = "All", IconName = "SilverwareForkKnife" });
-        foreach (var c in categories) Categories.Add(c);
+        try
+        {
+            var categories = await _inventoryService.GetCategoriesAsync();
+            Categories.Clear();
+            Categories.Add(new Category { Id = 0, Name = "All", IconName = "SilverwareForkKnife" });
+            foreach (var c in categories) Categories.Add(c);
 
-        var items = await _inventoryService.GetMenuItemsAsync();
-        MenuItems.Clear();
-        foreach (var i in items) MenuItems.Add(i);
+            var items = await _inventoryService.GetMenuItemsAsync();
+            MenuItems.Clear();
+            foreach (var i in items) MenuItems.Add(i);
 
-        // Create a new order
-        CurrentOrder = await _orderService.CreateOrderAsync(null, 2); // Hardcoded userId 2 (Cashier)
+            // Create a new order
+            var userId = LoginViewModel.CurrentUser?.Id ?? 2;
+            CurrentOrder = await _orderService.CreateOrderAsync(null, userId);
+        }
+        catch (Exception ex)
+        {
+            var inner = ex.InnerException != null ? ex.InnerException.Message : "No inner exception";
+            System.Windows.MessageBox.Show($"InitializeAsync error: {ex.Message}\nInner: {inner}\n{ex.StackTrace}");
+        }
     }
 
     private async Task LoadMenuItems(int? categoryId)
@@ -206,7 +215,8 @@ public class PosViewModel : BaseViewModel
         CurrentOrder = await _orderService.GetOrderByIdAsync(_currentOrder.Id);
         
         // Start a new order
-        CurrentOrder = await _orderService.CreateOrderAsync(null, 2);
+        var userId = LoginViewModel.CurrentUser?.Id ?? 2;
+        CurrentOrder = await _orderService.CreateOrderAsync(null, userId);
     }
 
     private async Task PrintReceipt()
