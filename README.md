@@ -46,8 +46,8 @@ The database automatically seeds these users on startup:
 | Role | Username | Password |
 |---|---|---|
 | Administrator | `admin` | `admin` |
-| Cashier / POS | `cashier1` | `1234` |
-| Kitchen Staff | `kitchen1` | `kitchen` |
+| Cashier / POS | `cashier` | `cashier` |
+| Kitchen Staff | `kitchen` | `kitchen` |
 
 ## Documentation
 For an in-depth architectural explanation and a guide on how to extend the codebase, please read the [TUTORIAL.md](./TUTORIAL.md) file.
