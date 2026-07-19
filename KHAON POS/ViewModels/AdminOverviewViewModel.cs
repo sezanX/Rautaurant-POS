@@ -44,9 +44,51 @@ public class AdminOverviewViewModel : BaseViewModel
         set => SetProperty(ref _activeCustomers, value);
     }
 
-    public ObservableCollection<ISeries> SalesSeries { get; set; }
-    public Axis[] XAxes { get; set; }
-    public Axis[] YAxes { get; set; }
+    private bool _isWeeklySelected = true;
+    public bool IsWeeklySelected
+    {
+        get => _isWeeklySelected;
+        set
+        {
+            if (SetProperty(ref _isWeeklySelected, value) && value)
+            {
+                _isMonthlySelected = false;
+                OnPropertyChanged(nameof(IsMonthlySelected));
+                _ = UpdateSalesChart();
+            }
+        }
+    }
+
+    private bool _isMonthlySelected;
+    public bool IsMonthlySelected
+    {
+        get => _isMonthlySelected;
+        set
+        {
+            if (SetProperty(ref _isMonthlySelected, value) && value)
+            {
+                _isWeeklySelected = false;
+                OnPropertyChanged(nameof(IsWeeklySelected));
+                _ = UpdateSalesChart();
+            }
+        }
+    }
+
+    public ObservableCollection<ISeries> SalesSeries { get; } = new();
+
+    private Axis[] _xAxes = Array.Empty<Axis>();
+    public Axis[] XAxes
+    {
+        get => _xAxes;
+        set => SetProperty(ref _xAxes, value);
+    }
+
+    private Axis[] _yAxes = Array.Empty<Axis>();
+    public Axis[] YAxes
+    {
+        get => _yAxes;
+        set => SetProperty(ref _yAxes, value);
+    }
 
     public ObservableCollection<Order> RecentOrders { get; } = new();
     public ObservableCollection<TopItemDTO> TopItems { get; } = new();
@@ -59,42 +101,82 @@ public class AdminOverviewViewModel : BaseViewModel
 
         RefreshDataCommand = new RelayCommand(async _ => await LoadDashboardData());
 
-        var mainColor = SKColor.Parse("#66BD76");
+        _ = LoadDashboardData();
+    }
 
-        // LiveCharts2 configuration for a simple area chart
-        SalesSeries = new ObservableCollection<ISeries>
+    private async Task UpdateSalesChart()
+    {
+        try
         {
-            new LineSeries<decimal>
+            string[] labels;
+            decimal[] values;
+
+            if (IsWeeklySelected)
             {
-                Values = new[] { 12m, 25m, 18m, 35m, 40m, 55m, 45m }, // Mock data (thousands)
+                (labels, values) = await _reportingService.GetWeeklySalesAsync();
+            }
+            else
+            {
+                (labels, values) = await _reportingService.GetMonthlySalesAsync();
+            }
+
+            var mainColor = SKColor.Parse("#66BD76");
+
+            SalesSeries.Clear();
+            SalesSeries.Add(new LineSeries<decimal>
+            {
+                Values = values,
                 Name = "Revenue",
                 GeometryFill = null,
                 GeometryStroke = null,
                 Fill = new SolidColorPaint(mainColor.WithAlpha(50)),
                 Stroke = new SolidColorPaint(mainColor) { StrokeThickness = 3 },
                 LineSmoothness = 0.5
-            }
-        };
+            });
 
-        XAxes = new[]
-        {
-            new Axis
+            XAxes = new[]
             {
-                Labels = new[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul" },
-                LabelsPaint = new SolidColorPaint(SKColors.Gray)
-            }
-        };
+                new Axis
+                {
+                    Labels = labels,
+                    LabelsPaint = new SolidColorPaint(SKColors.Gray)
+                }
+            };
 
-        YAxes = new[]
-        {
-            new Axis
+            YAxes = new[]
             {
-                Labeler = value => value.ToString("C0") + "k",
-                LabelsPaint = new SolidColorPaint(SKColors.Gray)
-            }
-        };
+                new Axis
+                {
+                    Labeler = value => value.ToString("C0"),
+                    LabelsPaint = new SolidColorPaint(SKColors.Gray)
+                }
+            };
+        }
+        catch (Exception)
+        {
+            // Fallback in case of database errors
+            var mainColor = SKColor.Parse("#66BD76");
+            SalesSeries.Clear();
+            SalesSeries.Add(new LineSeries<decimal>
+            {
+                Values = new[] { 12m, 25m, 18m, 35m, 40m, 55m, 45m },
+                Name = "Revenue (Demo)",
+                GeometryFill = null,
+                GeometryStroke = null,
+                Fill = new SolidColorPaint(mainColor.WithAlpha(50)),
+                Stroke = new SolidColorPaint(mainColor) { StrokeThickness = 3 },
+                LineSmoothness = 0.5
+            });
 
-        _ = LoadDashboardData();
+            XAxes = new[]
+            {
+                new Axis
+                {
+                    Labels = new[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul" },
+                    LabelsPaint = new SolidColorPaint(SKColors.Gray)
+                }
+            };
+        }
     }
 
     private async Task LoadDashboardData()
@@ -114,5 +196,7 @@ public class AdminOverviewViewModel : BaseViewModel
         var topItems = await _reportingService.GetTopItemsAsync(3);
         TopItems.Clear();
         foreach(var item in topItems) TopItems.Add(item);
+
+        await UpdateSalesChart();
     }
 }

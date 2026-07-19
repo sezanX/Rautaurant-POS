@@ -14,19 +14,39 @@ public class AdminAnalyticsViewModel : BaseViewModel
 {
     private readonly IReportingService _reportingService;
 
-    public ObservableCollection<ISeries> CategorySalesSeries { get; set; }
+    public ObservableCollection<ISeries> CategorySalesSeries { get; } = new();
 
     public AdminAnalyticsViewModel(IReportingService reportingService)
     {
         _reportingService = reportingService;
 
-        // Mock data for a pie chart or bar chart
-        CategorySalesSeries = new ObservableCollection<ISeries>
+        _ = LoadAnalyticsData();
+    }
+
+    private async Task LoadAnalyticsData()
+    {
+        try
         {
-            new PieSeries<double> { Values = new double[] { 45 }, Name = "Main Course" },
-            new PieSeries<double> { Values = new double[] { 25 }, Name = "Beverages" },
-            new PieSeries<double> { Values = new double[] { 20 }, Name = "Appetizers" },
-            new PieSeries<double> { Values = new double[] { 10 }, Name = "Desserts" }
-        };
+            var categorySales = await _reportingService.GetCategorySalesAsync();
+            CategorySalesSeries.Clear();
+
+            foreach (var kvp in categorySales)
+            {
+                CategorySalesSeries.Add(new PieSeries<double>
+                {
+                    Values = new double[] { kvp.Value },
+                    Name = kvp.Key
+                });
+            }
+        }
+        catch (Exception)
+        {
+            // Fallback in case of database or connection issues
+            CategorySalesSeries.Clear();
+            CategorySalesSeries.Add(new PieSeries<double> { Values = new double[] { 45 }, Name = "Main Course (Demo)" });
+            CategorySalesSeries.Add(new PieSeries<double> { Values = new double[] { 25 }, Name = "Beverages (Demo)" });
+            CategorySalesSeries.Add(new PieSeries<double> { Values = new double[] { 20 }, Name = "Appetizers (Demo)" });
+            CategorySalesSeries.Add(new PieSeries<double> { Values = new double[] { 10 }, Name = "Desserts (Demo)" });
+        }
     }
 }

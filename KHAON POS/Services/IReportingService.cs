@@ -10,4 +10,7 @@ public interface IReportingService
     Task<int> GetOrderCountAsync(System.DateTime date);
     Task<System.Collections.Generic.List<Order>> GetRecentOrdersAsync(int count = 50);
     Task<System.Collections.Generic.List<RestaurantPOS.Data.Models.TopItemDTO>> GetTopItemsAsync(int count = 5);
+    Task<System.Collections.Generic.Dictionary<string, double>> GetCategorySalesAsync();
+    Task<(string[] Labels, decimal[] Values)> GetWeeklySalesAsync();
+    Task<(string[] Labels, decimal[] Values)> GetMonthlySalesAsync();
 }

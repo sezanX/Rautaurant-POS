@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Xq1IoKQgCcU=",
+  "dgSpecHash": "fpwOu8PtlX8=",
   "success": true,
-  "projectFilePath": "d:\\Software Dev Projects\\Rautaurant-POS-main\\KHAON POS\\RestaurantPOS.csproj",
+  "projectFilePath": "D:\\Software Dev Projects\\Rautaurant-POS-main\\KHAON POS\\RestaurantPOS.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Jabir\\.nuget\\packages\\harfbuzzsharp\\7.3.0\\harfbuzzsharp.7.3.0.nupkg.sha512",
     "C:\\Users\\Jabir\\.nuget\\packages\\harfbuzzsharp.nativeassets.macos\\7.3.0\\harfbuzzsharp.nativeassets.macos.7.3.0.nupkg.sha512",

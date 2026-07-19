@@ -194,4 +194,66 @@ public class ReportingService : IReportingService
         
         return topItems;
     }
+
+    public async Task<System.Collections.Generic.Dictionary<string, double>> GetCategorySalesAsync()
+    {
+        var categorySales = await _context.OrderItems
+            .Include(oi => oi.MenuItem)
+            .ThenInclude(m => m.Category)
+            .GroupBy(oi => oi.MenuItem != null && oi.MenuItem.Category != null ? oi.MenuItem.Category.Name : "Other")
+            .Select(g => new
+            {
+                CategoryName = g.Key,
+                Sales = g.Sum(oi => (double)oi.Quantity * (double)(oi.UnitPrice + oi.ExtraCharge))
+            })
+            .ToDictionaryAsync(x => x.CategoryName, x => x.Sales);
+
+        return categorySales;
+    }
+
+    public async Task<(string[] Labels, decimal[] Values)> GetWeeklySalesAsync()
+    {
+        var startDate = DateTime.Today.AddDays(-6);
+        
+        var dailySales = await _context.Payments
+            .Where(p => p.PaymentDate.Date >= startDate.Date)
+            .GroupBy(p => p.PaymentDate.Date)
+            .Select(g => new { Date = g.Key, Total = g.Sum(p => p.AmountPaid) })
+            .ToListAsync();
+
+        var labels = new string[7];
+        var values = new decimal[7];
+
+        for (int i = 0; i < 7; i++)
+        {
+            var date = startDate.AddDays(i);
+            labels[i] = date.ToString("ddd");
+            values[i] = dailySales.FirstOrDefault(x => x.Date == date.Date)?.Total ?? 0m;
+        }
+
+        return (labels, values);
+    }
+
+    public async Task<(string[] Labels, decimal[] Values)> GetMonthlySalesAsync()
+    {
+        var startDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1).AddMonths(-5);
+        
+        var monthlySales = await _context.Payments
+            .Where(p => p.PaymentDate.Date >= startDate.Date)
+            .GroupBy(p => new { p.PaymentDate.Year, p.PaymentDate.Month })
+            .Select(g => new { g.Key.Year, g.Key.Month, Total = g.Sum(p => p.AmountPaid) })
+            .ToListAsync();
+
+        var labels = new string[6];
+        var values = new decimal[6];
+
+        for (int i = 0; i < 6; i++)
+        {
+            var monthDate = startDate.AddMonths(i);
+            labels[i] = monthDate.ToString("MMM");
+            values[i] = monthlySales.FirstOrDefault(x => x.Year == monthDate.Year && x.Month == monthDate.Month)?.Total ?? 0m;
+        }
+
+        return (labels, values);
+    }
 }

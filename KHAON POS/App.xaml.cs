@@ -71,6 +71,7 @@ public partial class App : Application
             {
                 var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
                 dbContext.Database.Migrate();
+                DbSeeder.SeedOrderItemsIfEmpty(dbContext);
             }
 
             var mainWindow = _host.Services.GetRequiredService<MainWindow>();

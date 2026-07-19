@@ -63,7 +63,7 @@ namespace RestaurantPOS.Views {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/RestaurantPOS;V1.0.0.0;component/views/posview.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/RestaurantPOS;component/views/posview.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\Views\PosView.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "d:\\Software Dev Projects\\Rautaurant-POS-main\\KHAON POS\\RestaurantPOS.csproj": {}
+    "D:\\Software Dev Projects\\Rautaurant-POS-main\\KHAON POS\\RestaurantPOS.csproj": {}
   },
   "projects": {
-    "d:\\Software Dev Projects\\Rautaurant-POS-main\\KHAON POS\\RestaurantPOS.csproj": {
+    "D:\\Software Dev Projects\\Rautaurant-POS-main\\KHAON POS\\RestaurantPOS.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "d:\\Software Dev Projects\\Rautaurant-POS-main\\KHAON POS\\RestaurantPOS.csproj",
+        "projectUniqueName": "D:\\Software Dev Projects\\Rautaurant-POS-main\\KHAON POS\\RestaurantPOS.csproj",
         "projectName": "RestaurantPOS",
-        "projectPath": "d:\\Software Dev Projects\\Rautaurant-POS-main\\KHAON POS\\RestaurantPOS.csproj",
+        "projectPath": "D:\\Software Dev Projects\\Rautaurant-POS-main\\KHAON POS\\RestaurantPOS.csproj",
         "packagesPath": "C:\\Users\\Jabir\\.nuget\\packages\\",
-        "outputPath": "d:\\Software Dev Projects\\Rautaurant-POS-main\\KHAON POS\\obj\\",
+        "outputPath": "D:\\Software Dev Projects\\Rautaurant-POS-main\\KHAON POS\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Jabir\\AppData\\Roaming\\NuGet\\NuGet.Config"

@@ -3,6 +3,45 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF">
+    <UserControl.Resources>
+        <Style x:Key="PeriodToggleStyle" TargetType="RadioButton">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#757575"/>
+            <Setter Property="Padding" Value="16,6"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border x:Name="Border" 
+                                Background="{TemplateBinding Background}" 
+                                CornerRadius="16" 
+                                Padding="{TemplateBinding Padding}" 
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <ContentPresenter.ContentTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding}" 
+                                                   FontWeight="{Binding RelativeSource={RelativeSource AncestorType=RadioButton}, Path=FontWeight}" 
+                                                   Foreground="{Binding RelativeSource={RelativeSource AncestorType=RadioButton}, Path=Foreground}"/>
+                                    </DataTemplate>
+                                </ContentPresenter.ContentTemplate>
+                            </ContentPresenter>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#F5F5F5"/>
+                                <Setter Property="Foreground" Value="#424242"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Cursor" Value="Hand"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
     <Grid Margin="32">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -126,12 +165,15 @@
                     <Grid Grid.Row="0" Margin="0,0,0,24">
                         <TextBlock Text="Sales Overview" FontSize="20" FontWeight="Bold" Foreground="#212121" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                            <Border Background="#F5F5F5" CornerRadius="16" Padding="16,6" Margin="0,0,8,0">
-                                <TextBlock Text="Weekly" FontWeight="SemiBold" Foreground="#424242"/>
-                            </Border>
-                            <Border Background="Transparent" CornerRadius="16" Padding="16,6">
-                                <TextBlock Text="Monthly" FontWeight="SemiBold" Foreground="#757575"/>
-                            </Border>
+                            <RadioButton Content="Weekly" 
+                                         GroupName="SalesPeriod" 
+                                         Style="{StaticResource PeriodToggleStyle}" 
+                                         IsChecked="{Binding IsWeeklySelected, Mode=TwoWay}"
+                                         Margin="0,0,8,0"/>
+                            <RadioButton Content="Monthly" 
+                                         GroupName="SalesPeriod" 
+                                         Style="{StaticResource PeriodToggleStyle}" 
+                                         IsChecked="{Binding IsMonthlySelected, Mode=TwoWay}"/>
                         </StackPanel>
                     </Grid>
                     
