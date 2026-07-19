@@ -59,6 +59,8 @@ public class AdminOverviewViewModel : BaseViewModel
 
         RefreshDataCommand = new RelayCommand(async _ => await LoadDashboardData());
 
+        var mainColor = SKColor.Parse("#66BD76");
+
         // LiveCharts2 configuration for a simple area chart
         SalesSeries = new ObservableCollection<ISeries>
         {
@@ -68,8 +70,8 @@ public class AdminOverviewViewModel : BaseViewModel
                 Name = "Revenue",
                 GeometryFill = null,
                 GeometryStroke = null,
-                Fill = new SolidColorPaint(SKColors.Blue.WithAlpha(50)),
-                Stroke = new SolidColorPaint(SKColors.Blue) { StrokeThickness = 3 },
+                Fill = new SolidColorPaint(mainColor.WithAlpha(50)),
+                Stroke = new SolidColorPaint(mainColor) { StrokeThickness = 3 },
                 LineSmoothness = 0.5
             }
         };
@@ -109,7 +111,7 @@ public class AdminOverviewViewModel : BaseViewModel
         RecentOrders.Clear();
         foreach(var order in recentOrders) RecentOrders.Add(order);
 
-        var topItems = await _reportingService.GetTopItemsAsync(5);
+        var topItems = await _reportingService.GetTopItemsAsync(3);
         TopItems.Clear();
         foreach(var item in topItems) TopItems.Add(item);
     }

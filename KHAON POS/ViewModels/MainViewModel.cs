@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Windows.Input;
 
 namespace RestaurantPOS.ViewModels;
@@ -66,9 +67,28 @@ public class MainViewModel : BaseViewModel
             case "Dashboard":
                 CurrentViewModel = (BaseViewModel)_serviceProvider.GetService(typeof(DashboardViewModel))!;
                 break;
+            case "Support":
+                OpenSupportLink();
+                break;
             case "Logout":
                 CurrentViewModel = (BaseViewModel)_serviceProvider.GetService(typeof(LoginViewModel))!;
                 break;
+        }
+    }
+
+    private void OpenSupportLink()
+    {
+        try
+        {
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = "https://wa.me/8801307040108",
+                UseShellExecute = true
+            });
+        }
+        catch
+        {
+            // Ignore failures; user can open support manually if system policy blocks shell execute.
         }
     }
 

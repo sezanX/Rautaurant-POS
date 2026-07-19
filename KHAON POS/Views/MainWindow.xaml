@@ -4,8 +4,9 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:views="clr-namespace:RestaurantPOS.Views"
         xmlns:viewmodels="clr-namespace:RestaurantPOS.ViewModels"
-        Title="Restaurant POS" Height="768" Width="1024"
+        Title="KHAON POS" Height="768" Width="1024"
         WindowStartupLocation="CenterScreen"
+        WindowState="Maximized"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="13"
@@ -41,19 +42,22 @@
         <Border Background="White" BorderBrush="#E0E0E0" BorderThickness="0,0,0,1">
             <Grid Margin="24,0">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
-                    <materialDesign:PackIcon Kind="SilverwareForkKnife" Width="24" Height="24" Foreground="#66BD76" VerticalAlignment="Center" Margin="0,0,8,0" />
+                    <Image Source="/logo.png" Width="32" Height="32" Stretch="Uniform" Margin="0,0,8,0" />
                     <TextBlock Text="KHAON POS" FontSize="20" FontWeight="Bold" Foreground="#66BD76" VerticalAlignment="Center" />
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                    <Ellipse Width="8" Height="8" Fill="#66BD76" Margin="0,0,8,0" VerticalAlignment="Center" />
-                    <TextBlock Text="Station ID: POS-01-MAIN" Foreground="#757575" VerticalAlignment="Center" Margin="0,0,24,0" />
-                    
-                    <TextBlock Text="{Binding CurrentDate, StringFormat={}{0:MMM dd, yyyy}}" FontWeight="SemiBold" Foreground="#212121" VerticalAlignment="Center" Margin="0,0,8,0" />
-                    <TextBlock Text="{Binding CurrentTime, StringFormat={}{0:HH:mm tt}}" Foreground="#757575" VerticalAlignment="Center" Margin="0,0,24,0" />
-                    
-                    <materialDesign:PackIcon Kind="HelpCircleOutline" Width="20" Height="20" Foreground="#757575" VerticalAlignment="Center" Margin="0,0,4,0" />
-                    <TextBlock Text="Support" Foreground="#757575" VerticalAlignment="Center" Margin="0,0,24,0" />
+                   
+                    <TextBlock Text="{Binding CurrentTime, StringFormat={}{0:h:mm tt}}" FontWeight="Bold" Foreground="#212121" VerticalAlignment="Center" Margin="0,0,8,0" />
+                    <TextBlock Text="{Binding CurrentDate, StringFormat={}{0:MMM dd, yyyy}}"  Foreground="#757575" VerticalAlignment="Center" Margin="0,0,8,0" />
+                   
+                
+                    <Button Command="{Binding NavigateCommand}" CommandParameter="Support" Style="{StaticResource MaterialDesignFlatButton}" Foreground="#757575" Height="32" Padding="8,0" Margin="0,0,24,0">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="HelpCircleOutline" Width="20" Height="20" Foreground="#757575" VerticalAlignment="Center" Margin="0,0,4,0" />
+                            <TextBlock Text="Support" Foreground="#757575" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
                     
                     <Button Command="{Binding NavigateCommand}" CommandParameter="Logout" Style="{StaticResource MaterialDesignFlatButton}" Foreground="#E53935" Height="32" Padding="8,0" Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVis}}">
                         <StackPanel Orientation="Horizontal">

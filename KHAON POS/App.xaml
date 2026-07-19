@@ -10,7 +10,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign3.Defaults.xaml" />
             </ResourceDictionary.MergedDictionaries>
             
-            <SolidColorBrush x:Key="AppBackgroundBrush" Color="#F4F7F6" />
+            <SolidColorBrush x:Key="AppBackgroundBrush" Color="#EAF9ED" />
             <SolidColorBrush x:Key="PrimaryGreenBrush" Color="#66BD76" />
             <SolidColorBrush x:Key="TextDarkBrush" Color="#212121" />
             <SolidColorBrush x:Key="TextMutedBrush" Color="#757575" />

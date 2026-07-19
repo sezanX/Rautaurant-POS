@@ -33,7 +33,7 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Border Width="300" Margin="0,0,24,24" Background="White" CornerRadius="8" BorderThickness="0,6,0,0" BorderBrush="#66BD76">
+                        <Border Width="300" Margin="0,0,24,24" Background="White" CornerRadius="8" BorderThickness="0,6,0,0" BorderBrush="{Binding StatusColorHex}">
                             <Border.Effect>
                                 <DropShadowEffect BlurRadius="8" ShadowDepth="2" Color="#E0E0E0" Opacity="0.5"/>
                             </Border.Effect>
@@ -52,10 +52,10 @@
                                             <TextBlock Text="{Binding Order.Id, StringFormat=#{0}}" FontWeight="Bold" FontSize="24" Foreground="#212121" Margin="0,4,0,0"/>
                                         </StackPanel>
                                         
-                                        <Border Background="#E8F5E9" CornerRadius="16" Padding="12,6" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                        <Border Background="{Binding StatusBackgroundHex}" CornerRadius="16" Padding="12,6" HorizontalAlignment="Right" VerticalAlignment="Center">
                                             <StackPanel Orientation="Horizontal">
-                                                <materialDesign:PackIcon Kind="ClockOutline" Foreground="#66BD76" Width="20" Height="20" Margin="0,0,6,0" VerticalAlignment="Center"/>
-                                                <TextBlock Text="{Binding TimeRemaining}" FontWeight="Bold" FontSize="18" Foreground="#66BD76" VerticalAlignment="Center"/>
+                                                <materialDesign:PackIcon Kind="ClockOutline" Foreground="{Binding StatusColorHex}" Width="20" Height="20" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                                <TextBlock Text="{Binding TimeRemaining}" FontWeight="Bold" FontSize="18" Foreground="{Binding StatusColorHex}" VerticalAlignment="Center"/>
                                             </StackPanel>
                                         </Border>
                                     </Grid>
@@ -72,7 +72,7 @@
                                                         <ColumnDefinition Width="*" />
                                                         <ColumnDefinition Width="Auto" />
                                                     </Grid.ColumnDefinitions>
-                                                    <TextBlock Grid.Column="0" Text="{Binding Quantity}" FontWeight="Bold" FontSize="20" Foreground="#66BD76" Margin="0,0,12,0"/>
+                                                    <TextBlock Grid.Column="0" Text="{Binding Quantity}" FontWeight="Bold" FontSize="20" Foreground="{Binding DataContext.StatusColorHex, RelativeSource={RelativeSource AncestorType=Border}}" Margin="0,0,12,0"/>
                                                     <TextBlock Grid.Column="1" Text="{Binding MenuItem.Name}" FontWeight="Bold" FontSize="18" Foreground="#212121" TextWrapping="Wrap" VerticalAlignment="Center"/>
                                                     <TextBlock Grid.Column="2" Text="{Binding MenuItem.Category.Name}" FontSize="13" Foreground="#9E9E9E" VerticalAlignment="Center"/>
                                                 </Grid>

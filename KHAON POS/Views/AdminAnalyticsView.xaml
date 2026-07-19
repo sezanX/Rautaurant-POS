@@ -18,7 +18,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
-                    <materialDesign:PackIcon Kind="ChartPie" Width="24" Height="24" Foreground="#E91E63" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                    <materialDesign:PackIcon Kind="ChartPie" Width="24" Height="24" Foreground="{DynamicResource PrimaryGreenBrush}" VerticalAlignment="Center" Margin="0,0,8,0"/>
                     <TextBlock Text="Sales by Category" FontSize="20" FontWeight="Bold" Foreground="#212121" VerticalAlignment="Center"/>
                 </StackPanel>
 

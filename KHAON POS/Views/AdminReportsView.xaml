@@ -24,7 +24,7 @@
                     </Grid.ColumnDefinitions>
                     
                     <StackPanel Grid.Column="0" Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="ReceiptText" Width="24" Height="24" Foreground="#FF9800" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                        <materialDesign:PackIcon Kind="ReceiptText" Width="24" Height="24" Foreground="{DynamicResource PrimaryGreenBrush}" VerticalAlignment="Center" Margin="0,0,8,0"/>
                         <TextBlock Text="Recent Orders" FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center" Foreground="#212121"/>
                     </StackPanel>
                     <Button Grid.Column="1" Command="{Binding RefreshCommand}" Style="{StaticResource MaterialDesignIconForegroundButton}" HorizontalAlignment="Right">
@@ -34,6 +34,7 @@
 
                 <DataGrid Grid.Row="1" ItemsSource="{Binding RecentOrders}" 
                           AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True"
+                          Background="White" RowBackground="White" AlternatingRowBackground="White"
                           materialDesign:DataGridAssist.CellPadding="16" materialDesign:DataGridAssist.ColumnHeaderPadding="16">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Order ID" Binding="{Binding Id}" />

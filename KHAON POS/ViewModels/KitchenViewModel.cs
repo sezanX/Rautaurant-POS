@@ -33,9 +33,53 @@ public class KitchenOrderViewModel : BaseViewModel
         }
     }
 
+    public string StatusColorHex
+    {
+        get
+        {
+            if (_order.EstimatedCompletionTime.HasValue)
+            {
+                var diff = _order.EstimatedCompletionTime.Value - DateTime.Now;
+                double secs = diff.TotalSeconds;
+                if (secs <= 0)
+                {
+                    return "#E53935"; // Red
+                }
+                else if (secs <= 60)
+                {
+                    return "#FF9800"; // Orange
+                }
+            }
+            return "#66BD76"; // Green (Default)
+        }
+    }
+
+    public string StatusBackgroundHex
+    {
+        get
+        {
+            if (_order.EstimatedCompletionTime.HasValue)
+            {
+                var diff = _order.EstimatedCompletionTime.Value - DateTime.Now;
+                double secs = diff.TotalSeconds;
+                if (secs <= 0)
+                {
+                    return "#FFEBEE"; // Light Red
+                }
+                else if (secs <= 60)
+                {
+                    return "#FFF3E0"; // Light Orange
+                }
+            }
+            return "#E8F5E9"; // Light Green (Default)
+        }
+    }
+
     public void RefreshTime()
     {
         OnPropertyChanged(nameof(TimeRemaining));
+        OnPropertyChanged(nameof(StatusColorHex));
+        OnPropertyChanged(nameof(StatusBackgroundHex));
     }
 }
 
@@ -49,7 +93,7 @@ public class KitchenViewModel : BaseViewModel
     public ICommand MarkAsPreparedCommand { get; }
     public ICommand AddTimeCommand { get; }
     public ICommand RefreshCommand { get; }
-    
+
     public string CurrentTime => DateTime.Now.ToString("h:mm tt, ddd, MMM d, yyyy");
 
     public KitchenViewModel(IOrderService orderService)
@@ -64,12 +108,27 @@ public class KitchenViewModel : BaseViewModel
         {
             Interval = TimeSpan.FromSeconds(1)
         };
-        _timer.Tick += (s, e) => 
+        _timer.Tick += (s, e) =>
         {
             OnPropertyChanged(nameof(CurrentTime));
+            bool shouldPlayWarning = false;
             foreach (var order in ActiveOrders)
             {
                 order.RefreshTime();
+                if (order.Order.EstimatedCompletionTime.HasValue)
+                {
+                    var diff = order.Order.EstimatedCompletionTime.Value - DateTime.Now;
+                    double secs = diff.TotalSeconds;
+                    // Play warning sound for 5 seconds leading to/at the 1-minute remaining mark (56s to 60s inclusive)
+                    if (secs >= 56 && secs <= 60)
+                    {
+                        shouldPlayWarning = true;
+                    }
+                }
+            }
+            if (shouldPlayWarning)
+            {
+                System.Media.SystemSounds.Beep.Play();
             }
         };
         _timer.Start();
@@ -85,13 +144,13 @@ public class KitchenViewModel : BaseViewModel
     private async Task LoadActiveOrders()
     {
         var orders = await _orderService.GetActiveOrdersAsync();
-        
+
         var existingIds = ActiveOrders.Select(o => o.Order.Id).ToList();
         var newOrders = orders.Where(o => (o.Status == "Pending" || o.Status == "Preparing")).ToList();
-        
+
         // Remove completed or removed orders
         var toRemove = ActiveOrders.Where(o => !newOrders.Any(no => no.Id == o.Order.Id)).ToList();
-        foreach(var rm in toRemove) ActiveOrders.Remove(rm);
+        foreach (var rm in toRemove) ActiveOrders.Remove(rm);
 
         // Add new orders
         foreach (var order in newOrders)
@@ -116,7 +175,7 @@ public class KitchenViewModel : BaseViewModel
         await _orderService.UpdateOrderStatusAsync(kOrder.Order.Id, "Served"); // or "Prepared"
         ActiveOrders.Remove(kOrder);
     }
-    
+
     private async Task AddTime(KitchenOrderViewModel? kOrder, int minutes)
     {
         if (kOrder == null) return;

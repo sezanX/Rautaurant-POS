@@ -17,7 +17,7 @@
             </Grid.ColumnDefinitions>
 
             <!-- Inventory List -->
-            <materialDesign:Card Grid.Column="0" Padding="16" UniformCornerRadius="8" Background="White" Margin="0,0,24,0">
+            <materialDesign:Card Grid.Column="0" Padding="16" UniformCornerRadius="8" Background="White" Margin="0,0,24,0" materialDesign:ElevationAssist.Elevation="Dp2">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -25,12 +25,14 @@
                     </Grid.RowDefinitions>
                     
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
-                        <materialDesign:PackIcon Kind="ViewList" Width="24" Height="24" Foreground="#4CAF50" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                        <materialDesign:PackIcon Kind="ViewList" Width="24" Height="24" Foreground="{DynamicResource PrimaryGreenBrush}" VerticalAlignment="Center" Margin="0,0,8,0"/>
                         <TextBlock Text="Menu Items" FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center" Foreground="#212121"/>
                     </StackPanel>
 
                     <DataGrid Grid.Row="1" ItemsSource="{Binding MenuItems}" SelectedItem="{Binding SelectedItem}" 
                               AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True"
+                              Background="White" RowBackground="White" AlternatingRowBackground="White"
+                              GridLinesVisibility="None"
                               materialDesign:DataGridAssist.CellPadding="16" materialDesign:DataGridAssist.ColumnHeaderPadding="16">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID" Binding="{Binding Id}" />
@@ -44,37 +46,55 @@
             </materialDesign:Card>
 
             <!-- Add / Edit Item Form -->
-            <materialDesign:Card Grid.Column="1" Padding="24" UniformCornerRadius="8" Background="White" VerticalAlignment="Top" TextElement.Foreground="#212121">
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <materialDesign:Card Grid.Column="1" Padding="20" UniformCornerRadius="8" Background="White" VerticalAlignment="Top" TextElement.Foreground="#212121" materialDesign:ElevationAssist.Elevation="Dp2">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Padding="0">
                     <StackPanel>
-                        <TextBlock Text="Manage Item" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,16" Foreground="#212121" />
+                        <TextBlock Text="Manage Item" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,14" Foreground="#212121" />
                         
-                        <TextBox Text="{Binding NewName, UpdateSourceTrigger=PropertyChanged}" 
-                                 materialDesign:HintAssist.Hint="Name" Foreground="#212121"
-                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,16" />
-                                 
-                        <TextBox Text="{Binding NewDescription, UpdateSourceTrigger=PropertyChanged}" 
-                                 materialDesign:HintAssist.Hint="Description" Foreground="#212121"
-                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,16" />
-                                 
-                        <TextBox Text="{Binding NewPrice, UpdateSourceTrigger=PropertyChanged}" 
-                                 materialDesign:HintAssist.Hint="Price" Foreground="#212121"
-                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,16" />
-                                 
-                        <ComboBox ItemsSource="{Binding Categories}" SelectedValue="{Binding NewCategoryId}" 
-                                  DisplayMemberPath="Name" SelectedValuePath="Id" Foreground="#212121"
-                                  materialDesign:HintAssist.Hint="Category" Margin="0,0,0,16" Style="{StaticResource MaterialDesignFloatingHintComboBox}" />
-                                  
-                        <TextBox Text="{Binding NewPrepTime, UpdateSourceTrigger=PropertyChanged}" 
-                                 materialDesign:HintAssist.Hint="Prep Time (Minutes)" Foreground="#212121"
-                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,16" />
-                                 
-                        <!-- Photo Upload -->
-                        <TextBlock Text="Product Image" Foreground="#757575" Margin="0,8,0,4"/>
-                        <Border BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="4" Height="150" Margin="0,0,0,8" ClipToBounds="True">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <TextBox Text="{Binding NewName, UpdateSourceTrigger=PropertyChanged}" 
+                                     materialDesign:HintAssist.Hint="Name" Foreground="#212121"
+                                     Background="#F7F9F8" BorderBrush="#E0E0E0"
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,10,10" />
+                                     
+                            <ComboBox Grid.Column="1" ItemsSource="{Binding Categories}" SelectedValue="{Binding NewCategoryId}" 
+                                      DisplayMemberPath="Name" SelectedValuePath="Id" Foreground="#212121"
+                                      Background="#F7F9F8" BorderBrush="#E0E0E0"
+                                      materialDesign:HintAssist.Hint="Category" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="0,0,0,10" />
+                                      
+                            <TextBox Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding NewDescription, UpdateSourceTrigger=PropertyChanged}" 
+                                     materialDesign:HintAssist.Hint="Description" Foreground="#212121"
+                                     Background="#F7F9F8" BorderBrush="#E0E0E0"
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,10" />
+                                     
+                            <TextBox Grid.Row="2" Text="{Binding NewPrice, UpdateSourceTrigger=PropertyChanged}" 
+                                     materialDesign:HintAssist.Hint="Price" Foreground="#212121"
+                                     Background="#F7F9F8" BorderBrush="#E0E0E0"
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,10,0" />
+                                     
+                            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding NewPrepTime, UpdateSourceTrigger=PropertyChanged}" 
+                                     materialDesign:HintAssist.Hint="Prep Time (Minutes)" Foreground="#212121"
+                                     Background="#F7F9F8" BorderBrush="#E0E0E0"
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,0" />
+                        </Grid>
+                        
+                        <TextBlock Text="Product Image (Square 1:1)" Foreground="#757575" Margin="0,16,0,6"/>
+                        <Border x:Name="ImageBorder" BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="12" Width="180" Height="180" HorizontalAlignment="Left" Margin="0,0,0,14" ClipToBounds="True" Background="White">
                             <Grid>
+                                <!-- Image Preview -->
                                 <Image Source="{Binding NewImagePath}" Stretch="UniformToFill" />
-                                <TextBlock Text="No Image" Foreground="#BDBDBD" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                
+                                <!-- No Image placeholder -->
+                                <TextBlock Text="No Image" Foreground="#9E9E9E" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <TextBlock.Style>
                                         <Style TargetType="TextBlock">
                                             <Setter Property="Visibility" Value="Collapsed"/>
@@ -86,18 +106,38 @@
                                         </Style>
                                     </TextBlock.Style>
                                 </TextBlock>
+                                
+                                <!-- Hover Upload Overlay -->
+                                <Border Background="#80000000" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsMouseOver, ElementName=ImageBorder}" Value="True">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
+                                    
+                                    <Button Command="{Binding UploadPhotoCommand}" 
+                                            Style="{StaticResource MaterialDesignFlatButton}" 
+                                            Foreground="White" 
+                                            HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center">
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon Kind="Camera" Width="20" Height="20" Margin="0,0,8,0" VerticalAlignment="Center" />
+                                            <TextBlock Text="Upload" VerticalAlignment="Center" FontWeight="SemiBold" />
+                                        </StackPanel>
+                                    </Button>
+                                </Border>
                             </Grid>
                         </Border>
                         
-                        <Button Content="Upload Photo" Command="{Binding UploadPhotoCommand}" Style="{StaticResource MaterialDesignOutlinedButton}" Foreground="#2196F3" BorderBrush="#2196F3" Margin="0,0,0,24" />
-                        
-                        <Button Content="Save Item" Command="{Binding SaveItemCommand}" Background="#4CAF50" BorderBrush="#4CAF50" Foreground="White" Margin="0,0,0,16" />
-                        <Button Content="Clear Form" Command="{Binding ClearFormCommand}" Style="{StaticResource MaterialDesignFlatButton}" Foreground="#757575" Margin="0,0,0,24" />
-                        
-                        <Separator Margin="0,0,0,24" Background="#E0E0E0"/>
-                        
-                        <TextBlock Text="Danger Zone" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,8" Foreground="#F44336" />
-                        <Button Content="Delete Item" Command="{Binding DeleteItemCommand}" Style="{StaticResource MaterialDesignOutlinedButton}" Foreground="#F44336" BorderBrush="#F44336" />
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                            <Button Content="Save Item" Command="{Binding SaveItemCommand}" Background="{DynamicResource PrimaryGreenBrush}" BorderBrush="{DynamicResource PrimaryGreenBrush}" Foreground="White" Margin="0,0,10,0" Width="120" />
+                            <Button Content="Delete Item" Command="{Binding DeleteItemCommand}" Style="{StaticResource MaterialDesignOutlinedButton}" Foreground="#E53935" BorderBrush="#E53935" />
+                        </StackPanel>
                     </StackPanel>
                 </ScrollViewer>
             </materialDesign:Card>

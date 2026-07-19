@@ -25,12 +25,13 @@
                     </Grid.RowDefinitions>
                     
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
-                        <materialDesign:PackIcon Kind="AccountGroup" Width="24" Height="24" Foreground="#2196F3" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                        <materialDesign:PackIcon Kind="AccountGroup" Width="24" Height="24" Foreground="{DynamicResource PrimaryGreenBrush}" VerticalAlignment="Center" Margin="0,0,8,0"/>
                         <TextBlock Text="System Users" FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center" Foreground="#212121"/>
                     </StackPanel>
 
                     <DataGrid Grid.Row="1" ItemsSource="{Binding Users}" SelectedItem="{Binding SelectedUser}" 
                               AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True"
+                              Background="White" RowBackground="White" AlternatingRowBackground="White"
                               materialDesign:DataGridAssist.CellPadding="16" materialDesign:DataGridAssist.ColumnHeaderPadding="16">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID" Binding="{Binding Id}" />
@@ -60,13 +61,13 @@
                               Foreground="#212121"
                               materialDesign:HintAssist.Hint="Role" Margin="0,0,0,24" Style="{StaticResource MaterialDesignFloatingHintComboBox}" />
                               
-                    <Button Content="Add User" Command="{Binding AddUserCommand}" Background="#4CAF50" BorderBrush="#4CAF50" Foreground="White" Margin="0,0,0,32" />
+                    <Button Content="Add User" Command="{Binding AddUserCommand}" Background="{DynamicResource PrimaryGreenBrush}" BorderBrush="{DynamicResource PrimaryGreenBrush}" Foreground="White" Margin="0,0,0,32" />
                     
                     <Separator Margin="0,0,0,32" Background="#E0E0E0"/>
                     
                     <TextBlock Text="Manage Selected User" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,16" Foreground="#212121" />
                     <TextBlock Text="Select a user from the table to delete them from the system." Foreground="#757575" TextWrapping="Wrap" Margin="0,0,0,16" />
-                    <Button Content="Delete Selected User" Command="{Binding DeleteUserCommand}" Style="{StaticResource MaterialDesignOutlinedButton}" Foreground="#F44336" BorderBrush="#F44336" />
+                    <Button Content="Delete Selected User" Command="{Binding DeleteUserCommand}" Style="{StaticResource MaterialDesignOutlinedButton}" Foreground="{DynamicResource PrimaryGreenBrush}" BorderBrush="{DynamicResource PrimaryGreenBrush}" />
                 </StackPanel>
             </materialDesign:Card>
         </Grid>

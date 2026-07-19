@@ -6,7 +6,7 @@ namespace RestaurantPOS.ViewModels;
 
 public class DashboardViewModel : BaseViewModel
 {
-    private BaseViewModel _currentAdminViewModel;
+    private BaseViewModel _currentAdminViewModel = default!;
     public BaseViewModel CurrentAdminViewModel
     {
         get => _currentAdminViewModel;

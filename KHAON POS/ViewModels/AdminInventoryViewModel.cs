@@ -148,7 +148,7 @@ public class AdminInventoryViewModel : BaseViewModel
 
                 NewImagePath = destinationPath;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // Ignore for now
             }

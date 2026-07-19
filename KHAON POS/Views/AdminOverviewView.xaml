@@ -46,13 +46,13 @@
             <materialDesign:Card Grid.Column="0" Padding="24" UniformCornerRadius="12" Background="White" materialDesign:ElevationAssist.Elevation="Dp1">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="CashMultiple" Foreground="#4CAF50" Width="24" Height="24" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                        <materialDesign:PackIcon Kind="CashMultiple" Foreground="{DynamicResource PrimaryGreenBrush}" Width="24" Height="24" VerticalAlignment="Center" Margin="0,0,8,0"/>
                         <TextBlock Text="Total Revenue" Foreground="#757575" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center"/>
                     </StackPanel>
                     <TextBlock Text="{Binding TotalSales, StringFormat={}{0:C}}" FontSize="32" FontWeight="Bold" Foreground="#212121" Margin="0,16,0,8" />
                     <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="TrendingUp" Foreground="#4CAF50" VerticalAlignment="Center" Margin="0,0,4,0"/>
-                        <TextBlock Text="+15%" Foreground="#4CAF50" FontWeight="Bold" VerticalAlignment="Center"/>
+                        <materialDesign:PackIcon Kind="TrendingUp" Foreground="{DynamicResource PrimaryGreenBrush}" VerticalAlignment="Center" Margin="0,0,4,0"/>
+                        <TextBlock Text="+15%" Foreground="{DynamicResource PrimaryGreenBrush}" FontWeight="Bold" VerticalAlignment="Center"/>
                         <TextBlock Text=" vs last week" Foreground="#9E9E9E" FontSize="12" VerticalAlignment="Center" Margin="4,0,0,0"/>
                     </StackPanel>
                 </StackPanel>
@@ -62,13 +62,13 @@
             <materialDesign:Card Grid.Column="2" Padding="24" UniformCornerRadius="12" Background="White" materialDesign:ElevationAssist.Elevation="Dp1">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="ShoppingOutline" Foreground="#2196F3" Width="24" Height="24" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                        <materialDesign:PackIcon Kind="ShoppingOutline" Foreground="{DynamicResource PrimaryGreenBrush}" Width="24" Height="24" VerticalAlignment="Center" Margin="0,0,8,0"/>
                         <TextBlock Text="Total Orders" Foreground="#757575" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center"/>
                     </StackPanel>
                     <TextBlock Text="{Binding OrderCount}" FontSize="32" FontWeight="Bold" Foreground="#212121" Margin="0,16,0,8" />
                     <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="TrendingUp" Foreground="#4CAF50" VerticalAlignment="Center" Margin="0,0,4,0"/>
-                        <TextBlock Text="+12%" Foreground="#4CAF50" FontWeight="Bold" VerticalAlignment="Center"/>
+                        <materialDesign:PackIcon Kind="TrendingUp" Foreground="{DynamicResource PrimaryGreenBrush}" VerticalAlignment="Center" Margin="0,0,4,0"/>
+                        <TextBlock Text="+12%" Foreground="{DynamicResource PrimaryGreenBrush}" FontWeight="Bold" VerticalAlignment="Center"/>
                         <TextBlock Text=" vs last week" Foreground="#9E9E9E" FontSize="12" VerticalAlignment="Center" Margin="4,0,0,0"/>
                     </StackPanel>
                 </StackPanel>
@@ -78,13 +78,13 @@
             <materialDesign:Card Grid.Column="4" Padding="24" UniformCornerRadius="12" Background="White" materialDesign:ElevationAssist.Elevation="Dp1">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="ChartBar" Foreground="#9C27B0" Width="24" Height="24" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                        <materialDesign:PackIcon Kind="ChartBar" Foreground="{DynamicResource PrimaryGreenBrush}" Width="24" Height="24" VerticalAlignment="Center" Margin="0,0,8,0"/>
                         <TextBlock Text="Avg Order Value" Foreground="#757575" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center"/>
                     </StackPanel>
                     <TextBlock Text="{Binding AverageOrderValue, StringFormat={}{0:C}}" FontSize="32" FontWeight="Bold" Foreground="#212121" Margin="0,16,0,8" />
                     <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="TrendingUp" Foreground="#4CAF50" VerticalAlignment="Center" Margin="0,0,4,0"/>
-                        <TextBlock Text="+5%" Foreground="#4CAF50" FontWeight="Bold" VerticalAlignment="Center"/>
+                        <materialDesign:PackIcon Kind="TrendingUp" Foreground="{DynamicResource PrimaryGreenBrush}" VerticalAlignment="Center" Margin="0,0,4,0"/>
+                        <TextBlock Text="+5%" Foreground="{DynamicResource PrimaryGreenBrush}" FontWeight="Bold" VerticalAlignment="Center"/>
                         <TextBlock Text=" vs last week" Foreground="#9E9E9E" FontSize="12" VerticalAlignment="Center" Margin="4,0,0,0"/>
                     </StackPanel>
                 </StackPanel>
@@ -94,13 +94,13 @@
             <materialDesign:Card Grid.Column="6" Padding="24" UniformCornerRadius="12" Background="White" materialDesign:ElevationAssist.Elevation="Dp1">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="AccountMultipleOutline" Foreground="#FF9800" Width="24" Height="24" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                        <materialDesign:PackIcon Kind="AccountMultipleOutline" Foreground="{DynamicResource PrimaryGreenBrush}" Width="24" Height="24" VerticalAlignment="Center" Margin="0,0,8,0"/>
                         <TextBlock Text="Active Customers" Foreground="#757575" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center"/>
                     </StackPanel>
                     <TextBlock Text="{Binding ActiveCustomers}" FontSize="32" FontWeight="Bold" Foreground="#212121" Margin="0,16,0,8" />
                     <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="TrendingUp" Foreground="#4CAF50" VerticalAlignment="Center" Margin="0,0,4,0"/>
-                        <TextBlock Text="+8%" Foreground="#4CAF50" FontWeight="Bold" VerticalAlignment="Center"/>
+                        <materialDesign:PackIcon Kind="TrendingUp" Foreground="{DynamicResource PrimaryGreenBrush}" VerticalAlignment="Center" Margin="0,0,4,0"/>
+                        <TextBlock Text="+8%" Foreground="{DynamicResource PrimaryGreenBrush}" FontWeight="Bold" VerticalAlignment="Center"/>
                         <TextBlock Text=" vs last week" Foreground="#9E9E9E" FontSize="12" VerticalAlignment="Center" Margin="4,0,0,0"/>
                     </StackPanel>
                 </StackPanel>
@@ -147,50 +147,14 @@
 
             <!-- Right Column -->
             <Grid Grid.Column="2">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="24" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-
-                <!-- Recent Orders -->
-                <materialDesign:Card Grid.Row="0" Padding="24" UniformCornerRadius="12" Background="White" materialDesign:ElevationAssist.Elevation="Dp1">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <TextBlock Text="Recent Orders" FontSize="18" FontWeight="Bold" Foreground="#212121" Margin="0,0,0,16"/>
-                        <ItemsControl Grid.Row="1" ItemsSource="{Binding RecentOrders}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Border BorderThickness="0,0,0,1" BorderBrush="#EEEEEE" Padding="0,12">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*" />
-                                                <ColumnDefinition Width="Auto" />
-                                            </Grid.ColumnDefinitions>
-                                            <StackPanel>
-                                                <TextBlock Text="{Binding Id, StringFormat=Order #{0}}" FontWeight="SemiBold" Foreground="#424242" />
-                                                <TextBlock Text="{Binding OrderDate, StringFormat={}{0:MMM dd, HH:mm}}" FontSize="12" Foreground="#9E9E9E" />
-                                            </StackPanel>
-                                            <TextBlock Grid.Column="1" Text="{Binding TotalAmount, StringFormat={}{0:C}}" FontWeight="Bold" Foreground="#66BD76" VerticalAlignment="Center"/>
-                                        </Grid>
-                                    </Border>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </Grid>
-                </materialDesign:Card>
-
                 <!-- Top Items -->
-                <materialDesign:Card Grid.Row="2" Padding="24" UniformCornerRadius="12" Background="White" materialDesign:ElevationAssist.Elevation="Dp1">
+                <materialDesign:Card Padding="24" UniformCornerRadius="12" Background="White" materialDesign:ElevationAssist.Elevation="Dp1">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <TextBlock Text="Top Items" FontSize="18" FontWeight="Bold" Foreground="#212121" Margin="0,0,0,16"/>
+                        <TextBlock Text="Top 3 Best Selling Items" FontSize="18" FontWeight="Bold" Foreground="#212121" Margin="0,0,0,16"/>
                         <ItemsControl Grid.Row="1" ItemsSource="{Binding TopItems}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
@@ -208,7 +172,7 @@
                                                 <TextBlock Text="{Binding Name}" FontWeight="SemiBold" Foreground="#424242" />
                                                 <TextBlock Text="Item" FontSize="12" Foreground="#9E9E9E" />
                                             </StackPanel>
-                                            <TextBlock Grid.Column="2" Text="{Binding UnitsSold, StringFormat={}{0} sold}" FontWeight="Bold" Foreground="#2196F3" VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Column="2" Text="{Binding UnitsSold, StringFormat={}{0} sold}" FontWeight="Bold" Foreground="{DynamicResource PrimaryGreenBrush}" VerticalAlignment="Center"/>
                                         </Grid>
                                     </Border>
                                 </DataTemplate>

@@ -50,7 +50,7 @@ public class ReportingService : IReportingService
         {
             row.RelativeItem().Column(column =>
             {
-                column.Item().Text("RESTAURANT POS").FontSize(20).SemiBold().FontColor(Colors.Blue.Darken2);
+                column.Item().Text("KHAON POS").FontSize(20).SemiBold().FontColor(Colors.Blue.Darken2);
                 column.Item().Text("123 Main Street, Cityville");
                 column.Item().Text("Phone: (555) 123-4567");
             });
@@ -156,6 +156,28 @@ public class ReportingService : IReportingService
             .ToListAsync();
 
         var topItems = new System.Collections.Generic.List<RestaurantPOS.Data.Models.TopItemDTO>();
+
+        if (groupedData.Count == 0)
+        {
+            var fallbackItems = await _context.MenuItems
+                .Include(m => m.Category)
+                .OrderBy(m => m.Name)
+                .Take(count)
+                .ToListAsync();
+
+            foreach (var menuItem in fallbackItems)
+            {
+                topItems.Add(new RestaurantPOS.Data.Models.TopItemDTO
+                {
+                    Name = menuItem.Name,
+                    IconName = menuItem.Category?.IconName ?? "Food",
+                    UnitsSold = 0
+                });
+            }
+
+            return topItems;
+        }
+
         foreach(var data in groupedData) 
         {
              var menuItem = await _context.MenuItems

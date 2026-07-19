@@ -1,6 +1,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using RestaurantPOS.Data.Entities;
@@ -16,6 +17,13 @@ public class PosViewModel : BaseViewModel
 
     public ObservableCollection<Category> Categories { get; } = new();
     public ObservableCollection<MenuItem> MenuItems { get; } = new();
+
+    private Category? _selectedCategory;
+    public Category? SelectedCategory
+    {
+        get => _selectedCategory;
+        set => SetProperty(ref _selectedCategory, value);
+    }
     
     private Order? _currentOrder;
     public Order? CurrentOrder
@@ -60,25 +68,44 @@ public class PosViewModel : BaseViewModel
     public ICommand PrintReceiptCommand { get; }
     public ICommand LoadDataCommand { get; }
 
+    private readonly SemaphoreSlim _orderLock = new(1, 1);
+
     public PosViewModel(IInventoryService inventoryService, IOrderService orderService, IReportingService reportingService)
     {
         _inventoryService = inventoryService;
         _orderService = orderService;
         _reportingService = reportingService;
 
-        SelectCategoryCommand = new RelayCommand<Category>(async c => await LoadMenuItems(c?.Id));
-        AddToCartCommand = new RelayCommand<MenuItem>(async m => await AddToCart(m));
-        RemoveFromCartCommand = new RelayCommand<OrderItem>(async o => await RemoveFromCart(o));
-        IncreaseQuantityCommand = new RelayCommand<OrderItem>(async o => await UpdateQuantity(o, 1));
-        DecreaseQuantityCommand = new RelayCommand<OrderItem>(async o => await UpdateQuantity(o, -1));
-        UpdateExtraChargeCommand = new RelayCommand<OrderItem>(async o => await UpdateExtraCharge(o));
-        ClearAllCommand = new RelayCommand(async _ => await ClearAll());
-        CheckoutCommand = new RelayCommand(async _ => await PlaceOrder(), _ => _currentOrder != null && _currentOrder.OrderItems.Any());
-        PrintReceiptCommand = new RelayCommand(async _ => await PrintReceipt(), _ => _currentOrder != null);
+        SelectCategoryCommand = new RelayCommand<Category>(async c => 
+        {
+            SelectedCategory = c;
+            await LoadMenuItems(c?.Id);
+        });
+        AddToCartCommand = new RelayCommand<MenuItem>(async m => await ExecuteOrderAction(() => AddToCart(m)));
+        RemoveFromCartCommand = new RelayCommand<OrderItem>(async o => await ExecuteOrderAction(() => RemoveFromCart(o)));
+        IncreaseQuantityCommand = new RelayCommand<OrderItem>(async o => await ExecuteOrderAction(() => UpdateQuantity(o, 1)));
+        DecreaseQuantityCommand = new RelayCommand<OrderItem>(async o => await ExecuteOrderAction(() => UpdateQuantity(o, -1)));
+        UpdateExtraChargeCommand = new RelayCommand<OrderItem>(async o => await ExecuteOrderAction(() => UpdateExtraCharge(o)));
+        ClearAllCommand = new RelayCommand(async _ => await ExecuteOrderAction(ClearAll));
+        CheckoutCommand = new RelayCommand(async _ => await ExecuteOrderAction(PlaceOrder), _ => _currentOrder != null && _currentOrder.OrderItems.Any());
+        PrintReceiptCommand = new RelayCommand(async _ => await ExecuteOrderAction(PrintReceipt), _ => _currentOrder != null);
         LoadDataCommand = new RelayCommand(async _ => await InitializeAsync());
         
         // Load data on initialization
         _ = InitializeAsync();
+    }
+
+    private async Task ExecuteOrderAction(Func<Task> action)
+    {
+        await _orderLock.WaitAsync();
+        try
+        {
+            await action();
+        }
+        finally
+        {
+            _orderLock.Release();
+        }
     }
 
     public async Task InitializeAsync()
@@ -97,6 +124,9 @@ public class PosViewModel : BaseViewModel
             // Create a new order
             var userId = LoginViewModel.CurrentUser?.Id ?? 2;
             CurrentOrder = await _orderService.CreateOrderAsync(null, userId);
+
+            // Default to "All" category selected
+            SelectedCategory = Categories.FirstOrDefault(c => c.Id == 0);
         }
         catch (Exception ex)
         {
@@ -217,6 +247,10 @@ public class PosViewModel : BaseViewModel
         // Start a new order
         var userId = LoginViewModel.CurrentUser?.Id ?? 2;
         CurrentOrder = await _orderService.CreateOrderAsync(null, userId);
+
+        // Reset category selection to "All"
+        SelectedCategory = Categories.FirstOrDefault(c => c.Id == 0);
+        await LoadMenuItems(0);
     }
 
     private async Task PrintReceipt()
