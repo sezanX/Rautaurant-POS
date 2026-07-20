@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "d:\\Software Dev Projects\\Rautaurant-POS-main\\KHAON POS\\KHAONPOS.csproj": {}
+    "D:\\Software Dev Projects\\Rautaurant-POS-main\\KHAON POS\\KHAONPOS.csproj": {}
   },
   "projects": {
-    "d:\\Software Dev Projects\\Rautaurant-POS-main\\KHAON POS\\KHAONPOS.csproj": {
+    "D:\\Software Dev Projects\\Rautaurant-POS-main\\KHAON POS\\KHAONPOS.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "d:\\Software Dev Projects\\Rautaurant-POS-main\\KHAON POS\\KHAONPOS.csproj",
+        "projectUniqueName": "D:\\Software Dev Projects\\Rautaurant-POS-main\\KHAON POS\\KHAONPOS.csproj",
         "projectName": "KHAONPOS",
-        "projectPath": "d:\\Software Dev Projects\\Rautaurant-POS-main\\KHAON POS\\KHAONPOS.csproj",
+        "projectPath": "D:\\Software Dev Projects\\Rautaurant-POS-main\\KHAON POS\\KHAONPOS.csproj",
         "packagesPath": "C:\\Users\\Jabir\\.nuget\\packages\\",
-        "outputPath": "d:\\Software Dev Projects\\Rautaurant-POS-main\\KHAON POS\\obj\\",
+        "outputPath": "D:\\Software Dev Projects\\Rautaurant-POS-main\\KHAON POS\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Jabir\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -72,11 +72,18 @@
               "target": "Package",
               "version": "[8.0.0, )"
             },
+            "Microsoft.NET.ILLink.Tasks": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.29, )",
+              "autoReferenced": true
+            },
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
               "version": "[8.0.4, )"
             },
             "QuestPDF": {
+              "include": "Runtime, Compile, Native, Analyzers",
               "target": "Package",
               "version": "[2024.7.0, )"
             },
@@ -102,6 +109,10 @@
               "version": "[8.0.29, 8.0.29]"
             },
             {
+              "name": "Microsoft.AspNetCore.App.Runtime.win-x64",
+              "version": "[8.0.29, 8.0.29]"
+            },
+            {
               "name": "Microsoft.NETCore.App.Host.win-x64",
               "version": "[8.0.29, 8.0.29]"
             },
@@ -110,7 +121,15 @@
               "version": "[8.0.29, 8.0.29]"
             },
             {
+              "name": "Microsoft.NETCore.App.Runtime.win-x64",
+              "version": "[8.0.29, 8.0.29]"
+            },
+            {
               "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[8.0.29, 8.0.29]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Runtime.win-x64",
               "version": "[8.0.29, 8.0.29]"
             }
           ],
@@ -123,6 +142,11 @@
             }
           },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.302/PortableRuntimeIdentifierGraph.json"
+        }
+      },
+      "runtimes": {
+        "win-x64": {
+          "#import": []
         }
       }
     }

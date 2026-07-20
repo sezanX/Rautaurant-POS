@@ -1,0 +1,2 @@
+D:\Software Dev Projects\Rautaurant-POS-main\KHAON POS\bin\Release\publish\KHAONPOS.pdb
+D:\Software Dev Projects\Rautaurant-POS-main\KHAON POS\bin\Release\publish\KHAONPOS.exe

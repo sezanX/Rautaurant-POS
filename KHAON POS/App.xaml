@@ -10,6 +10,15 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign3.Defaults.xaml" />
             </ResourceDictionary.MergedDictionaries>
             
+            <FontFamily x:Key="MaterialDesignFont">Arial, Calibri, Segoe UI, sans-serif</FontFamily>
+
+            <Style TargetType="{x:Type TextBlock}">
+                <Setter Property="FontFamily" Value="Arial, Calibri, Segoe UI, sans-serif" />
+            </Style>
+            <Style TargetType="{x:Type Control}">
+                <Setter Property="FontFamily" Value="Arial, Calibri, Segoe UI, sans-serif" />
+            </Style>
+
             <SolidColorBrush x:Key="AppBackgroundBrush" Color="#EAF9ED" />
             <SolidColorBrush x:Key="PrimaryGreenBrush" Color="#66BD76" />
             <SolidColorBrush x:Key="TextDarkBrush" Color="#212121" />

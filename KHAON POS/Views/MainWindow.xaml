@@ -13,7 +13,7 @@
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource AppBackgroundBrush}"
-        FontFamily="{DynamicResource MaterialDesignFont}"
+        FontFamily="Arial, Calibri, Segoe UI, sans-serif"
         Icon="/logo.png">
 
     <Window.Resources>
