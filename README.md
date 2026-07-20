@@ -12,7 +12,6 @@ A production-ready Desktop Restaurant Point-of-Sale (POS) application built on m
 - **Database**: PostgreSQL (Cloud-hosted via Neon.tech for real-time multi-user sync)
 - **ORM**: Entity Framework Core 8 (Npgsql)
 - **Reporting**: WPF FlowDocument Printing & QuestPDF
-- **Barcode & QR**: ZXing.Net
 - **Charts & Analytics**: LiveCharts2 (LiveChartsCore.SkiaSharpView.WPF)
 - **Dependency Injection**: Microsoft.Extensions.Hosting
 
