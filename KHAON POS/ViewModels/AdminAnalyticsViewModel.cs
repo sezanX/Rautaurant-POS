@@ -6,20 +6,19 @@ using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using SkiaSharp;
-using RestaurantPOS.Services;
+using KHAONPOS.Services;
 
-namespace RestaurantPOS.ViewModels;
+namespace KHAONPOS.ViewModels;
 
 public class AdminAnalyticsViewModel : BaseViewModel
 {
     private readonly IReportingService _reportingService;
 
-    public ObservableCollection<ISeries> CategorySalesSeries { get; } = new();
+    public ObservableCollection<ISeries> CategorySalesSeries { get; } = [];
 
     public AdminAnalyticsViewModel(IReportingService reportingService)
     {
         _reportingService = reportingService;
-
         _ = LoadAnalyticsData();
     }
 
@@ -34,7 +33,7 @@ public class AdminAnalyticsViewModel : BaseViewModel
             {
                 CategorySalesSeries.Add(new PieSeries<double>
                 {
-                    Values = new double[] { kvp.Value },
+                    Values = [kvp.Value],
                     Name = kvp.Key
                 });
             }
@@ -43,10 +42,10 @@ public class AdminAnalyticsViewModel : BaseViewModel
         {
             // Fallback in case of database or connection issues
             CategorySalesSeries.Clear();
-            CategorySalesSeries.Add(new PieSeries<double> { Values = new double[] { 45 }, Name = "Main Course (Demo)" });
-            CategorySalesSeries.Add(new PieSeries<double> { Values = new double[] { 25 }, Name = "Beverages (Demo)" });
-            CategorySalesSeries.Add(new PieSeries<double> { Values = new double[] { 20 }, Name = "Appetizers (Demo)" });
-            CategorySalesSeries.Add(new PieSeries<double> { Values = new double[] { 10 }, Name = "Desserts (Demo)" });
+            CategorySalesSeries.Add(new PieSeries<double> { Values = [45], Name = "Main Course (Demo)" });
+            CategorySalesSeries.Add(new PieSeries<double> { Values = [25], Name = "Beverages (Demo)" });
+            CategorySalesSeries.Add(new PieSeries<double> { Values = [20], Name = "Appetizers (Demo)" });
+            CategorySalesSeries.Add(new PieSeries<double> { Values = [10], Name = "Desserts (Demo)" });
         }
     }
 }

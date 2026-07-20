@@ -2,18 +2,18 @@ using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using RestaurantPOS.Data;
-using RestaurantPOS.Data.Entities;
+using KHAONPOS.Data;
+using KHAONPOS.Data.Entities;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
-namespace RestaurantPOS.ViewModels;
+namespace KHAONPOS.ViewModels;
 
 public class AdminUsersViewModel : BaseViewModel
 {
     private readonly AppDbContext _context;
 
-    public ObservableCollection<User> Users { get; } = new();
+    public ObservableCollection<User> Users { get; } = [];
 
     private User? _selectedUser;
     public User? SelectedUser
@@ -43,7 +43,7 @@ public class AdminUsersViewModel : BaseViewModel
         set => SetProperty(ref _newRole, value);
     }
 
-    public ObservableCollection<string> AvailableRoles { get; } = new() { "Admin", "Cashier", "Kitchen" };
+    public ObservableCollection<string> AvailableRoles { get; } = ["Admin", "Cashier", "Kitchen"];
 
     public ICommand AddUserCommand { get; }
     public ICommand DeleteUserCommand { get; }
@@ -90,7 +90,7 @@ public class AdminUsersViewModel : BaseViewModel
         NewUsername = "";
         NewPassword = "";
         NewRole = "Cashier";
-        
+
         await LoadUsersAsync();
     }
 

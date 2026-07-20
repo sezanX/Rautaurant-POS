@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace RestaurantPOS.Views;
+namespace KHAONPOS.Views;
 
 public class RoleSelectedBrushConverter : IValueConverter
 {
@@ -53,6 +53,25 @@ public class RoleSelectedThicknessConverter : IValueConverter
         var isSelected = selectedRole == role;
 
         return isSelected ? new Thickness(2) : new Thickness(1);
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+public class RoleSelectedLogoBackgroundConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        var selectedRole = value as string;
+        var role = parameter as string;
+        var isSelected = selectedRole == role;
+
+        return isSelected
+            ? new SolidColorBrush(Colors.White)
+            : new SolidColorBrush((Color)ColorConverter.ConvertFromString("#E8F5E9"));
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

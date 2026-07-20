@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using RestaurantPOS.Data.Entities;
+using KHAONPOS.Data.Entities;
 
-namespace RestaurantPOS.Services;
+namespace KHAONPOS.Services;
 
 public interface IOrderService
 {
-    Task<Order> CreateOrderAsync(int? tableId, int userId);
+    Task<Order> CreateOrderAsync(int userId);
     Task<Order?> GetOrderByIdAsync(int orderId);
     Task<List<Order>> GetActiveOrdersAsync();
     Task<Order> AddItemToOrderAsync(int orderId, int menuItemId, int quantity, string? remarks = null);

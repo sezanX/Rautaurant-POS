@@ -1,15 +1,16 @@
 using System;
+using System.IO;
 using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
-using RestaurantPOS.Data;
-using RestaurantPOS.Services;
-using RestaurantPOS.ViewModels;
-using RestaurantPOS.Views;
+using KHAONPOS.Data;
+using KHAONPOS.Services;
+using KHAONPOS.ViewModels;
+using KHAONPOS.Views;
 
-namespace RestaurantPOS;
+namespace KHAONPOS;
 
 public partial class App : Application
 {
@@ -20,7 +21,7 @@ public partial class App : Application
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
         _host = Host.CreateDefaultBuilder()
-            .ConfigureServices((context, services) =>
+            .ConfigureServices((_, services) =>
             {
                 // Register DbContext
                 services.AddDbContext<AppDbContext>(ServiceLifetime.Transient);
@@ -29,19 +30,19 @@ public partial class App : Application
                 services.AddTransient<IOrderService, OrderService>();
                 services.AddTransient<IInventoryService, InventoryService>();
                 services.AddTransient<IReportingService, ReportingService>();
-                services.AddTransient<IBarcodeService, BarcodeService>();
 
                 // Register ViewModels
                 services.AddSingleton<MainViewModel>();
                 services.AddTransient<LoginViewModel>();
-                services.AddTransient<PosViewModel>();
+                services.AddTransient<CashierViewModel>();
                 services.AddTransient<KitchenViewModel>();
-                services.AddTransient<DashboardViewModel>();
+                services.AddTransient<AdminDashboardViewModel>();
                 services.AddTransient<AdminOverviewViewModel>();
                 services.AddTransient<AdminAnalyticsViewModel>();
                 services.AddTransient<AdminReportsViewModel>();
                 services.AddTransient<AdminUsersViewModel>();
                 services.AddTransient<AdminInventoryViewModel>();
+                services.AddTransient<AdminCategoryViewModel>();
 
                 // Register MainWindow
                 services.AddSingleton<MainWindow>();
@@ -57,11 +58,8 @@ public partial class App : Application
 
     private void OnStartup(object sender, StartupEventArgs e)
     {
-        this.DispatcherUnhandledException += (s, args) => 
-        {
-            System.IO.File.WriteAllText("crash.log", args.Exception.ToString());
-        };
-        
+        DispatcherUnhandledException += (s, args) => File.WriteAllText("crash.log", args.Exception.ToString());
+
         try
         {
             _host.Start();

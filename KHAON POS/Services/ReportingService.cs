@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,10 +7,11 @@ using Microsoft.EntityFrameworkCore;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
-using RestaurantPOS.Data;
-using RestaurantPOS.Data.Entities;
+using KHAONPOS.Data;
+using KHAONPOS.Data.Entities;
+using KHAONPOS.Data.Models;
 
-namespace RestaurantPOS.Services;
+namespace KHAONPOS.Services;
 
 public class ReportingService : IReportingService
 {
@@ -21,7 +23,7 @@ public class ReportingService : IReportingService
         QuestPDF.Settings.License = LicenseType.Community;
     }
 
-    public async Task<string> GenerateReceiptPdfAsync(Order order, Payment payment)
+    public Task<string> GenerateReceiptPdfAsync(Order order, Payment? payment = null)
     {
         var filePath = Path.Combine(Path.GetTempPath(), $"Receipt_{order.Id}_{DateTime.Now:yyyyMMddHHmmss}.pdf");
 
@@ -29,124 +31,120 @@ public class ReportingService : IReportingService
         {
             container.Page(page =>
             {
-                page.Size(PageSizes.A5);
-                page.Margin(1, Unit.Centimetre);
+                page.ContinuousSize(80, Unit.Millimetre);
+                page.Margin(4, Unit.Millimetre);
                 page.PageColor(Colors.White);
-                page.DefaultTextStyle(x => x.FontSize(10).FontFamily(Fonts.Arial));
+                page.DefaultTextStyle(x => x.FontSize(9.5f).FontFamily(Fonts.Arial));
 
-                page.Header().Element(ComposeHeader);
-                page.Content().Element(x => ComposeContent(x, order, payment));
-                page.Footer().Element(ComposeFooter);
+                page.Content().MinHeight(100, Unit.Millimetre).Column(column =>
+                {
+                    column.Spacing(4);
+
+                    // Header
+                    column.Item().AlignCenter().Text("KHAON POS RECEIPT").FontSize(14).Bold();
+                    column.Item().AlignCenter().Text($"Order #{order.Id}").FontSize(11).SemiBold();
+                    column.Item().AlignCenter().Text($"Date: {order.OrderDate:dd/MM/yyyy h:mm:ss tt}").FontSize(9);
+
+                    column.Item().PaddingVertical(2).LineHorizontal(0.75f).LineColor(Colors.Grey.Medium);
+
+                    // Items list
+                    foreach (var item in order.OrderItems)
+                    {
+                        column.Item().Row(row =>
+                        {
+                            var itemName = item.MenuItem?.Name ?? "Item";
+                            row.RelativeItem().Text($"{item.Quantity}x {itemName}").Bold();
+                            row.AutoItem().Text($"US${item.TotalPrice:F2}").Bold();
+                        });
+
+                        if (!string.IsNullOrEmpty(item.Remarks))
+                        {
+                            column.Item().PaddingLeft(6).Text($"Note: {item.Remarks}").FontSize(8.5f).Italic().FontColor(Colors.Grey.Darken1);
+                        }
+
+                        if (item.ExtraCharge > 0)
+                        {
+                            column.Item().PaddingLeft(6).Text($"+ Extra: US${item.ExtraCharge * item.Quantity:F2}").FontSize(8.5f).FontColor(Colors.Grey.Darken1);
+                        }
+                    }
+
+                    column.Item().PaddingVertical(2).LineHorizontal(0.75f).LineColor(Colors.Grey.Medium);
+
+                    // Total
+                    column.Item().AlignRight().Text($"Total: US${order.TotalAmount:F2}").FontSize(12).Bold();
+
+                    if (payment != null)
+                    {
+                        column.Item().AlignRight().Text($"Paid ({payment.PaymentMethod}): US${payment.AmountPaid:F2}").FontSize(9);
+                    }
+
+                    column.Item().PaddingTop(6).AlignCenter().Text("Thank you!").Italic().FontSize(9);
+                });
             });
         })
         .GeneratePdf(filePath);
 
-        return await Task.FromResult(filePath);
+        return Task.FromResult(filePath);
     }
 
-    private void ComposeHeader(IContainer container)
+    public async Task<decimal> GetTotalSalesAsync(DateTime? startDate = null, DateTime? endDate = null)
     {
-        container.Row(row =>
-        {
-            row.RelativeItem().Column(column =>
-            {
-                column.Item().Text("KHAON POS").FontSize(20).SemiBold().FontColor(Colors.Blue.Darken2);
-                column.Item().Text("123 Main Street, Cityville");
-                column.Item().Text("Phone: (555) 123-4567");
-            });
-        });
+        var paymentsQuery = _context.Payments.AsQueryable();
+        if (startDate.HasValue)
+            paymentsQuery = paymentsQuery.Where(p => p.PaymentDate >= startDate.Value);
+        if (endDate.HasValue)
+            paymentsQuery = paymentsQuery.Where(p => p.PaymentDate <= endDate.Value);
+
+        var totalFromPayments = await paymentsQuery.SumAsync(p => (decimal?)p.AmountPaid) ?? 0m;
+
+        if (totalFromPayments > 0m)
+            return totalFromPayments;
+
+        var ordersQuery = _context.Orders.Where(o => o.Status == "Completed" || o.Status == "Paid");
+        if (startDate.HasValue)
+            ordersQuery = ordersQuery.Where(o => o.OrderDate >= startDate.Value);
+        if (endDate.HasValue)
+            ordersQuery = ordersQuery.Where(o => o.OrderDate <= endDate.Value);
+
+        return await ordersQuery.SumAsync(o => (decimal?)o.TotalAmount) ?? 0m;
     }
 
-    private void ComposeContent(IContainer container, Order order, Payment payment)
+    public async Task<int> GetOrderCountAsync(DateTime? startDate = null, DateTime? endDate = null)
     {
-        container.PaddingVertical(1, Unit.Centimetre).Column(column =>
-        {
-            column.Spacing(5);
+        var ordersQuery = _context.Orders.Where(o => o.Status != "Cancelled" && (o.TotalAmount > 0 || o.OrderItems.Any()));
+        if (startDate.HasValue)
+            ordersQuery = ordersQuery.Where(o => o.OrderDate >= startDate.Value);
+        if (endDate.HasValue)
+            ordersQuery = ordersQuery.Where(o => o.OrderDate <= endDate.Value);
 
-            column.Item().Row(row =>
-            {
-                row.RelativeItem().Text($"Order #: {order.Id}");
-                row.RelativeItem().AlignRight().Text($"Date: {order.OrderDate:g}");
-            });
-
-            column.Item().Row(row =>
-            {
-                row.RelativeItem().Text($"Table: {(order.Table != null ? order.Table.TableNumber.ToString() : "Takeout")}");
-                row.RelativeItem().AlignRight().Text($"Cashier: {(order.User != null ? order.User.Username : "N/A")}");
-            });
-
-            column.Item().PaddingTop(10).LineHorizontal(1).LineColor(Colors.Grey.Lighten2);
-
-            column.Item().Table(table =>
-            {
-                table.ColumnsDefinition(columns =>
-                {
-                    columns.ConstantColumn(25);
-                    columns.RelativeColumn();
-                    columns.ConstantColumn(50);
-                    columns.ConstantColumn(50);
-                });
-
-                table.Header(header =>
-                {
-                    header.Cell().Text("Qty").SemiBold();
-                    header.Cell().Text("Item").SemiBold();
-                    header.Cell().AlignRight().Text("Unit").SemiBold();
-                    header.Cell().AlignRight().Text("Total").SemiBold();
-                    
-                    header.Cell().ColumnSpan(4).PaddingTop(5).BorderBottom(1).BorderColor(Colors.Black);
-                });
-
-                foreach (var item in order.OrderItems)
-                {
-                    table.Cell().PaddingVertical(2).Text(item.Quantity.ToString());
-                    table.Cell().PaddingVertical(2).Text(item.MenuItem?.Name ?? "Unknown");
-                    table.Cell().PaddingVertical(2).AlignRight().Text($"${item.UnitPrice:F2}");
-                    table.Cell().PaddingVertical(2).AlignRight().Text($"${(item.Quantity * item.UnitPrice):F2}");
-                }
-            });
-
-            column.Item().PaddingTop(10).LineHorizontal(1).LineColor(Colors.Grey.Lighten2);
-
-            column.Item().AlignRight().Text($"Total: ${order.TotalAmount:F2}").FontSize(14).SemiBold();
-            column.Item().AlignRight().Text($"Paid ({payment.PaymentMethod}): ${payment.AmountPaid:F2}");
-        });
+        return await ordersQuery.CountAsync();
     }
 
-    private void ComposeFooter(IContainer container)
+    public async Task<int> GetActiveCustomersCountAsync(DateTime? startDate = null, DateTime? endDate = null)
     {
-        container.AlignCenter().Text("Thank you for your business!").Italic().FontSize(10);
+        var ordersQuery = _context.Orders.Where(o => o.Status != "Cancelled");
+        if (startDate.HasValue)
+            ordersQuery = ordersQuery.Where(o => o.OrderDate >= startDate.Value);
+        if (endDate.HasValue)
+            ordersQuery = ordersQuery.Where(o => o.OrderDate <= endDate.Value);
+
+        return await ordersQuery.CountAsync();
     }
 
-    public async Task<decimal> GetTotalSalesAsync(DateTime date)
+    public Task<List<Order>> GetRecentOrdersAsync(int count = 50)
     {
-        return await _context.Payments
-            .Where(p => p.PaymentDate.Date == date.Date)
-            .SumAsync(p => p.AmountPaid);
-    }
-
-    public async Task<int> GetOrderCountAsync(DateTime date)
-    {
-        return await _context.Orders
-            .Where(o => o.OrderDate.Date == date.Date)
-            .CountAsync();
-    }
-
-    public async Task<System.Collections.Generic.List<Order>> GetRecentOrdersAsync(int count = 50)
-    {
-        return await _context.Orders
+        return _context.Orders
             .Include(o => o.User)
-            .Include(o => o.Table)
             .OrderByDescending(o => o.OrderDate)
             .Take(count)
             .ToListAsync();
     }
 
-    public async Task<System.Collections.Generic.List<RestaurantPOS.Data.Models.TopItemDTO>> GetTopItemsAsync(int count = 5)
+    public async Task<List<TopItemDTO>> GetTopItemsAsync(int count = 5)
     {
         var groupedData = await _context.OrderItems
             .GroupBy(oi => oi.MenuItemId)
-            .Select(g => new 
+            .Select(g => new
             {
                 MenuItemId = g.Key,
                 UnitsSold = g.Sum(oi => oi.Quantity)
@@ -155,7 +153,7 @@ public class ReportingService : IReportingService
             .Take(count)
             .ToListAsync();
 
-        var topItems = new System.Collections.Generic.List<RestaurantPOS.Data.Models.TopItemDTO>();
+        var topItems = new List<TopItemDTO>();
 
         if (groupedData.Count == 0)
         {
@@ -167,7 +165,7 @@ public class ReportingService : IReportingService
 
             foreach (var menuItem in fallbackItems)
             {
-                topItems.Add(new RestaurantPOS.Data.Models.TopItemDTO
+                topItems.Add(new TopItemDTO
                 {
                     Name = menuItem.Name,
                     IconName = menuItem.Category?.IconName ?? "Food",
@@ -178,35 +176,39 @@ public class ReportingService : IReportingService
             return topItems;
         }
 
-        foreach(var data in groupedData) 
+        var itemIds = groupedData.Select(d => d.MenuItemId);
+        var menuItemsDict = await _context.MenuItems
+            .Include(m => m.Category)
+            .Where(m => itemIds.Contains(m.Id))
+            .ToDictionaryAsync(m => m.Id);
+
+        foreach (var data in groupedData)
         {
-             var menuItem = await _context.MenuItems
-                 .Include(m => m.Category)
-                 .FirstOrDefaultAsync(m => m.Id == data.MenuItemId);
-                 
-             topItems.Add(new RestaurantPOS.Data.Models.TopItemDTO
-             {
-                 Name = menuItem?.Name ?? "Unknown",
-                 IconName = menuItem?.Category?.IconName ?? "Food",
-                 UnitsSold = data.UnitsSold
-             });
+            menuItemsDict.TryGetValue(data.MenuItemId, out var menuItem);
+            topItems.Add(new TopItemDTO
+            {
+                Name = menuItem?.Name ?? "Unknown",
+                IconName = menuItem?.Category?.IconName ?? "Food",
+                UnitsSold = data.UnitsSold
+            });
         }
-        
+
         return topItems;
     }
 
-    public async Task<System.Collections.Generic.Dictionary<string, double>> GetCategorySalesAsync()
+    public async Task<Dictionary<string, double>> GetCategorySalesAsync()
     {
-        var categorySales = await _context.OrderItems
+        var items = await _context.OrderItems
             .Include(oi => oi.MenuItem)
-            .ThenInclude(m => m.Category)
-            .GroupBy(oi => oi.MenuItem != null && oi.MenuItem.Category != null ? oi.MenuItem.Category.Name : "Other")
-            .Select(g => new
-            {
-                CategoryName = g.Key,
-                Sales = g.Sum(oi => (double)oi.Quantity * (double)(oi.UnitPrice + oi.ExtraCharge))
-            })
-            .ToDictionaryAsync(x => x.CategoryName, x => x.Sales);
+            .ThenInclude(m => m!.Category)
+            .ToListAsync();
+
+        var categorySales = items
+            .GroupBy(oi => oi.MenuItem?.Category?.Name ?? "Other")
+            .ToDictionary(
+                g => g.Key,
+                g => g.Sum(oi => (double)oi.Quantity * (double)(oi.UnitPrice + oi.ExtraCharge))
+            );
 
         return categorySales;
     }
@@ -214,7 +216,7 @@ public class ReportingService : IReportingService
     public async Task<(string[] Labels, decimal[] Values)> GetWeeklySalesAsync()
     {
         var startDate = DateTime.Today.AddDays(-6);
-        
+
         var dailySales = await _context.Payments
             .Where(p => p.PaymentDate.Date >= startDate.Date)
             .GroupBy(p => p.PaymentDate.Date)
@@ -237,7 +239,7 @@ public class ReportingService : IReportingService
     public async Task<(string[] Labels, decimal[] Values)> GetMonthlySalesAsync()
     {
         var startDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1).AddMonths(-5);
-        
+
         var monthlySales = await _context.Payments
             .Where(p => p.PaymentDate.Date >= startDate.Date)
             .GroupBy(p => new { p.PaymentDate.Year, p.PaymentDate.Month })

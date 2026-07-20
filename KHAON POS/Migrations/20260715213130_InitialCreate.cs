@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace RestaurantPOS.Migrations
+namespace KHAONPOS.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration
@@ -23,10 +23,7 @@ namespace RestaurantPOS.Migrations
                     Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     IconName = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Categories", x => x.Id);
-                });
+                constraints: table => table.PrimaryKey("PK_Categories", x => x.Id));
 
             migrationBuilder.CreateTable(
                 name: "Tables",
@@ -38,10 +35,7 @@ namespace RestaurantPOS.Migrations
                     Status = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
                     Capacity = table.Column<int>(type: "integer", nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Tables", x => x.Id);
-                });
+                constraints: table => table.PrimaryKey("PK_Tables", x => x.Id));
 
             migrationBuilder.CreateTable(
                 name: "Users",
@@ -53,10 +47,7 @@ namespace RestaurantPOS.Migrations
                     PasswordHash = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     Role = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.Id);
-                });
+                constraints: table => table.PrimaryKey("PK_Users", x => x.Id));
 
             migrationBuilder.CreateTable(
                 name: "MenuItems",
@@ -167,7 +158,7 @@ namespace RestaurantPOS.Migrations
 
             migrationBuilder.InsertData(
                 table: "Categories",
-                columns: new[] { "Id", "IconName", "Name" },
+                columns: ["Id", "IconName", "Name"],
                 values: new object[,]
                 {
                     { 1, "Hamburger", "Burgers" },
@@ -178,7 +169,7 @@ namespace RestaurantPOS.Migrations
 
             migrationBuilder.InsertData(
                 table: "Tables",
-                columns: new[] { "Id", "Capacity", "Status", "TableNumber" },
+                columns: ["Id", "Capacity", "Status", "TableNumber"],
                 values: new object[,]
                 {
                     { 1, 4, "Available", 1 },
@@ -190,7 +181,7 @@ namespace RestaurantPOS.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "PasswordHash", "Role", "Username" },
+                columns: ["Id", "PasswordHash", "Role", "Username"],
                 values: new object[,]
                 {
                     { 1, "admin", "Admin", "admin" },
@@ -200,7 +191,7 @@ namespace RestaurantPOS.Migrations
 
             migrationBuilder.InsertData(
                 table: "MenuItems",
-                columns: new[] { "Id", "Barcode", "CategoryId", "Description", "ImagePath", "Name", "PreparationTimeMinutes", "Price", "StockQuantity" },
+                columns: ["Id", "Barcode", "CategoryId", "Description", "ImagePath", "Name", "PreparationTimeMinutes", "Price", "StockQuantity"],
                 values: new object[,]
                 {
                     { 1, "10001", 1, "Beef patty with cheese", "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&q=80", "Classic Cheeseburger", 5, 9.99m, 50 },
@@ -214,7 +205,7 @@ namespace RestaurantPOS.Migrations
 
             migrationBuilder.InsertData(
                 table: "Orders",
-                columns: new[] { "Id", "EstimatedCompletionTime", "OrderDate", "Status", "TableId", "TotalAmount", "UserId" },
+                columns: ["Id", "EstimatedCompletionTime", "OrderDate", "Status", "TableId", "TotalAmount", "UserId"],
                 values: new object[,]
                 {
                     { 1, new DateTime(2026, 7, 16, 12, 15, 0, 0, DateTimeKind.Local), new DateTime(2026, 7, 16, 12, 0, 0, 0, DateTimeKind.Local), "Completed", 1, 45.20m, 2 },
@@ -224,7 +215,7 @@ namespace RestaurantPOS.Migrations
 
             migrationBuilder.InsertData(
                 table: "Payments",
-                columns: new[] { "Id", "AmountPaid", "OrderId", "PaymentDate", "PaymentMethod" },
+                columns: ["Id", "AmountPaid", "OrderId", "PaymentDate", "PaymentMethod"],
                 values: new object[,]
                 {
                     { 1, 45.20m, 1, new DateTime(2026, 7, 16, 12, 30, 0, 0, DateTimeKind.Local), "Card" },

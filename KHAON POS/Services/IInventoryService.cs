@@ -1,14 +1,16 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using RestaurantPOS.Data.Entities;
+using KHAONPOS.Data.Entities;
 
-namespace RestaurantPOS.Services;
+namespace KHAONPOS.Services;
 
 public interface IInventoryService
 {
     Task<List<Category>> GetCategoriesAsync();
     Task<List<MenuItem>> GetMenuItemsAsync();
     Task<List<MenuItem>> GetMenuItemsByCategoryAsync(int categoryId);
-    Task<MenuItem?> GetMenuItemByBarcodeAsync(string barcode);
     Task UpdateStockAsync(int menuItemId, int quantityChange);
+    Task<Category> AddCategoryAsync(Category category);
+    Task UpdateCategoryAsync(Category category);
+    Task<(bool Success, string Message)> DeleteCategoryAsync(int categoryId);
 }

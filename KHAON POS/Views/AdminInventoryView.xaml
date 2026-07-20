@@ -1,4 +1,4 @@
-<UserControl x:Class="RestaurantPOS.Views.AdminInventoryView"
+<UserControl x:Class="KHAONPOS.Views.AdminInventoryView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
@@ -8,7 +8,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Text="Inventory Management" FontSize="28" FontWeight="Bold" Foreground="#212121" Margin="0,0,0,24" />
+        <TextBlock Grid.Row="0" Text="Menu Items Management" FontSize="28" FontWeight="Bold" Foreground="#212121" Margin="0,0,0,24" />
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -136,7 +136,8 @@
                         
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                             <Button Content="Save Item" Command="{Binding SaveItemCommand}" Background="{DynamicResource PrimaryGreenBrush}" BorderBrush="{DynamicResource PrimaryGreenBrush}" Foreground="White" Margin="0,0,10,0" Width="120" />
-                            <Button Content="Delete Item" Command="{Binding DeleteItemCommand}" Style="{StaticResource MaterialDesignOutlinedButton}" Foreground="#E53935" BorderBrush="#E53935" />
+                            <Button Content="Delete Item" Command="{Binding DeleteItemCommand}" Style="{StaticResource MaterialDesignOutlinedButton}" Foreground="#E53935" BorderBrush="#E53935" Margin="0,0,10,0" />
+                            <Button Content="Clear" Command="{Binding ClearFormCommand}" Style="{StaticResource MaterialDesignFlatButton}" Foreground="#757575" />
                         </StackPanel>
                     </StackPanel>
                 </ScrollViewer>

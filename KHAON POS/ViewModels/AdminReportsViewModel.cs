@@ -2,16 +2,16 @@ using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using RestaurantPOS.Data.Entities;
-using RestaurantPOS.Services;
+using KHAONPOS.Data.Entities;
+using KHAONPOS.Services;
 
-namespace RestaurantPOS.ViewModels;
+namespace KHAONPOS.ViewModels;
 
 public class AdminReportsViewModel : BaseViewModel
 {
     private readonly IReportingService _reportingService;
 
-    public ObservableCollection<Order> RecentOrders { get; } = new();
+    public ObservableCollection<Order> RecentOrders { get; } = [];
 
     public ICommand RefreshCommand { get; }
 
@@ -22,6 +22,7 @@ public class AdminReportsViewModel : BaseViewModel
 
         _ = LoadReportsAsync();
     }
+
 
     private async Task LoadReportsAsync()
     {

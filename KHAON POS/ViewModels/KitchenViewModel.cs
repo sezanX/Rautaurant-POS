@@ -4,28 +4,22 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Threading;
-using RestaurantPOS.Data.Entities;
-using RestaurantPOS.Services;
+using KHAONPOS.Data.Entities;
+using KHAONPOS.Services;
 
-namespace RestaurantPOS.ViewModels;
+namespace KHAONPOS.ViewModels;
 
-public class KitchenOrderViewModel : BaseViewModel
+public class KitchenOrderViewModel(Order order) : BaseViewModel
 {
-    private readonly Order _order;
-    public Order Order => _order;
-
-    public KitchenOrderViewModel(Order order)
-    {
-        _order = order;
-    }
+    public Order Order { get; } = order;
 
     public string TimeRemaining
     {
         get
         {
-            if (_order.EstimatedCompletionTime.HasValue)
+            if (Order.EstimatedCompletionTime.HasValue)
             {
-                var diff = _order.EstimatedCompletionTime.Value - DateTime.Now;
+                var diff = Order.EstimatedCompletionTime.Value - DateTime.Now;
                 if (diff.TotalSeconds < 0) return "00:00 min";
                 return $"{(int)diff.TotalMinutes:D2}:{diff.Seconds:D2} min";
             }
@@ -37,9 +31,9 @@ public class KitchenOrderViewModel : BaseViewModel
     {
         get
         {
-            if (_order.EstimatedCompletionTime.HasValue)
+            if (Order.EstimatedCompletionTime.HasValue)
             {
-                var diff = _order.EstimatedCompletionTime.Value - DateTime.Now;
+                var diff = Order.EstimatedCompletionTime.Value - DateTime.Now;
                 double secs = diff.TotalSeconds;
                 if (secs <= 0)
                 {
@@ -58,9 +52,9 @@ public class KitchenOrderViewModel : BaseViewModel
     {
         get
         {
-            if (_order.EstimatedCompletionTime.HasValue)
+            if (Order.EstimatedCompletionTime.HasValue)
             {
-                var diff = _order.EstimatedCompletionTime.Value - DateTime.Now;
+                var diff = Order.EstimatedCompletionTime.Value - DateTime.Now;
                 double secs = diff.TotalSeconds;
                 if (secs <= 0)
                 {
@@ -86,14 +80,15 @@ public class KitchenOrderViewModel : BaseViewModel
 public class KitchenViewModel : BaseViewModel
 {
     private readonly IOrderService _orderService;
-    private DispatcherTimer _timer;
+    private readonly DispatcherTimer _timer;
 
-    public ObservableCollection<KitchenOrderViewModel> ActiveOrders { get; } = new();
+    public ObservableCollection<KitchenOrderViewModel> ActiveOrders { get; } = [];
 
     public ICommand MarkAsPreparedCommand { get; }
     public ICommand AddTimeCommand { get; }
     public ICommand RefreshCommand { get; }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "WPF INotifyPropertyChanged requires instance properties.")]
     public string CurrentTime => DateTime.Now.ToString("h:mm tt, ddd, MMM d, yyyy");
 
     public KitchenViewModel(IOrderService orderService)
@@ -146,7 +141,7 @@ public class KitchenViewModel : BaseViewModel
         var orders = await _orderService.GetActiveOrdersAsync();
 
         var existingIds = ActiveOrders.Select(o => o.Order.Id).ToList();
-        var newOrders = orders.Where(o => (o.Status == "Pending" || o.Status == "Preparing")).ToList();
+        var newOrders = orders.Where(o => o.Status == "Pending" || o.Status == "Preparing").ToList();
 
         // Remove completed or removed orders
         var toRemove = ActiveOrders.Where(o => !newOrders.Any(no => no.Id == o.Order.Id)).ToList();

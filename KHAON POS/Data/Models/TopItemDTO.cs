@@ -1,4 +1,4 @@
-namespace RestaurantPOS.Data.Models;
+namespace KHAONPOS.Data.Models;
 
 public class TopItemDTO
 {

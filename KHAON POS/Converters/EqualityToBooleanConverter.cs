@@ -2,7 +2,7 @@ using System;
 using System.Globalization;
 using System.Windows.Data;
 
-namespace RestaurantPOS.Converters;
+namespace KHAONPOS.Converters;
 
 public class EqualityToBooleanConverter : IMultiValueConverter
 {
@@ -12,7 +12,7 @@ public class EqualityToBooleanConverter : IMultiValueConverter
             return false;
 
         // Compare by Id if both are Categories, or standard Equals comparison
-        if (values[0] is RestaurantPOS.Data.Entities.Category cat1 && values[1] is RestaurantPOS.Data.Entities.Category cat2)
+        if (values[0] is KHAONPOS.Data.Entities.Category cat1 && values[1] is KHAONPOS.Data.Entities.Category cat2)
         {
             return cat1.Id == cat2.Id;
         }

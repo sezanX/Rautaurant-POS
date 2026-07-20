@@ -1,18 +1,12 @@
 using System;
 using System.Windows.Input;
 
-namespace RestaurantPOS.ViewModels;
+namespace KHAONPOS.ViewModels;
 
-public class RelayCommand : ICommand
+public class RelayCommand(Action<object?> execute, Predicate<object?>? canExecute = null) : ICommand
 {
-    private readonly Action<object?> _execute;
-    private readonly Predicate<object?>? _canExecute;
-
-    public RelayCommand(Action<object?> execute, Predicate<object?>? canExecute = null)
-    {
-        _execute = execute ?? throw new ArgumentNullException(nameof(execute));
-        _canExecute = canExecute;
-    }
+    private readonly Action<object?> _execute = execute ?? throw new ArgumentNullException(nameof(execute));
+    private readonly Predicate<object?>? _canExecute = canExecute;
 
     public event EventHandler? CanExecuteChanged
     {
@@ -31,16 +25,10 @@ public class RelayCommand : ICommand
     }
 }
 
-public class RelayCommand<T> : ICommand
+public class RelayCommand<T>(Action<T?> execute, Predicate<T?>? canExecute = null) : ICommand
 {
-    private readonly Action<T?> _execute;
-    private readonly Predicate<T?>? _canExecute;
-
-    public RelayCommand(Action<T?> execute, Predicate<T?>? canExecute = null)
-    {
-        _execute = execute ?? throw new ArgumentNullException(nameof(execute));
-        _canExecute = canExecute;
-    }
+    private readonly Action<T?> _execute = execute ?? throw new ArgumentNullException(nameof(execute));
+    private readonly Predicate<T?>? _canExecute = canExecute;
 
     public event EventHandler? CanExecuteChanged
     {

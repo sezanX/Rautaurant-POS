@@ -1,6 +1,6 @@
 using System.Windows.Controls;
 
-namespace RestaurantPOS.Views
+namespace KHAONPOS.Views
 {
     public partial class AdminAnalyticsView : UserControl
     {

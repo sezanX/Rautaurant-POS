@@ -6,19 +6,17 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Win32;
-using RestaurantPOS.Data;
-using RestaurantPOS.Data.Entities;
-using RestaurantPOS.Services;
+using KHAONPOS.Data;
+using KHAONPOS.Data.Entities;
 
-namespace RestaurantPOS.ViewModels;
+namespace KHAONPOS.ViewModels;
 
 public class AdminInventoryViewModel : BaseViewModel
 {
     private readonly AppDbContext _context;
-    private readonly IInventoryService _inventoryService;
 
-    public ObservableCollection<MenuItem> MenuItems { get; } = new();
-    public ObservableCollection<Category> Categories { get; } = new();
+    public ObservableCollection<MenuItem> MenuItems { get; } = [];
+    public ObservableCollection<Category> Categories { get; } = [];
 
     private MenuItem? _selectedItem;
     public MenuItem? SelectedItem
@@ -92,10 +90,9 @@ public class AdminInventoryViewModel : BaseViewModel
     public ICommand UploadPhotoCommand { get; }
     public ICommand ClearFormCommand { get; }
 
-    public AdminInventoryViewModel(AppDbContext context, IInventoryService inventoryService)
+    public AdminInventoryViewModel(AppDbContext context)
     {
         _context = context;
-        _inventoryService = inventoryService;
 
         SaveItemCommand = new RelayCommand(async _ => await SaveItemAsync());
         DeleteItemCommand = new RelayCommand(async _ => await DeleteSelectedItemAsync(), _ => SelectedItem != null);
@@ -129,13 +126,13 @@ public class AdminInventoryViewModel : BaseViewModel
             Filter = "Image Files (*.jpg;*.jpeg;*.png)|*.jpg;*.jpeg;*.png"
         };
 
-        if (openFileDialog.ShowDialog() == true)
+        if (openFileDialog.ShowDialog() is true)
         {
             try
             {
                 var sourcePath = openFileDialog.FileName;
                 var imagesFolder = Path.Combine(Environment.CurrentDirectory, "Assets", "Images");
-                
+
                 if (!Directory.Exists(imagesFolder))
                 {
                     Directory.CreateDirectory(imagesFolder);
@@ -148,9 +145,9 @@ public class AdminInventoryViewModel : BaseViewModel
 
                 NewImagePath = destinationPath;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // Ignore for now
+                System.Diagnostics.Debug.WriteLine($"Failed to upload photo: {ex.Message}");
             }
         }
     }

@@ -2,43 +2,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using RestaurantPOS.Data;
-using RestaurantPOS.Data.Entities;
+using KHAONPOS.Data;
+using KHAONPOS.Data.Entities;
 
-namespace RestaurantPOS.Services;
+namespace KHAONPOS.Services;
 
-public class InventoryService : IInventoryService
+public class InventoryService(AppDbContext context) : IInventoryService
 {
-    private readonly AppDbContext _context;
+    private readonly AppDbContext _context = context;
 
-    public InventoryService(AppDbContext context)
+    public Task<List<Category>> GetCategoriesAsync()
     {
-        _context = context;
+        return _context.Categories.ToListAsync();
     }
 
-    public async Task<List<Category>> GetCategoriesAsync()
+    public Task<List<MenuItem>> GetMenuItemsAsync()
     {
-        return await _context.Categories.ToListAsync();
+        return _context.MenuItems.Include(m => m.Category).ToListAsync();
     }
 
-    public async Task<List<MenuItem>> GetMenuItemsAsync()
+    public Task<List<MenuItem>> GetMenuItemsByCategoryAsync(int categoryId)
     {
-        return await _context.MenuItems.Include(m => m.Category).ToListAsync();
-    }
-
-    public async Task<List<MenuItem>> GetMenuItemsByCategoryAsync(int categoryId)
-    {
-        return await _context.MenuItems
+        return _context.MenuItems
             .Include(m => m.Category)
             .Where(m => m.CategoryId == categoryId)
             .ToListAsync();
-    }
-
-    public async Task<MenuItem?> GetMenuItemByBarcodeAsync(string barcode)
-    {
-        return await _context.MenuItems
-            .Include(m => m.Category)
-            .FirstOrDefaultAsync(m => m.Barcode == barcode);
     }
 
     public async Task UpdateStockAsync(int menuItemId, int quantityChange)
@@ -49,5 +37,33 @@ public class InventoryService : IInventoryService
             item.StockQuantity += quantityChange;
             await _context.SaveChangesAsync();
         }
+    }
+
+    public async Task<Category> AddCategoryAsync(Category category)
+    {
+        _context.Categories.Add(category);
+        await _context.SaveChangesAsync();
+        return category;
+    }
+
+    public async Task UpdateCategoryAsync(Category category)
+    {
+        _context.Categories.Update(category);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task<(bool Success, string Message)> DeleteCategoryAsync(int categoryId)
+    {
+        var category = await _context.Categories.FindAsync(categoryId);
+        if (category == null)
+            return (false, "Category not found.");
+
+        var hasMenuItems = await _context.MenuItems.AnyAsync(m => m.CategoryId == categoryId);
+        if (hasMenuItems)
+            return (false, "Cannot delete category because menu items are associated with it.");
+
+        _context.Categories.Remove(category);
+        await _context.SaveChangesAsync();
+        return (true, "Category deleted successfully.");
     }
 }

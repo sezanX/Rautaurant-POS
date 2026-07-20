@@ -2,7 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Windows.Input;
 
-namespace RestaurantPOS.ViewModels;
+namespace KHAONPOS.ViewModels;
 
 public class MainViewModel : BaseViewModel
 {
@@ -25,7 +25,10 @@ public class MainViewModel : BaseViewModel
 
     public ICommand NavigateCommand { get; }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "WPF INotifyPropertyChanged requires instance properties.")]
     public DateTime CurrentDate => DateTime.Now;
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "WPF INotifyPropertyChanged requires instance properties.")]
     public DateTime CurrentTime => DateTime.Now;
 
     private readonly System.Windows.Threading.DispatcherTimer _timer;
@@ -34,7 +37,7 @@ public class MainViewModel : BaseViewModel
     {
         _serviceProvider = serviceProvider;
         _currentViewModel = (BaseViewModel)_serviceProvider.GetService(typeof(LoginViewModel))!;
-        
+
         NavigateCommand = new RelayCommand<string>(Navigate);
 
         // Subscribe to a static login event to change to POS view on success
@@ -59,13 +62,13 @@ public class MainViewModel : BaseViewModel
         switch (viewName)
         {
             case "POS":
-                CurrentViewModel = (BaseViewModel)_serviceProvider.GetService(typeof(PosViewModel))!;
+                CurrentViewModel = (BaseViewModel)_serviceProvider.GetService(typeof(CashierViewModel))!;
                 break;
             case "Kitchen":
                 CurrentViewModel = (BaseViewModel)_serviceProvider.GetService(typeof(KitchenViewModel))!;
                 break;
             case "Dashboard":
-                CurrentViewModel = (BaseViewModel)_serviceProvider.GetService(typeof(DashboardViewModel))!;
+                CurrentViewModel = (BaseViewModel)_serviceProvider.GetService(typeof(AdminDashboardViewModel))!;
                 break;
             case "Support":
                 OpenSupportLink();
@@ -76,13 +79,13 @@ public class MainViewModel : BaseViewModel
         }
     }
 
-    private void OpenSupportLink()
+    private static void OpenSupportLink()
     {
         try
         {
             Process.Start(new ProcessStartInfo
             {
-                FileName = "https://wa.me/8801307040108",
+                FileName = "https://github.com/sezanX/Rautaurant-POS",
                 UseShellExecute = true
             });
         }

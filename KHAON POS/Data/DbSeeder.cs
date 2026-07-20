@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using RestaurantPOS.Data.Entities;
+using KHAONPOS.Data.Entities;
 
-namespace RestaurantPOS.Data;
+namespace KHAONPOS.Data;
 
 public static class DbSeeder
 {
@@ -19,14 +19,6 @@ public static class DbSeeder
                 context.SaveChanges();
             }
 
-            var firstTable = context.Tables.FirstOrDefault();
-            if (firstTable == null)
-            {
-                firstTable = new Table { TableNumber = 1, Capacity = 4, Status = "Available" };
-                context.Tables.Add(firstTable);
-                context.SaveChanges();
-            }
-
             if (!context.OrderItems.Any())
             {
                 // Get the first 3 orders in the database
@@ -38,7 +30,6 @@ public static class DbSeeder
                     var newOrder = new Order
                     {
                         UserId = firstUser.Id,
-                        TableId = firstTable.Id,
                         OrderDate = DateTime.Now,
                         TotalAmount = 0m,
                         Status = "Completed"
@@ -89,7 +80,6 @@ public static class DbSeeder
                     var order = new Order
                     {
                         UserId = firstUser.Id,
-                        TableId = firstTable.Id,
                         OrderDate = pastDate.AddHours(12),
                         TotalAmount = 0m,
                         Status = "Completed",
@@ -124,7 +114,6 @@ public static class DbSeeder
                     var order = new Order
                     {
                         UserId = firstUser.Id,
-                        TableId = firstTable.Id,
                         OrderDate = pastMonthDate,
                         TotalAmount = 0m,
                         Status = "Completed",

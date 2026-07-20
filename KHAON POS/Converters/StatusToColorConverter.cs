@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace RestaurantPOS.Converters;
+namespace KHAONPOS.Converters;
 
 public class StatusToColorConverter : IValueConverter
 {

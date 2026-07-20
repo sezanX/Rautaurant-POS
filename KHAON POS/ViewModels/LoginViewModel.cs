@@ -1,10 +1,10 @@
 using System;
 using System.Linq;
 using System.Windows.Input;
-using RestaurantPOS.Data;
-using RestaurantPOS.Data.Entities;
+using KHAONPOS.Data;
+using KHAONPOS.Data.Entities;
 
-namespace RestaurantPOS.ViewModels;
+namespace KHAONPOS.ViewModels;
 
 public class LoginViewModel : BaseViewModel
 {
@@ -56,6 +56,7 @@ public class LoginViewModel : BaseViewModel
     public ICommand LoginCommand { get; }
     public ICommand SelectRoleCommand { get; }
     public ICommand BackCommand { get; }
+    public ICommand ForgotPasswordCommand { get; }
 
     public static event EventHandler<string>? LoginSuccessful;
     public static User? CurrentUser { get; private set; }
@@ -66,6 +67,10 @@ public class LoginViewModel : BaseViewModel
         LoginCommand = new RelayCommand(ExecuteLogin, CanExecuteLogin);
         SelectRoleCommand = new RelayCommand<string>(ExecuteSelectRole);
         BackCommand = new RelayCommand(ExecuteBack);
+        ForgotPasswordCommand = new RelayCommand(_ => ExecuteForgotPassword());
+
+        // Default role on login page load is Admin
+        ExecuteSelectRole("Admin");
     }
 
     private void ExecuteSelectRole(string? role)
@@ -75,14 +80,25 @@ public class LoginViewModel : BaseViewModel
             SelectedRole = role;
             IsRoleSelected = true;
             ErrorMessage = string.Empty;
+
+            switch (role)
+            {
+                case "Admin":
+                    Username = "admin";
+                    break;
+                case "Cashier":
+                    Username = "cashier";
+                    break;
+                case "Kitchen":
+                    Username = "kitchen";
+                    break;
+            }
         }
     }
 
     private void ExecuteBack(object? parameter)
     {
-        IsRoleSelected = false;
-        SelectedRole = string.Empty;
-        Username = string.Empty;
+        ExecuteSelectRole("Admin");
         Password = string.Empty;
         ErrorMessage = string.Empty;
     }
@@ -97,19 +113,32 @@ public class LoginViewModel : BaseViewModel
         var trimmedUsername = Username?.Trim();
         var trimmedPassword = Password?.Trim();
 
-        var user = _context.Users.FirstOrDefault(u => u.Username == trimmedUsername && u.PasswordHash == trimmedPassword && u.Role == SelectedRole);
+        var user = _context.Users.FirstOrDefault(u =>
+            u.Role == SelectedRole &&
+            u.PasswordHash == trimmedPassword &&
+            (u.Username == trimmedUsername ||
+             (u.Username == "cashier1" && trimmedUsername == "cashier") ||
+             (u.Username == "kitchen1" && trimmedUsername == "kitchen") ||
+             (u.Username == "cashier" && trimmedUsername == "cashier1") ||
+             (u.Username == "kitchen" && trimmedUsername == "kitchen1")));
+
         if (user != null)
         {
             CurrentUser = user;
             ErrorMessage = string.Empty;
             LoginSuccessful?.Invoke(this, user.Role);
-            
-            // Clear fields after login
+
+            // Clear fields and reset default role after login
             ExecuteBack(null);
         }
         else
         {
             ErrorMessage = "Invalid username or password for this role";
         }
+    }
+
+    private void ExecuteForgotPassword()
+    {
+        ErrorMessage = "Please contact your admin/manager";
     }
 }

@@ -1,7 +1,7 @@
 using System.Windows;
-using RestaurantPOS.ViewModels;
+using KHAONPOS.ViewModels;
 
-namespace RestaurantPOS.Views;
+namespace KHAONPOS.Views;
 
 public partial class MainWindow : Window
 {

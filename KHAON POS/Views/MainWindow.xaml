@@ -1,9 +1,9 @@
-<Window x:Class="RestaurantPOS.Views.MainWindow"
+<Window x:Class="KHAONPOS.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:views="clr-namespace:RestaurantPOS.Views"
-        xmlns:viewmodels="clr-namespace:RestaurantPOS.ViewModels"
+        xmlns:views="clr-namespace:KHAONPOS.Views"
+        xmlns:viewmodels="clr-namespace:KHAONPOS.ViewModels"
         Title="KHAON POS" Height="768" Width="1024"
         WindowStartupLocation="CenterScreen"
         WindowState="Maximized"
@@ -12,7 +12,7 @@
         TextElement.FontSize="13"
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
-        Background="{DynamicResource MaterialDesignPaper}"
+        Background="{DynamicResource AppBackgroundBrush}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         Icon="/logo.png">
 
@@ -21,18 +21,18 @@
         <DataTemplate DataType="{x:Type viewmodels:LoginViewModel}">
             <views:LoginView />
         </DataTemplate>
-        <DataTemplate DataType="{x:Type viewmodels:PosViewModel}">
-            <views:PosView />
+        <DataTemplate DataType="{x:Type viewmodels:CashierViewModel}">
+            <views:CashierView />
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewmodels:KitchenViewModel}">
             <views:KitchenView />
         </DataTemplate>
-        <DataTemplate DataType="{x:Type viewmodels:DashboardViewModel}">
-            <views:DashboardView />
+        <DataTemplate DataType="{x:Type viewmodels:AdminDashboardViewModel}">
+            <views:AdminDashboardView />
         </DataTemplate>
     </Window.Resources>
 
-    <Grid>
+    <Grid Background="{DynamicResource AppBackgroundBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="64" />
             <RowDefinition Height="*" />
@@ -48,7 +48,7 @@
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
                    
-                    <TextBlock Text="{Binding CurrentTime, StringFormat={}{0:h:mm tt}}" FontWeight="Bold" Foreground="#212121" VerticalAlignment="Center" Margin="0,0,8,0" />
+                    <TextBlock Text="{Binding CurrentTime, StringFormat={}{0:h:mm:ss tt}}" FontWeight="Bold" Foreground="#212121" VerticalAlignment="Center" Margin="0,0,8,0" />
                     <TextBlock Text="{Binding CurrentDate, StringFormat={}{0:MMM dd, yyyy}}"  Foreground="#757575" VerticalAlignment="Center" Margin="0,0,8,0" />
                    
                 

@@ -1,4 +1,4 @@
-<UserControl x:Class="RestaurantPOS.Views.AdminReportsView"
+<UserControl x:Class="KHAONPOS.Views.AdminReportsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
@@ -8,7 +8,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Text="Transaction Reports" FontSize="28" FontWeight="Bold" Foreground="#212121" Margin="0,0,0,24" />
+        <TextBlock Grid.Row="0" Text="Orders" FontSize="28" FontWeight="Bold" Foreground="#212121" Margin="0,0,0,24" />
 
         <materialDesign:Card Grid.Row="1" Padding="16" UniformCornerRadius="8" Background="White">
             <Grid>
@@ -40,7 +40,6 @@
                         <DataGridTextColumn Header="Order ID" Binding="{Binding Id}" />
                         <DataGridTextColumn Header="Date" Binding="{Binding OrderDate, StringFormat={}{0:MMM dd, yyyy HH:mm}}" />
                         <DataGridTextColumn Header="Cashier" Binding="{Binding User.Username}" />
-                        <DataGridTextColumn Header="Table" Binding="{Binding Table.TableNumber}" />
                         <DataGridTextColumn Header="Status" Binding="{Binding Status}" />
                         <DataGridTextColumn Header="Total Amount" Binding="{Binding TotalAmount, StringFormat={}{0:C}}" />
                     </DataGrid.Columns>

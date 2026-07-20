@@ -1,4 +1,4 @@
-<UserControl x:Class="RestaurantPOS.Views.AdminOverviewView"
+<UserControl x:Class="KHAONPOS.Views.AdminOverviewView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -60,11 +60,12 @@
                 <TextBlock Text="Track your restaurant's performance" FontSize="14" Foreground="#757575" Margin="0,4,0,0" />
             </StackPanel>
             
-            <Border Grid.Column="1" Background="White" CornerRadius="8" Padding="16,8" BorderBrush="#E0E0E0" BorderThickness="1">
+            <Border Grid.Column="1" Background="White" CornerRadius="8" Padding="12,4" BorderBrush="#E0E0E0" BorderThickness="1">
                 <StackPanel Orientation="Horizontal">
-                    <materialDesign:PackIcon Kind="Calendar" Foreground="#757575" VerticalAlignment="Center" Margin="0,0,8,0"/>
-                    <TextBlock Text="Today" Foreground="#424242" FontWeight="SemiBold" VerticalAlignment="Center"/>
-                    <materialDesign:PackIcon Kind="ChevronDown" Foreground="#757575" VerticalAlignment="Center" Margin="8,0,0,0"/>
+                    <materialDesign:PackIcon Kind="Calendar" Foreground="#757575" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                    <ComboBox ItemsSource="{Binding PeriodOptions}" SelectedItem="{Binding SelectedPeriod}"
+                              BorderThickness="0" Background="Transparent" Foreground="#424242" 
+                              FontWeight="SemiBold" FontSize="14" VerticalAlignment="Center"/>
                 </StackPanel>
             </Border>
         </Grid>

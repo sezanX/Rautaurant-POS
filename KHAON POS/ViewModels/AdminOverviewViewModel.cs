@@ -6,11 +6,11 @@ using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using SkiaSharp;
-using RestaurantPOS.Services;
-using RestaurantPOS.Data.Entities;
-using RestaurantPOS.Data.Models;
+using KHAONPOS.Services;
+using KHAONPOS.Data.Entities;
+using KHAONPOS.Data.Models;
 
-namespace RestaurantPOS.ViewModels;
+namespace KHAONPOS.ViewModels;
 
 public class AdminOverviewViewModel : BaseViewModel
 {
@@ -44,6 +44,24 @@ public class AdminOverviewViewModel : BaseViewModel
         set => SetProperty(ref _activeCustomers, value);
     }
 
+    private static readonly decimal[] DemoRevenueValues = [12m, 25m, 18m, 35m, 40m, 55m, 45m];
+    private static readonly string[] DemoMonthLabels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"];
+
+    public ObservableCollection<string> PeriodOptions { get; } = ["Today", "This Week", "This Month", "All Time"];
+
+    private string _selectedPeriod = "Today";
+    public string SelectedPeriod
+    {
+        get => _selectedPeriod;
+        set
+        {
+            if (SetProperty(ref _selectedPeriod, value))
+            {
+                _ = LoadDashboardData();
+            }
+        }
+    }
+
     private bool _isWeeklySelected = true;
     public bool IsWeeklySelected
     {
@@ -74,24 +92,24 @@ public class AdminOverviewViewModel : BaseViewModel
         }
     }
 
-    public ObservableCollection<ISeries> SalesSeries { get; } = new();
+    public ObservableCollection<ISeries> SalesSeries { get; } = [];
 
-    private Axis[] _xAxes = Array.Empty<Axis>();
+    private Axis[] _xAxes = [];
     public Axis[] XAxes
     {
         get => _xAxes;
         set => SetProperty(ref _xAxes, value);
     }
 
-    private Axis[] _yAxes = Array.Empty<Axis>();
+    private Axis[] _yAxes = [];
     public Axis[] YAxes
     {
         get => _yAxes;
         set => SetProperty(ref _yAxes, value);
     }
 
-    public ObservableCollection<Order> RecentOrders { get; } = new();
-    public ObservableCollection<TopItemDTO> TopItems { get; } = new();
+    public ObservableCollection<Order> RecentOrders { get; } = [];
+    public ObservableCollection<TopItemDTO> TopItems { get; } = [];
 
     public ICommand RefreshDataCommand { get; }
 
@@ -134,23 +152,23 @@ public class AdminOverviewViewModel : BaseViewModel
                 LineSmoothness = 0.5
             });
 
-            XAxes = new[]
-            {
+            XAxes =
+            [
                 new Axis
                 {
                     Labels = labels,
                     LabelsPaint = new SolidColorPaint(SKColors.Gray)
                 }
-            };
+            ];
 
-            YAxes = new[]
-            {
+            YAxes =
+            [
                 new Axis
                 {
                     Labeler = value => value.ToString("C0"),
                     LabelsPaint = new SolidColorPaint(SKColors.Gray)
                 }
-            };
+            ];
         }
         catch (Exception)
         {
@@ -159,7 +177,7 @@ public class AdminOverviewViewModel : BaseViewModel
             SalesSeries.Clear();
             SalesSeries.Add(new LineSeries<decimal>
             {
-                Values = new[] { 12m, 25m, 18m, 35m, 40m, 55m, 45m },
+                Values = DemoRevenueValues,
                 Name = "Revenue (Demo)",
                 GeometryFill = null,
                 GeometryStroke = null,
@@ -168,34 +186,72 @@ public class AdminOverviewViewModel : BaseViewModel
                 LineSmoothness = 0.5
             });
 
-            XAxes = new[]
-            {
+            XAxes =
+            [
                 new Axis
                 {
-                    Labels = new[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul" },
+                    Labels = DemoMonthLabels,
                     LabelsPaint = new SolidColorPaint(SKColors.Gray)
                 }
-            };
+            ];
         }
     }
 
     private async Task LoadDashboardData()
     {
-        TotalSales = await _reportingService.GetTotalSalesAsync(DateTime.Today);
-        OrderCount = await _reportingService.GetOrderCountAsync(DateTime.Today);
-        
-        AverageOrderValue = OrderCount > 0 ? TotalSales / OrderCount : 0;
-        
-        // Mock data for ActiveCustomers
-        ActiveCustomers = 854; 
+        DateTime? startDate = null;
+        DateTime? endDate = null;
+        var now = DateTime.Now;
+
+        if (SelectedPeriod == "Today")
+        {
+            startDate = DateTime.Today;
+            endDate = DateTime.Today.AddDays(1).AddTicks(-1);
+        }
+        else if (SelectedPeriod == "This Week")
+        {
+            var diff = (int)now.DayOfWeek == 0 ? 6 : (int)now.DayOfWeek - 1;
+            startDate = DateTime.Today.AddDays(-diff);
+        }
+        else if (SelectedPeriod == "This Month")
+        {
+            startDate = new DateTime(now.Year, now.Month, 1);
+        }
+        else // "All Time"
+        {
+            startDate = null;
+            endDate = null;
+        }
+
+        TotalSales = await _reportingService.GetTotalSalesAsync(startDate, endDate);
+        OrderCount = await _reportingService.GetOrderCountAsync(startDate, endDate);
+
+        // Fallback to All Time if Today has no orders or sales yet
+        if (SelectedPeriod == "Today" && OrderCount == 0 && TotalSales == 0m)
+        {
+            var allTimeSales = await _reportingService.GetTotalSalesAsync(null, null);
+            var allTimeCount = await _reportingService.GetOrderCountAsync(null, null);
+            if (allTimeSales > 0m || allTimeCount > 0)
+            {
+                _selectedPeriod = "All Time";
+                OnPropertyChanged(nameof(SelectedPeriod));
+                startDate = null;
+                endDate = null;
+                TotalSales = allTimeSales;
+                OrderCount = allTimeCount;
+            }
+        }
+
+        AverageOrderValue = OrderCount > 0 ? TotalSales / OrderCount : 0m;
+        ActiveCustomers = await _reportingService.GetActiveCustomersCountAsync(startDate, endDate);
 
         var recentOrders = await _reportingService.GetRecentOrdersAsync(5);
         RecentOrders.Clear();
-        foreach(var order in recentOrders) RecentOrders.Add(order);
+        foreach (var order in recentOrders) RecentOrders.Add(order);
 
         var topItems = await _reportingService.GetTopItemsAsync(3);
         TopItems.Clear();
-        foreach(var item in topItems) TopItems.Add(item);
+        foreach (var item in topItems) TopItems.Add(item);
 
         await UpdateSalesChart();
     }

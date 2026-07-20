@@ -2,7 +2,7 @@ using System;
 using System.Globalization;
 using System.Windows.Data;
 
-namespace RestaurantPOS.Converters;
+namespace KHAONPOS.Converters;
 
 public class CurrencyConverter : IValueConverter
 {

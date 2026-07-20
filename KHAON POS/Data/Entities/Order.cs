@@ -3,15 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace RestaurantPOS.Data.Entities;
+namespace KHAONPOS.Data.Entities;
 
 public class Order
 {
     [Key]
     public int Id { get; set; }
-
-    public int? TableId { get; set; }
-    public Table? Table { get; set; }
 
     public int UserId { get; set; }
     public User? User { get; set; }
@@ -27,5 +24,5 @@ public class Order
 
     public DateTime? EstimatedCompletionTime { get; set; }
 
-    public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
+    public ICollection<OrderItem> OrderItems { get; set; } = [];
 }

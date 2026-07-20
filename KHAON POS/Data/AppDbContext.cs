@@ -1,13 +1,12 @@
 using System;
 using Microsoft.EntityFrameworkCore;
-using RestaurantPOS.Data.Entities;
+using KHAONPOS.Data.Entities;
 
-namespace RestaurantPOS.Data;
+namespace KHAONPOS.Data;
 
 public class AppDbContext : DbContext
 {
     public DbSet<User> Users { get; set; }
-    public DbSet<Table> Tables { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<MenuItem> MenuItems { get; set; }
     public DbSet<Order> Orders { get; set; }
@@ -52,14 +51,6 @@ public class AppDbContext : DbContext
             new User { Id = 3, Username = "kitchen1", PasswordHash = "kitchen", Role = "Kitchen" }
         );
 
-        modelBuilder.Entity<Table>().HasData(
-            new Table { Id = 1, TableNumber = 1, Capacity = 4, Status = "Available" },
-            new Table { Id = 2, TableNumber = 2, Capacity = 2, Status = "Available" },
-            new Table { Id = 3, TableNumber = 3, Capacity = 6, Status = "Occupied" },
-            new Table { Id = 4, TableNumber = 4, Capacity = 4, Status = "Available" },
-            new Table { Id = 5, TableNumber = 5, Capacity = 8, Status = "Reserved" }
-        );
-
         modelBuilder.Entity<Category>().HasData(
             new Category { Id = 1, Name = "Burgers", IconName = "Hamburger" },
             new Category { Id = 2, Name = "Pizza", IconName = "Pizza" },
@@ -78,9 +69,9 @@ public class AppDbContext : DbContext
         );
 
         modelBuilder.Entity<Order>().HasData(
-            new Order { Id = 1, UserId = 2, TableId = 1, OrderDate = DateTime.Today.AddHours(12), TotalAmount = 45.20m, Status = "Completed", EstimatedCompletionTime = DateTime.Today.AddHours(12).AddMinutes(15) },
-            new Order { Id = 2, UserId = 2, TableId = 2, OrderDate = DateTime.Today.AddHours(13), TotalAmount = 35.40m, Status = "Completed", EstimatedCompletionTime = DateTime.Today.AddHours(13).AddMinutes(10) },
-            new Order { Id = 3, UserId = 2, TableId = 3, OrderDate = DateTime.Today.AddHours(14), TotalAmount = 15.99m, Status = "Completed", EstimatedCompletionTime = DateTime.Today.AddHours(14).AddMinutes(12) }
+            new Order { Id = 1, UserId = 2, OrderDate = DateTime.Today.AddHours(12), TotalAmount = 45.20m, Status = "Completed", EstimatedCompletionTime = DateTime.Today.AddHours(12).AddMinutes(15) },
+            new Order { Id = 2, UserId = 2, OrderDate = DateTime.Today.AddHours(13), TotalAmount = 35.40m, Status = "Completed", EstimatedCompletionTime = DateTime.Today.AddHours(13).AddMinutes(10) },
+            new Order { Id = 3, UserId = 2, OrderDate = DateTime.Today.AddHours(14), TotalAmount = 15.99m, Status = "Completed", EstimatedCompletionTime = DateTime.Today.AddHours(14).AddMinutes(12) }
         );
 
         modelBuilder.Entity<Payment>().HasData(

@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace RestaurantPOS.Data.Entities;
+namespace KHAONPOS.Data.Entities;
 
 public class Category
 {
