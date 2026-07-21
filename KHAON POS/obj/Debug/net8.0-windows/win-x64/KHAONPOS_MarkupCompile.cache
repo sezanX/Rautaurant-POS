@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-d:\Software Dev Projects\Rautaurant-POS-main\KHAON POS\obj\Debug\net8.0-windows\win-x64\
+c:\Users\Computer Hospital\Desktop\Github\Rautaurant-POS\KHAON POS\obj\Debug\net8.0-windows\win-x64\
 KHAONPOS
 none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NET7_0_OR_GREATER;NET8_0_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WINDOWS7_0_OR_GREATER
-d:\Software Dev Projects\Rautaurant-POS-main\KHAON POS\App.xaml
+c:\Users\Computer Hospital\Desktop\Github\Rautaurant-POS\KHAON POS\App.xaml
 11-636791944
 
-511171561426
-252-1427267813
+54388682646
+2522140937794
 Views\AdminAnalyticsView.xaml;Views\AdminCategoryView.xaml;Views\AdminDashboardView.xaml;Views\AdminInventoryView.xaml;Views\AdminOverviewView.xaml;Views\AdminReportsView.xaml;Views\AdminUsersView.xaml;Views\CashierView.xaml;Views\KitchenView.xaml;Views\LoginView.xaml;Views\MainWindow.xaml;
 
 True

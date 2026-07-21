@@ -34,6 +34,7 @@ public class AdminInventoryViewModel : BaseViewModel
                     NewCategoryId = value.CategoryId;
                     NewPrepTime = value.PreparationTimeMinutes;
                     NewImagePath = value.ImagePath ?? "";
+                    NewImageData = value.ImageData;
                 }
                 else
                 {
@@ -82,8 +83,29 @@ public class AdminInventoryViewModel : BaseViewModel
     public string NewImagePath
     {
         get => _newImagePath;
-        set => SetProperty(ref _newImagePath, value);
+        set
+        {
+            if (SetProperty(ref _newImagePath, value))
+            {
+                OnPropertyChanged(nameof(NewDisplayImage));
+            }
+        }
     }
+
+    private byte[]? _newImageData;
+    public byte[]? NewImageData
+    {
+        get => _newImageData;
+        set
+        {
+            if (SetProperty(ref _newImageData, value))
+            {
+                OnPropertyChanged(nameof(NewDisplayImage));
+            }
+        }
+    }
+    
+    public object? NewDisplayImage => NewImageData != null ? NewImageData : (string.IsNullOrWhiteSpace(NewImagePath) ? null : NewImagePath);
 
     public ICommand SaveItemCommand { get; }
     public ICommand DeleteItemCommand { get; }
@@ -131,19 +153,12 @@ public class AdminInventoryViewModel : BaseViewModel
             try
             {
                 var sourcePath = openFileDialog.FileName;
-                var imagesFolder = Path.Combine(Environment.CurrentDirectory, "Assets", "Images");
-
-                if (!Directory.Exists(imagesFolder))
-                {
-                    Directory.CreateDirectory(imagesFolder);
-                }
-
-                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(sourcePath);
-                var destinationPath = Path.Combine(imagesFolder, fileName);
-
-                File.Copy(sourcePath, destinationPath, true);
-
-                NewImagePath = destinationPath;
+                
+                // Read the image file into a byte array for database storage
+                NewImageData = File.ReadAllBytes(sourcePath);
+                
+                // Clear the ImagePath to force the UI to use the new byte array
+                NewImagePath = "";
             }
             catch (Exception ex)
             {
@@ -167,6 +182,7 @@ public class AdminInventoryViewModel : BaseViewModel
                 CategoryId = NewCategoryId,
                 PreparationTimeMinutes = NewPrepTime,
                 ImagePath = NewImagePath,
+                ImageData = NewImageData,
                 StockQuantity = 100 // default
             };
             _context.MenuItems.Add(item);
@@ -180,6 +196,7 @@ public class AdminInventoryViewModel : BaseViewModel
             SelectedItem.CategoryId = NewCategoryId;
             SelectedItem.PreparationTimeMinutes = NewPrepTime;
             SelectedItem.ImagePath = NewImagePath;
+            SelectedItem.ImageData = NewImageData;
             _context.MenuItems.Update(SelectedItem);
         }
 
@@ -207,5 +224,6 @@ public class AdminInventoryViewModel : BaseViewModel
         if (Categories.Any()) NewCategoryId = Categories.First().Id;
         NewPrepTime = 0;
         NewImagePath = "";
+        NewImageData = null;
     }
 }

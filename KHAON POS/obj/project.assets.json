@@ -8733,19 +8733,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Jabir\\.nuget\\packages\\": {}
+    "C:\\Users\\Computer Hospital\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Software Dev Projects\\Rautaurant-POS-main\\KHAON POS\\KHAONPOS.csproj",
+      "projectUniqueName": "c:\\Users\\Computer Hospital\\Desktop\\Github\\Rautaurant-POS\\KHAON POS\\KHAONPOS_svzkcbaj_wpftmp.csproj",
       "projectName": "KHAONPOS",
-      "projectPath": "D:\\Software Dev Projects\\Rautaurant-POS-main\\KHAON POS\\KHAONPOS.csproj",
-      "packagesPath": "C:\\Users\\Jabir\\.nuget\\packages\\",
-      "outputPath": "D:\\Software Dev Projects\\Rautaurant-POS-main\\KHAON POS\\obj\\",
+      "projectPath": "c:\\Users\\Computer Hospital\\Desktop\\Github\\Rautaurant-POS\\KHAON POS\\KHAONPOS_svzkcbaj_wpftmp.csproj",
+      "packagesPath": "C:\\Users\\Computer Hospital\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Computer Hospital\\Desktop\\Github\\Rautaurant-POS\\KHAON POS\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Jabir\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\Computer Hospital\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0-windows"

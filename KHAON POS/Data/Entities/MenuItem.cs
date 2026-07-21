@@ -30,4 +30,9 @@ public class MenuItem
 
     [MaxLength(500)]
     public string? ImagePath { get; set; }
+
+    public byte[]? ImageData { get; set; }
+
+    [NotMapped]
+    public object? DisplayImage => ImageData != null ? ImageData : ImagePath;
 }
