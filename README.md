@@ -134,6 +134,9 @@ Rautaurant-POS-main/
    ```powershell
    dotnet run --project "KHAON POS/KHAONPOS.csproj"
    ```
+### For Build 
+``` cd "KHAON POS"
+dotnet publish -c Release -o publish
 
 ---
 
