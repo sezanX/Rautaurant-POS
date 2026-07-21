@@ -137,7 +137,7 @@ Rautaurant-POS-main/
 ### For Build 
 ``` cd "KHAON POS"
 dotnet publish -c Release -o publish
-
+```
 ---
 
 ## 🗄️ Database Configuration
