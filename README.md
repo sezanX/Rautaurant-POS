@@ -42,9 +42,12 @@ Designed for modern fast-food restaurants, cafes, and eateries, KHAON POS stream
 - **User & Staff Control**: Role-based user management (Admin, Cashier, Kitchen Staff), password reset, and user creation.
 - **Reports Export**: Printable sales reports filtered by date range.
 
-### ☁️ 4. Cloud & Local Database Integration
+### ☁️ 4. Cloud Database & Image Synchronization
 - **PostgreSQL Cloud Sync**: Configured for cloud PostgreSQL (Neon.tech) out of the box using `Npgsql.EntityFrameworkCore.PostgreSQL`.
 - **Automatic Auto-Migration & Data Seeding**: `AppDbContext` and `DbSeeder` automatically verify, migrate, and seed initial categories, menu items, sample orders, and user credentials on startup.
+- **Database Blob Storage for Images**: Neon.tech acts as the central source of truth for the application. Instead of using a local file system for images, product photos are converted into massive byte arrays and stored directly inside the PostgreSQL database using the `bytea` (Byte Array) data type.
+  - **Uploading**: When an admin uploads a photo via the UI, the application reads the file from the local hard drive and converts it into raw bytes (`File.ReadAllBytes`). EF Core sends this raw byte array over the internet directly into the Neon database.
+  - **Rendering**: When another computer loads the menu, it downloads the bytes from Neon.tech. A custom `ImageConverter.cs` intercepts the raw binary data, streams it into memory, and decodes it back into a visual `BitmapImage` for the UI. This ensures images sync perfectly and instantly across all computers without needing a separate cloud storage service like AWS S3!
 
 ---
 
