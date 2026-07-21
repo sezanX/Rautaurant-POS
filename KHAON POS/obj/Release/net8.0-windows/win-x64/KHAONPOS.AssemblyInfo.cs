@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("KHAONPOS")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6b50b2944e616c2201caecad47bb9e32441a4c0e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+09f2d1e57adc718b7935f80acf4d6ac006084877")]
 [assembly: System.Reflection.AssemblyProductAttribute("KHAONPOS")]
 [assembly: System.Reflection.AssemblyTitleAttribute("KHAONPOS")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -173,4 +173,38 @@ public static class DbSeeder
             throw new Exception($"Failed seeding data safely. Inner Exception: {innerMsg}", ex);
         }
     }
+
+    public static void MigrateLocalImagesToDatabase(AppDbContext context)
+    {
+        try
+        {
+            var itemsToMigrate = context.MenuItems
+                .Where(m => m.ImageData == null && m.ImagePath != null && m.ImagePath.Trim() != "")
+                .ToList();
+
+            bool changed = false;
+            foreach (var item in itemsToMigrate)
+            {
+                // Ensure it's a local path, not a URL
+                if (item.ImagePath!.Contains(":\\") || item.ImagePath.StartsWith("/") || item.ImagePath.StartsWith("."))
+                {
+                    if (System.IO.File.Exists(item.ImagePath))
+                    {
+                        item.ImageData = System.IO.File.ReadAllBytes(item.ImagePath);
+                        context.MenuItems.Update(item);
+                        changed = true;
+                    }
+                }
+            }
+
+            if (changed)
+            {
+                context.SaveChanges();
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Failed to migrate images: {ex.Message}");
+        }
+    }
 }
