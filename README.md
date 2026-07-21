@@ -154,8 +154,6 @@ To point the application to your own local or remote PostgreSQL instance:
 ## 📖 Further Documentation
 
 - 📘 **[TUTORIAL.md](./TUTORIAL.md)**: Developer architecture deep-dive, layer breakdown, step-by-step feature extension guide, and database migration instructions.
-- 📐 **[WORKFLOW.md](./KHAON%20POS/WORKFLOW.md)**: Visual system sequence diagrams, KDS timing flowcharts, cart state machine, and Entity Relationship Diagram (ERD).
-
 ---
 
 ## 📄 License
